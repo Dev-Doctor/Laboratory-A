@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
+      xmlns="http://javafx.com/javafx/17.0.2-ea"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="io.github.devdoctor.deltabooks.controllers.testController">
+   <children>
+      <Button layoutX="35.0" layoutY="35.0" mnemonicParsing="false" onAction="#onLoadBooksButtonClick" text="LoadBooks" />
+      <Button layoutX="35.0" layoutY="65.0" mnemonicParsing="false" onAction="#onLoadUsersButtonClick" text="LoadUsers" />
+      <Button layoutX="35.0" layoutY="95.0" mnemonicParsing="false" onAction="#onLoadConfigButtonClick" text="LoadConfigs" />
+   </children>
+</Pane>
