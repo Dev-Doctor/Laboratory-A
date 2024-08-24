@@ -1,13 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="io.github.devdoctor.deltabooks.controllers.registerController"
-            prefHeight="400.0" prefWidth="600.0">
-</AnchorPane>
+<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.devdoctor.deltabooks.controllers.registerController">
+   <center>
+      <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="70.0" layoutY="20.0" text="Nome" />
+            <TextField fx:id="TF_name" layoutX="10.0" layoutY="54.0" />
+            <Label layoutX="70.0" layoutY="62.0" text="Cognome">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="TF_lastname" />
+            <Label text="Email">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="TF_email">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TextField>
+            <Label layoutX="69.0" layoutY="10.0" text="Codice Fiscale">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="TF_fiscalcode" layoutX="10.0" layoutY="27.0" />
+            <Label layoutX="71.0" layoutY="10.0" text="Password">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Label>
+            <PasswordField fx:id="PF_password">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </PasswordField>
+            <Label layoutX="80.0" layoutY="72.0" text="Conferma Password">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></Label>
+            <PasswordField fx:id="PF_confirm_pass" layoutX="30.0" layoutY="89.0" />
+         </children>
+         <BorderPane.margin>
+            <Insets left="20.0" right="20.0" top="10.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="30.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onRegisterButtonClick" text="REGISTER">
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
+            <Separator prefWidth="10.0" />
+            <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onLoginButtonClick" text="LOGIN">
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" top="25.0" />
+         </BorderPane.margin>
+      </HBox>
+   </bottom>
+   <top>
+      <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Registrati">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+</BorderPane>

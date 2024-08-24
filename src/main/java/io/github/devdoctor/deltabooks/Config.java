@@ -1,12 +1,29 @@
 package io.github.devdoctor.deltabooks;
 
-public class Config {
-    private String users_dataset_location;
-    private String books_dataset_location;
 
+import java.io.File;
+
+/**
+ * The type Config.
+ * The application settings.
+ * @author Davide Restelli
+ */
+public class Config {
+    // The location of the users dataset
+    private String users_dataset_location;
+    // The location of the books dataset
+    private String books_dataset_location;
+    // Debug mode
+    private Boolean debug_mode;
+    /**
+     * Instantiates a new Config.
+     * This is called only if no config file is found.
+     * @see io.github.devdoctor.deltabooks.FileUtils#createEmptyConfigs(File)
+     */
     public Config() {
         this.users_dataset_location = "";
         this.books_dataset_location = "";
+        this.debug_mode = false;
     }
 
     public String getUsers_dataset_location() {

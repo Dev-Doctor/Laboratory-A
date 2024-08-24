@@ -1,5 +1,7 @@
 package io.github.devdoctor.deltabooks;
 
+import java.util.Objects;
+
 /**
  * The type User.
  * @author DevDoctor
@@ -20,12 +22,16 @@ public class User {
         this.password = null;
     }
 
-    public User(String name, String lastname, String fiscal_code, String email, String password) {
+    public User(String email) {
+        this.email = email;
+    }
+
+    public User(String name, String lastname, String fiscal_code, String email, String hashed_password) {
         this.name = name;
         this.lastname = lastname;
         this.fiscal_code = fiscal_code;
         this.email = email;
-        this.password = password;
+        this.password = hashed_password;
     }
 
     public String getName() {
@@ -46,5 +52,23 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String new_password) {
+        this.password = new_password;
+    }
+
+    public boolean equals(User secondUser) {
+        return Objects.equals(this.email, secondUser.email);
+    }
+
+    public String print() {
+        String result = "";
+        result += "Name: " + name + "\n";
+        result += "Lastname: " + lastname + "\n";
+        result += "Fiscal Code" + fiscal_code + "\n";
+        result += "Email: " + email + "\n";
+        result += "Password: " + password;
+        return result;
     }
 }

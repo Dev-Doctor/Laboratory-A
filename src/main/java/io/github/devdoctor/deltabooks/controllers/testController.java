@@ -8,18 +8,12 @@ public class testController {
 
     @FXML
     protected void onLoadUsersButtonClick() {
-        Config config = FileUtils.loadConfig();
-        try {
-            System.out.println(FileUtils.loadUsers(config.getUsers_dataset_location()));
-        } catch (Exception ignored){};
+        FileUtils.loadUsers();
     }
 
     @FXML
     protected void onLoadBooksButtonClick() {
-        Config config = FileUtils.loadConfig();
-        try {
-            System.out.println(FileUtils.loadBooks(config.getBooks_dataset_location()));
-        } catch (Exception ignored){};
+        FileUtils.loadBooks();
     }
 
     @FXML

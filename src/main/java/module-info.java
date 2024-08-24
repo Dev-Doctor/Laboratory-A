@@ -5,6 +5,7 @@ module io.github.devdoctor.deltabooks {
     requires org.controlsfx.controls;
     requires com.google.gson;
     requires java.logging;
+    requires jbcrypt;
 
     opens io.github.devdoctor.deltabooks to javafx.fxml, com.google.gson;
     exports io.github.devdoctor.deltabooks;

@@ -8,6 +8,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collection;
+import java.util.Collections;
 
 public class FileUtils {
     final static TypeToken<Collection<Book>> BOOK_COLLECTION_TYPE = new TypeToken<Collection<Book>>(){};
@@ -15,48 +16,100 @@ public class FileUtils {
 
     final static String CURRENT_DIR = System.getProperty("user.dir");
     final static String CONF_FOLDER = CURRENT_DIR + "/.config";
+    final static String DATA_FOLDER = CURRENT_DIR + "/data";
+    final static String BOOK_REVIEW_FOLDER = "/book_reviews";
     final static String CONF_FILE = "/app-configs.json";
     final static String CATALOG_FILE = "/book-catalog.json";
     final static String USER_FILE = "/users.json";
 
-    /**
-     * Loads the {@code Users} dataset from the passed file path.
-     * @param path The path to the file
-     * @throws FileNotFoundException if the file is not found
-     * @return The {@code Collection} of the Users.
-     * @see io.github.devdoctor.deltabooks.User
-     */
-    public static Collection<Book> loadBooks(String path) throws FileNotFoundException {
-        File f = new File(path + CATALOG_FILE);
-
-        Gson gson = new Gson();
-        return gson.fromJson(new FileReader(f), BOOK_COLLECTION_TYPE);
+    public static void loadBooks() {
+        try {
+            LoadedData.books = loadBooksFromFile();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
-     * Loads the {@code Users} dataset from the passed file path.
-     * @param path The path to the file
+     * Loads the {@code Users} dataset from the location saved in {@link Config#users_dataset_location}
+     * @throws FileNotFoundException if the file is not found
+     * @return The {@code Collection} of the Users.
+     * @see io.github.devdoctor.deltabooks.Book
+     * @see io.github.devdoctor.deltabooks.Config
+     */
+    public static Collection<Book> loadBooksFromFile() throws FileNotFoundException {
+        String path = LoadedData.config.getBooks_dataset_location() + CATALOG_FILE;
+        File f = new File(path);
+
+        if(!f.exists()) {
+            try {
+                createFileWithData(null, path);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        Collection<Book> books = new Gson().fromJson(new FileReader(f), BOOK_COLLECTION_TYPE);
+        return (books == null) ? Collections.emptyList() : books;
+    }
+
+    public static void loadUsers() {
+        try {
+            LoadedData.users = loadUsersFromFile();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Loads the {@code Users} dataset from the location saved in {@link Config#users_dataset_location}
      * @throws FileNotFoundException if the file is not found
      * @return The {@code Collection} of the Users.
      * @see io.github.devdoctor.deltabooks.User
+     * @see io.github.devdoctor.deltabooks.Config
      */
-    public static Collection<User> loadUsers(String path) throws FileNotFoundException {
+    public static Collection<User> loadUsersFromFile() throws FileNotFoundException {
+        String path = LoadedData.config.getUsers_dataset_location();
         File f = new File(path + USER_FILE);
 
-        Gson gson = new Gson();
-        return gson.fromJson(new FileReader(f), USER_COLLECTION_TYPE);
+        if(!f.exists()) {
+            try {
+                createFileWithData(null, path + USER_FILE);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        Collection<User> users = new Gson().fromJson(new FileReader(f), USER_COLLECTION_TYPE);
+
+        return (users == null) ? Collections.emptyList() : users;
     }
+
+
+
+    /**
+     * Loads the {@code Users} dataset from the passed file path.
+     * @throws FileNotFoundException if the file is not found
+     * @return The {@code Collection} of the Users.
+     * @see io.github.devdoctor.deltabooks.User
+     */
+    public static Boolean loadReviewFile(Book book_name) throws FileNotFoundException {
+        File f = new File(DATA_FOLDER + "/book_reviews/" + book_name + ".json");
+
+        return f.exists();
+    }
+
 
     /**
      * Tries to load the {@code Config} file.
      * If the path to the file is not found, it makes it.
      * If the file is not found, it makes an empty {@code Config} file.
      * An {@code IOException} is thrown if the file cannot be open/edited.
-     * @return Loads the {@code Config} file
      * @see #createEmptyConfigs(File)
      * @see io.github.devdoctor.deltabooks.Config
+     * @see io.github.devdoctor.deltabooks.LoadedData
      */
-    public static Config loadConfig() {
+    public static void loadConfig() {
         File f = new File(CONF_FOLDER + CONF_FILE);
         if(!f.exists()) {
             try {
@@ -65,13 +118,12 @@ public class FileUtils {
                 System.err.print("The config file cannot be open or modified in any way.");
             }
         }
-        Config result = new Config();
-        try {
-            result = new Gson().fromJson(new FileReader(f), Config.class);
-        } catch (Exception e) {}
 
-        System.out.println(result.getUsers_dataset_location());
-        return result;
+        try {
+            LoadedData.config = new Gson().fromJson(new FileReader(f), Config.class);
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
     }
 
     /**
@@ -95,5 +147,46 @@ public class FileUtils {
             // write it to file as json
             fileWriter.write(gson.toJson(config));
             fileWriter.close();
+    }
+
+    /**
+     * Write the {@code User} collection to file.
+     * The chosen path from where to load the file is saved in the {@code config} file
+     * Gives an error message if it is unable to modify the file.
+     *
+     * @param users  the users collection
+     * @return a boolean if the task was successfully executed or not
+     * @see Config
+     */
+    public static boolean writeUserList(Collection<User> users) {
+        String path = LoadedData.config.getUsers_dataset_location() + USER_FILE;
+        File f = new File(path);
+        if(f.exists()) {
+            String json = new Gson().toJson(users, USER_COLLECTION_TYPE.getType());
+            try {
+                createFileWithData(json, path);
+            } catch (IOException e) {
+                System.err.print("Unable to write/edit the file. Check permissions!");
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Writes to fle the passed data. Throws an {@code IOException}
+     * if it is unable to modify or write the file. If {@code data} is {@code null}
+     * create an empty file.
+     *
+     * @param data the data to write to the file, if it is {@code null} then create an empty file.
+     * @param path the path where the file is
+     * @throws IOException if file is not editable for missing permissions
+     */
+    private static void createFileWithData(String data, String path) throws IOException {
+        Writer fileWriter = new FileWriter(path, false);
+        if(data != null) {
+            fileWriter.write(data);
+        }
+        fileWriter.close();
     }
 }
