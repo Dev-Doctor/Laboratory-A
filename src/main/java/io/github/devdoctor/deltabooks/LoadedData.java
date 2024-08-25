@@ -14,5 +14,5 @@ public class LoadedData {
     public static Collection<Book> books;
     public static Config config;
     public static User logged_user = null;
-
+    public static Book current_looked_book = null;
 }

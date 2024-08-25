@@ -13,6 +13,7 @@ public class User {
     private String fiscal_code;
     private String email;
     private String password;
+    private String uuid;
 
     public User() {
         this.name = null;
@@ -20,18 +21,20 @@ public class User {
         this.fiscal_code = null;
         this.email = null;
         this.password = null;
+        this.uuid = null;
     }
 
     public User(String email) {
         this.email = email;
     }
 
-    public User(String name, String lastname, String fiscal_code, String email, String hashed_password) {
+    public User(String name, String lastname, String fiscal_code, String email, String hashed_password, String uuid) {
         this.name = name;
         this.lastname = lastname;
         this.fiscal_code = fiscal_code;
         this.email = email;
         this.password = hashed_password;
+        this.uuid = uuid;
     }
 
     public String getName() {
@@ -60,6 +63,10 @@ public class User {
 
     public boolean equals(User secondUser) {
         return Objects.equals(this.email, secondUser.email);
+    }
+
+    public String getUUID() {
+        return uuid;
     }
 
     public String print() {

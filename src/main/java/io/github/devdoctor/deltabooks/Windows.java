@@ -9,7 +9,10 @@ package io.github.devdoctor.deltabooks;
 public enum Windows {
     LOGIN(DeltaBooks.PROGRAM_NAME + " - Login", "login", 250, 500),
     REGISTER(DeltaBooks.PROGRAM_NAME + " - Register", "register", 500, 500),
-    HOME(DeltaBooks.PROGRAM_NAME + " - Home", "master", 1000, 1000);
+    HOME(DeltaBooks.PROGRAM_NAME + " - Home", "master", 1000, 1000),
+    BOOK_OVERVIEW(DeltaBooks.PROGRAM_NAME, "bookpage", 750, 750),
+    BOOK_REVIEW(DeltaBooks.PROGRAM_NAME + " - Write Review", "bookReview", 500, 750),
+    DEBUG("test", "debug", 500, 1000);
 
     final String title;
     final String resource;

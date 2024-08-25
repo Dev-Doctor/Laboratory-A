@@ -41,4 +41,8 @@ public class Config {
     public void setBooks_dataset_location(String books_dataset_location) {
         this.books_dataset_location = books_dataset_location;
     }
+
+    public boolean isDebugOn() {
+        return debug_mode;
+    }
 }

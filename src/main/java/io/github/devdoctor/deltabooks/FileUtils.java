@@ -7,20 +7,23 @@ import com.google.gson.reflect.TypeToken;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.UUID;
 
 public class FileUtils {
     final static TypeToken<Collection<Book>> BOOK_COLLECTION_TYPE = new TypeToken<Collection<Book>>(){};
     final static TypeToken<Collection<User>> USER_COLLECTION_TYPE = new TypeToken<Collection<User>>(){};
+    final static TypeToken<Collection<Review>> REVIEW_COLLECTION_TYPE = new TypeToken<Collection<Review>>(){};
 
     final static String CURRENT_DIR = System.getProperty("user.dir");
     final static String CONF_FOLDER = CURRENT_DIR + "/.config";
     final static String DATA_FOLDER = CURRENT_DIR + "/data";
-    final static String BOOK_REVIEW_FOLDER = "/book_reviews";
+    final static String BOOK_REVIEW_FOLDER = CONF_FOLDER + "/book_reviews";
     final static String CONF_FILE = "/app-configs.json";
     final static String CATALOG_FILE = "/book-catalog.json";
-    final static String USER_FILE = "/users.json";
+    final static String USER_FILE = "/registered-users.json";
 
     public static void loadBooks() {
         try {
@@ -85,20 +88,23 @@ public class FileUtils {
         return (users == null) ? Collections.emptyList() : users;
     }
 
-
-
     /**
-     * Loads the {@code Users} dataset from the passed file path.
-     * @throws FileNotFoundException if the file is not found
-     * @return The {@code Collection} of the Users.
-     * @see io.github.devdoctor.deltabooks.User
+     * Loads the {@code Reviews} dataset from the passed book UIDD.
+     * If the Review file is not yet created, returns an empty collection
+     * @return The {@code Collection} of the Reviews.
+     * @see io.github.devdoctor.deltabooks.Review
      */
-    public static Boolean loadReviewFile(Book book_name) throws FileNotFoundException {
-        File f = new File(DATA_FOLDER + "/book_reviews/" + book_name + ".json");
-
-        return f.exists();
+    public static Collection<Review> loadReviewsForBook(Book book) {
+        File f = new File(BOOK_REVIEW_FOLDER + "/" +  book.getUUID() + ".json");
+        try {
+            if(f.exists()) {
+                return new Gson().fromJson(new FileReader(f), REVIEW_COLLECTION_TYPE);
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return new ArrayList<>();
     }
-
 
     /**
      * Tries to load the {@code Config} file.
@@ -115,7 +121,7 @@ public class FileUtils {
             try {
                 createEmptyConfigs(f);
             } catch (IOException ioe) {
-                System.err.print("The config file cannot be open or modified in any way.");
+                System.err.println("The config file cannot be open or modified in any way.");
             }
         }
 
@@ -166,11 +172,37 @@ public class FileUtils {
             try {
                 createFileWithData(json, path);
             } catch (IOException e) {
-                System.err.print("Unable to write/edit the file. Check permissions!");
+                System.err.println("Unable to write/edit the file. Check permissions!");
             }
             return true;
         }
         return false;
+    }
+
+    /**
+     * Write the {@code Reviews} collection to a file.
+     * The file name used is the {@code UUID} of the book.
+     * Gives an error message if it is unable to modify the file.
+     *
+     * @param reviews  the collection holding the reviews
+     * @param book owner of the reviews
+     * @see Config
+     * @see UUID
+     */
+    public static Boolean writeBookReviewsToFile(Collection<Review> reviews, Book book) {
+        String path = BOOK_REVIEW_FOLDER + "/" + book.getUUID() + ".json";
+        File f = new File(path);
+        System.out.println(path);
+
+        String json = new Gson().toJson(reviews, REVIEW_COLLECTION_TYPE.getType());
+        System.out.println(json);
+        try {
+            createFileWithData(json, path);
+        } catch (IOException e) {
+            System.err.println("Unable to write/edit the file. Check permissions!");
+            return false;
+        }
+        return true;
     }
 
     /**

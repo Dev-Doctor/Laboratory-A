@@ -1,4 +1,5 @@
 {
   "users_dataset_location": "E:\\Programming\\Java\\Laboratory-A\\.config",
-  "books_dataset_location": "E:\\Programming\\Java\\Laboratory-A\\.config"
+  "books_dataset_location": "E:\\Programming\\Java\\Laboratory-A\\.config",
+  "debug_mode": true
 }

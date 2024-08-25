@@ -16,27 +16,26 @@ public class Review {
     private int edition;
 
     // the custom note wrote by the user
-    private char[] note;
+    private String note;
 
     // recommended books by the user
     private Collection<Book> recommended_books;
 
-    // creator fiscal number of the review
-    private String creator_id;
+    // creator of the review UUID number
+    private String creator_uuid;
 
-
-    public Review() {
-        note = new char[MAX_NOTE_SIZE];
+    public Review(String UUID) {
+        this.creator_uuid = UUID;
     }
 
-    public Review(int style, int content, int niceness, int originality, int edition, String note, Collection<Book> books, String creator_id) {
+    public Review(int style, int content, int niceness, int originality, int edition, String note, Collection<Book> books, String creator_uuid) {
         this.style = style;
         this.content = content;
         this.niceness = niceness;
         this.originality = originality;
         this.edition = edition;
-        this.note = note.toCharArray();
-        this.creator_id = creator_id;
+        this.note = note;
+        this.creator_uuid = creator_uuid;
         this.recommended_books = books;
     }
 
@@ -84,28 +83,12 @@ public class Review {
         this.edition = edition;
     }
 
-    public char[] getNote() {
+    public String getNote() {
         return note;
     }
 
-    public void setNote(char[] note) {
+    public void setNote(String note) {
         this.note = note;
-    }
-
-    /**
-     * Sets note from string. Checks the {@code String} size if it is valid.
-     * If the size is bigger than {@value MAX_NOTE_SIZE} returns {@code False} else saves
-     * the {@code String} and returns {@code True}
-     *
-     * @param string the string to check and save
-     * @return A boolean is returned if the string is saved.
-     */
-    public boolean setNoteFromString(String string) {
-        if(string.length() > 255) {
-            return false;
-        }
-        this.note = string.toCharArray();
-        return true;
     }
 
     /**
@@ -115,5 +98,13 @@ public class Review {
      */
     public String getNoteToString() {
         return new String(note);
+    }
+
+    public String getCreator_uuid() {
+        return creator_uuid;
+    }
+
+    public void setCreator_uuid(String creator_uuid) {
+        this.creator_uuid = creator_uuid;
     }
 }

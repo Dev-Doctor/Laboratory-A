@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.devdoctor.deltabooks.controllers.bookReviewController">
+   <center>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+         <children>
+            <HBox maxWidth="1.7976931348623157E308">
+               <children>
+                  <Label text="Criteri di valutazione">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </HBox>
+            <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" />
+                  <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="0.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label text="Style" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" GridPane.rowIndex="1">
+                     <children>
+                        <Label text="Content" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="10.0" layoutY="40.0" GridPane.rowIndex="2">
+                     <children>
+                        <Label text="Niceness" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="10.0" layoutY="70.0" GridPane.rowIndex="3">
+                     <children>
+                        <Label text="Originality" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="10.0" layoutY="100.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
+                     <children>
+                        <Label text="Edition" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" GridPane.columnIndex="1">
+                     <children>
+                        <RadioButton fx:id="RBStyle1" mnemonicParsing="false" text="1">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="style" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <children>
+                        <RadioButton fx:id="RBContent1" mnemonicParsing="false" text="1">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="content" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <children>
+                        <RadioButton fx:id="RBNiceness1" mnemonicParsing="false" text="1">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="niceness" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="109.0" layoutY="70.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <children>
+                        <RadioButton fx:id="RBOriginality1" mnemonicParsing="false" text="1">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="originality" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="109.0" layoutY="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <children>
+                        <RadioButton fx:id="RBEdition1" mnemonicParsing="false" text="1">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="edition" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="109.0" layoutY="10.0" GridPane.columnIndex="2">
+                     <children>
+                        <RadioButton fx:id="RBStyle2" mnemonicParsing="false" text="2">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="style1" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="178.0" layoutY="10.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <children>
+                        <RadioButton fx:id="RBContent2" mnemonicParsing="false" text="2">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="style12" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="178.0" layoutY="40.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <children>
+                        <RadioButton fx:id="RBNiceness2" mnemonicParsing="false" text="2">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="style121" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="178.0" layoutY="70.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <children>
+                        <RadioButton fx:id="RBOriginality2" mnemonicParsing="false" text="2">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="style1211" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="178.0" layoutY="100.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                     <children>
+                        <RadioButton fx:id="RBEdition2" mnemonicParsing="false" text="2">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="style12111" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="178.0" layoutY="10.0" GridPane.columnIndex="3">
+                     <children>
+                        <RadioButton fx:id="RBStyle3" mnemonicParsing="false" text="3">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="style11" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="310.0" layoutY="10.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <children>
+                        <RadioButton fx:id="RBContent3" mnemonicParsing="false" text="3">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="style112" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="310.0" layoutY="40.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                     <children>
+                        <RadioButton fx:id="RBNiceness3" mnemonicParsing="false" text="3">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="style1121" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="310.0" layoutY="70.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                     <children>
+                        <RadioButton fx:id="RBOriginality3" mnemonicParsing="false" text="3">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="style11211" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="310.0" layoutY="100.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                     <children>
+                        <RadioButton fx:id="RBEdition3" mnemonicParsing="false" text="3">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="style112111" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="310.0" layoutY="10.0" GridPane.columnIndex="4">
+                     <children>
+                        <RadioButton fx:id="RBStyle4" mnemonicParsing="false" text="4">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="style111" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="410.0" layoutY="10.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                         <children>
+                        <RadioButton fx:id="RBContent4" mnemonicParsing="false" text="4">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="style1112" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="410.0" layoutY="40.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                     <children>
+                        <RadioButton fx:id="RBNiceness4" mnemonicParsing="false" text="4">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="style11121" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="410.0" layoutY="70.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                     <children>
+                        <RadioButton fx:id="RBOriginality4" mnemonicParsing="false" text="4">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="style111211" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="410.0" layoutY="100.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                     <children>
+                        <RadioButton fx:id="RBEdition4" mnemonicParsing="false" text="4">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="style1112111" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="410.0" layoutY="10.0" GridPane.columnIndex="5">
+                     <children>
+                        <RadioButton fx:id="RBStyle5" mnemonicParsing="false" text="5">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="style1111" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="510.0" layoutY="10.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                     <children>
+                        <RadioButton fx:id="RBContent5" mnemonicParsing="false" text="5">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="style11111" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="510.0" layoutY="40.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                     <children>
+                        <RadioButton fx:id="RBNiceness5" mnemonicParsing="false" text="5">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="style111111" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="510.0" layoutY="70.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                     <children>
+                        <RadioButton fx:id="RBOriginality5" mnemonicParsing="false" text="5">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="style1111111" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="510.0" layoutY="100.0" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                     <children>
+                        <RadioButton fx:id="RBEdition5" mnemonicParsing="false" text="5">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="style11111111" />
+                           </toggleGroup>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+               </children>
+            </GridPane>
+            <HBox maxWidth="1.7976931348623157E308">
+               <children>
+                  <Label text="Nota Personale">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="10.0" top="20.0" />
+               </padding>
+            </HBox>
+            <TextArea fx:id="TA_note" maxWidth="1.7976931348623157E308" minWidth="0.0" onKeyTyped="#onNoteKeyTyped" wrapText="true" />
+            <Label fx:id="L_charCounter" text="0" />
+            <HBox maxWidth="1.7976931348623157E308">
+               <VBox.margin>
+                  <Insets left="10.0" top="10.0" />
+               </VBox.margin>
+               <children>
+                  <Label text="Libri Consigliati">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox maxWidth="1.7976931348623157E308" />
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="390.0" maxWidth="1.7976931348623157E308">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onSaveReviewButtonClick" text="Pubblica Recensione" />
+               </children>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+</BorderPane>

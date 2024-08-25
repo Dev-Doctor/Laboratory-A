@@ -6,6 +6,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 /**
@@ -89,7 +90,8 @@ public class UserUtils {
 
     public static Boolean createUser(String name, String lastname, String fiscal_code,
                                      String email, String password){
-        User new_user = new User(name, lastname, fiscal_code, email, "");
+        UUID uuid = UUID.randomUUID();
+        User new_user = new User(name, lastname, fiscal_code, email, "", uuid.toString());
         if(!doesUserExist(new_user).getKey()) {
             String hashed_password = generatePassword(password);
             new_user.setPassword(hashed_password);

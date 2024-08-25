@@ -16,6 +16,7 @@ public class Book {
     private float price;
     private String publish_month;
     private String publish_year;
+    private String UUID;
 
     /**
      * Instantiates a new Book.
@@ -38,6 +39,31 @@ public class Book {
         this.price = price;
         this.publish_month = publish_month;
         this.publish_year = publish_year;
+        this.UUID = "";
+    }
+
+    /**
+     * Instantiates a new Book.
+     *
+     * @param title         the title
+     * @param authors       the authors
+     * @param description   the description
+     * @param category      the category
+     * @param publisher     the publisher
+     * @param price         the price
+     * @param publish_month the publish month
+     * @param publish_year  the publish year
+     */
+    public Book(String title, List<String> authors, String description, List<String> category, String publisher, float price, String publish_month, String publish_year, String UUID) {
+        this.title = title;
+        this.authors = authors;
+        this.description = description;
+        this.category = category;
+        this.publisher = publisher;
+        this.price = price;
+        this.publish_month = publish_month;
+        this.publish_year = publish_year;
+        this.UUID = UUID;
     }
 
     public String getTitle() {
@@ -102,6 +128,14 @@ public class Book {
 
     public void setPublish_year(String publish_year) {
         this.publish_year = publish_year;
+    }
+
+    public String getUUID() {
+        return UUID;
+    }
+
+    public void setUUID(String UUID) {
+        this.UUID = UUID;
     }
 }
 

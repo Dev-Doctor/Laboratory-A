@@ -1,6 +1,7 @@
 package io.github.devdoctor.deltabooks;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -48,7 +49,7 @@ public class WindowsUtils {
      * @param window the window to load
      * @see Windows
      */
-    public static void openDialogWindow(ActionEvent event, Windows window) {
+    public static void openDialogWindow(Event event, Windows window) {
         FXMLLoader fxmlLoader = new FXMLLoader(DeltaBooks.class.getResource(window.resource + ".fxml"));
         Stage dialog = new Stage();
         Scene scene = null;
