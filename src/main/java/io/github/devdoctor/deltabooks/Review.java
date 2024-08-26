@@ -107,4 +107,5 @@ public class Review {
     public void setCreator_uuid(String creator_uuid) {
         this.creator_uuid = creator_uuid;
     }
+
 }

@@ -69,6 +69,10 @@ public class User {
         return uuid;
     }
 
+    public String getFullName() {
+        return Utils.capitalize(name) + " " + Utils.capitalize(lastname);
+    }
+
     public String print() {
         String result = "";
         result += "Name: " + name + "\n";

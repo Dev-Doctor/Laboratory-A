@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 
@@ -50,6 +51,11 @@ public class WindowsUtils {
      * @see Windows
      */
     public static void openDialogWindow(Event event, Windows window) {
+        Window n = ( (Node) event.getSource()).getScene().getWindow();
+        openDialogWindow(n, window);
+    }
+
+    public static void openDialogWindow(Window parent, Windows window) {
         FXMLLoader fxmlLoader = new FXMLLoader(DeltaBooks.class.getResource(window.resource + ".fxml"));
         Stage dialog = new Stage();
         Scene scene = null;
@@ -61,7 +67,7 @@ public class WindowsUtils {
         dialog.setScene(scene);
         dialog.setTitle(window.title);
         dialog.initModality(Modality.WINDOW_MODAL);
-        dialog.initOwner(( (Node) event.getSource()).getScene().getWindow());
+        dialog.initOwner(parent);
         dialog.showAndWait();
     }
 }

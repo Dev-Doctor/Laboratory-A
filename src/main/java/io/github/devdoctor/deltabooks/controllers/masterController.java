@@ -2,10 +2,14 @@ package io.github.devdoctor.deltabooks.controllers;
 
 import com.google.gson.Gson;
 import io.github.devdoctor.deltabooks.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -14,10 +18,7 @@ import javafx.scene.layout.BorderPane;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.ResourceBundle;
-import java.util.UUID;
+import java.util.*;
 
 public class masterController implements Initializable {
 
@@ -43,6 +44,9 @@ public class masterController implements Initializable {
     private TableView<Book> TW_books;
 
     @FXML
+    private Tab TAB_placeholder;
+
+    @FXML
     private TextField TF_author;
     @FXML
     private TextField TF_title;
@@ -52,28 +56,37 @@ public class masterController implements Initializable {
     @FXML
     private ToolBar TB_userSide;
 
+    @FXML
+    private TabPane TP_books;
+    @FXML
+    private TabPane TPmaster;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         L_pageTitle.setText(DeltaBooks.PROGRAM_NAME);
         TC_title.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
         TC_author.setCellValueFactory(new PropertyValueFactory<Book, String>("publisher"));
         TW_books.setItems(FXCollections.observableArrayList(LoadedData.books));
+
     }
 
     @FXML
-    public void clickItem(MouseEvent event)
-    {
+    public void clickItem(MouseEvent event) {
         //Checking double click
         if (event.getClickCount() == 2) {
             LoadedData.current_looked_book = TW_books.getSelectionModel().getSelectedItem();
-            WindowsUtils.openDialogWindow(event, Windows.BOOK_OVERVIEW);
-            LoadedData.current_looked_book = null;
+            addNewTab();
+            TPmaster.getSelectionModel().select(2);
+//            WindowsUtils.openDialogWindow(event, Windows.BOOK_OVERVIEW);
+//            LoadedData.current_looked_book = null;
         }
     }
 
+
     @FXML
     protected void onTestButtonClick() {
-        TW_books.setItems(FXCollections.observableArrayList(new ArrayList<Book>()));
+        Random rnd = new Random();
+        LoadedData.current_looked_book = (Book) LoadedData.books.toArray()[rnd.nextInt(LoadedData.books.size())];
     }
 
     @FXML
@@ -81,6 +94,7 @@ public class masterController implements Initializable {
         TF_author.setText("");
         TF_title.setText("");
         TF_year.setText("");
+        TW_books.getItems().clear();
         TW_books.setItems(FXCollections.observableArrayList(LoadedData.books));
     }
 
@@ -90,7 +104,7 @@ public class masterController implements Initializable {
         String title = TF_title.getText();
         String year = TF_year.getText();
 
-        TW_books.setItems(FXCollections.observableArrayList(BookUtils.searchBookByTitle(title)));
+        TW_books.setItems(FXCollections.observableArrayList(BookUtils.searchBook(title, author, year)));
     }
 
 
@@ -116,10 +130,31 @@ public class masterController implements Initializable {
         }
     }
 
-    /*
-     *
-     *
-     */
+    private void addNewTab() {
+        FXMLLoader loader = new FXMLLoader(DeltaBooks.class.getResource("bookTab.fxml"));
+        Parent tabContent = null;
+        try {
+            tabContent = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        String new_title = LoadedData.current_looked_book.getTitle();
+        try {
+            new_title = new_title.substring(0, 10);
+            new_title += "..";
+        } catch (Exception e){
+
+        }
+//        Tab tab = new Tab("Libro " + TP_books.getTabs().size());
+        Tab tab = new Tab(new_title);
+        tab.setOnClosed(((bookpageController) loader.getController())::onClose);
+        tab.setTooltip(new Tooltip(LoadedData.current_looked_book.getTitle()));
+        tab.setContent(tabContent);
+
+        TP_books.getTabs().add(tab);
+        TP_books.getSelectionModel().select(tab);
+    }
+
     @Deprecated(since = "0.5", forRemoval = true)
     private void setUUIDs() {
         Collection<Book> update = new ArrayList<Book>();

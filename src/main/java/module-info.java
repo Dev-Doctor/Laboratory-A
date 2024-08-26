@@ -6,6 +6,7 @@ module io.github.devdoctor.deltabooks {
     requires com.google.gson;
     requires java.logging;
     requires jbcrypt;
+    requires java.desktop;
 
     opens io.github.devdoctor.deltabooks to javafx.fxml, com.google.gson;
     exports io.github.devdoctor.deltabooks;

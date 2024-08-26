@@ -31,6 +31,7 @@ public class DeltaBooks extends Application {
     }
 
     private static void inizialization() {
+        LoadedData.loginEvent = new LoginEvent();
         FileUtils.loadConfig();
         FileUtils.loadUsers();
         FileUtils.loadBooks();

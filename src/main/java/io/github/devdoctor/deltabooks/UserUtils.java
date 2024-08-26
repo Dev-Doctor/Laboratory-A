@@ -3,10 +3,7 @@ package io.github.devdoctor.deltabooks;
 import javafx.util.Pair;
 import org.mindrot.jbcrypt.BCrypt;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -77,6 +74,15 @@ public class UserUtils {
             return true;
         }
         return false;
+    }
+
+    public static User getUserFromUUID(UUID uuid) {
+        for(User current : LoadedData.users) {
+            if(Objects.equals(current.getUUID(), uuid.toString())) {
+                return current;
+            }
+        }
+        return null;
     }
 
     public static Pair<Boolean, User> doesUserExist(User user) {

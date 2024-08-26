@@ -15,4 +15,6 @@ public class LoadedData {
     public static Config config;
     public static User logged_user = null;
     public static Book current_looked_book = null;
+    public static Review last_review = null;
+    public static LoginEvent loginEvent;
 }

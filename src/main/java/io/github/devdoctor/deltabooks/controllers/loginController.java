@@ -26,6 +26,7 @@ public class loginController {
             u = result.getValue();
             if(UserUtils.checkPassword(password, u.getPassword())) {
                 LoadedData.logged_user = u;
+                LoadedData.loginEvent.onLogin();
                 Stage stage = (Stage) TF_email.getScene().getWindow();
                 stage.close();
             } else {

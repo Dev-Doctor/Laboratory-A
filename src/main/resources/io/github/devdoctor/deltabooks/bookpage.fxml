@@ -1,114 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.devdoctor.deltabooks.controllers.bookpageController">
-   <center>
-      <VBox BorderPane.alignment="CENTER">
-         <children>
-            <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-               <children>
-                  <Label fx:id="L_title" text="Label">
-                     <font>
-                        <Font size="25.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-               <children>
-                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                     <children>
-                        <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <Label fx:id="L_price" text="??">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-               <children>
-                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                     <children>
-                        <Label text="Description:">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="L_description" text="??" wrapText="true" />
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <HBox prefWidth="200.0">
-               <children>
-                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                     <children>
-                        <Label text="Authors">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="L_authors" text="??" wrapText="true" />
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <HBox prefWidth="200.0">
-               <children>
-                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                     <children>
-                        <Label text="Categories:">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="L_categories" text="??" wrapText="true" />
-                     </children>
-                  </VBox>
-               </children>
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
-            </HBox>
-            <HBox prefWidth="200.0">
-               <children>
-                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                     <children>
-                        <Label text="Publisher:">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="L_publisher" text="??" wrapText="true" />
-                     </children>
-                  </VBox>
-               </children>
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
-            </HBox>
-            <HBox alignment="CENTER" layoutX="10.0" layoutY="341.0" prefWidth="200.0">
-               <padding>
-                  <Insets top="10.0" />
-               </padding>
-               <children>
-                  <Button fx:id="B_writeReview" disable="true" mnemonicParsing="false" onAction="#onWriteReviewButtonClick" text="Scrivi una recensione" />
-               </children>
-            </HBox>
-         </children>
-         <BorderPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </BorderPane.margin>
-      </VBox>
-   </center>
+<BorderPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.devdoctor.deltabooks.controllers.bookpageController">
    <bottom>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -129,4 +37,149 @@
          </children>
       </VBox>
    </bottom>
+   <center>
+      <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Libro">
+            <content>
+                  <BorderPane BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </BorderPane.margin>
+                     <center>
+                     <VBox>
+                        <children>
+                           <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                              <children>
+                                 <Label fx:id="L_title" text="Label">
+                                    <font>
+                                       <Font size="25.0" />
+                                    </font>
+                                 </Label>
+                              </children>
+                           </HBox>
+                           <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                              <children>
+                                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                    <children>
+                                       <ImageView fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                                    </children>
+                                 </VBox>
+                              </children>
+                           </HBox>
+                           <Label fx:id="L_price" text="??">
+                              <font>
+                                 <Font size="15.0" />
+                              </font>
+                           </Label>
+                           <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                              <children>
+                                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                    <children>
+                                       <Label text="Description:">
+                                          <font>
+                                             <Font name="System Bold" size="15.0" />
+                                          </font>
+                                       </Label>
+                                       <Label fx:id="L_description" text="??" wrapText="true" />
+                                    </children>
+                                 </VBox>
+                              </children>
+                           </HBox>
+                           <HBox prefWidth="200.0">
+                              <children>
+                                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                    <children>
+                                       <Label text="Authors">
+                                          <font>
+                                             <Font name="System Bold" size="15.0" />
+                                          </font>
+                                       </Label>
+                                       <Label fx:id="L_authors" text="??" wrapText="true" />
+                                    </children>
+                                 </VBox>
+                              </children>
+                           </HBox>
+                           <HBox prefWidth="200.0">
+                              <children>
+                                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                    <children>
+                                       <Label text="Categories:">
+                                          <font>
+                                             <Font name="System Bold" size="15.0" />
+                                          </font>
+                                       </Label>
+                                       <Label fx:id="L_categories" text="??" wrapText="true" />
+                                    </children>
+                                 </VBox>
+                              </children>
+                              <padding>
+                                 <Insets top="10.0" />
+                              </padding>
+                           </HBox>
+                           <HBox prefWidth="200.0">
+                              <children>
+                                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                    <children>
+                                       <Label text="Publisher:">
+                                          <font>
+                                             <Font name="System Bold" size="15.0" />
+                                          </font>
+                                       </Label>
+                                       <Label fx:id="L_publisher" text="??" wrapText="true" />
+                                    </children>
+                                 </VBox>
+                              </children>
+                              <padding>
+                                 <Insets top="10.0" />
+                              </padding>
+                           </HBox>
+                           <HBox alignment="CENTER" layoutX="10.0" layoutY="341.0" prefWidth="200.0">
+                              <padding>
+                                 <Insets top="10.0" />
+                              </padding>
+                              <children>
+                                 <Button fx:id="B_writeReview" disable="true" mnemonicParsing="false" onAction="#onWriteReviewButtonClick" text="Scrivi una recensione" />
+                              </children>
+                           </HBox>
+                           <HBox alignment="CENTER" layoutX="10.0" layoutY="389.0" prefWidth="200.0">
+                              <padding>
+                                 <Insets top="10.0" />
+                              </padding>
+                           </HBox>
+                        </children>
+                           <BorderPane.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </BorderPane.margin>
+                     </VBox>
+                     </center>
+                     <top>
+                        <ToolBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="10.0" BorderPane.alignment="CENTER" />
+                     </top>
+                  </BorderPane>
+            </content>
+          </Tab>
+          <Tab text="Recensioni">
+               <content>
+                  <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                     <center>
+                        <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                          <columns>
+                            <TableColumn maxWidth="1.7976931348623157E308" prefWidth="-1.0" text="Valutazione media" />
+                            <TableColumn maxWidth="1.7976931348623157E308" prefWidth="-1.0" text="Utente" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </center>
+                     <top>
+                        <ToolBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="10.0" BorderPane.alignment="CENTER" />
+                     </top>
+                  </BorderPane>
+               </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </center>
 </BorderPane>

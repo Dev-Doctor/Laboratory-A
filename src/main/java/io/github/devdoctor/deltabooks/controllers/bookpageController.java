@@ -1,20 +1,20 @@
 package io.github.devdoctor.deltabooks.controllers;
 
 import io.github.devdoctor.deltabooks.*;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 
 import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.UUID;
+import java.util.*;
 
-public class bookpageController implements Initializable {
+public class bookpageController implements Initializable, LoginListener {
 
     @FXML
     protected Button B_writeReview;
@@ -34,7 +34,15 @@ public class bookpageController implements Initializable {
     @FXML
     protected Hyperlink HL_uuid;
 
+    @FXML
+    private TableColumn<Review, String> TCuser;
+    @FXML
+    private TableColumn<Review, String> TCvote;
 
+    @FXML
+    protected TableView<Review> TVreviews;
+
+    private ArrayList<Review> reviews;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -47,6 +55,25 @@ public class bookpageController implements Initializable {
         L_price.setText(String.valueOf(current_book.getPrice()) + "€");
         HL_uuid.setText(current_book.getUUID());
 
+        LoadedData.loginEvent.addListener(this);
+
+        // is casted to arraylist to use addfirst later
+        reviews = new ArrayList<Review>(FileUtils.loadReviewsForBook(current_book));
+
+        TCuser.setCellValueFactory(cellData -> {
+            User creator = UserUtils.getUserFromUUID(UUID.fromString(cellData.getValue().getCreator_uuid()));
+            if(creator == null) {
+                return new SimpleStringProperty("Utente Rimosso");
+            }
+            return new SimpleStringProperty(creator.getFullName());
+        });
+        TCvote.setCellValueFactory(cellData -> {
+            String stars = calculateStars(cellData.getValue());
+            return new SimpleStringProperty(stars);
+        });
+
+        reloadReviews();
+
         if(!LoadedData.config.isDebugOn()) {
             HL_uuid.setVisible(false);
         }
@@ -56,13 +83,39 @@ public class bookpageController implements Initializable {
         }
     }
 
+    private String calculateStars(Review review) {
+        String result = String.join("", Collections.nCopies(review.getFinalVote(), "★"));
+        result += String.join("", Collections.nCopies(5-review.getFinalVote(), "☆"));
+        return result;
+    }
+
     public void onWriteReviewButtonClick(ActionEvent event) {
         WindowsUtils.openDialogWindow(event, Windows.BOOK_REVIEW);
+        if(LoadedData.last_review != null) {
+            reviews.add(0, LoadedData.last_review);
+            LoadedData.last_review = null;
+            reloadReviews();
+            B_writeReview.setDisable(true);
+        }
+    }
+
+    private void reloadReviews() {
+        TVreviews.getItems().clear();
+        TVreviews.setItems(FXCollections.observableArrayList(reviews));
     }
 
     public void onUIDDHyperlinkClick() {
         ClipboardContent content = new ClipboardContent();
         content.putString(HL_uuid.getText());
         Clipboard.getSystemClipboard().setContent(content);
+    }
+
+    @Override
+    public void onLogin() {
+        B_writeReview.setDisable(false);
+    }
+
+    public void onClose(Event event) {
+        LoadedData.loginEvent.removeListener(this);
     }
 }

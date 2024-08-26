@@ -115,6 +115,10 @@ public class bookReviewController implements Initializable {
         } else {
             System.err.println("C'e' stato un problema a salvare la recensione!");
         }
+
+        // sets true to check for new review
+        LoadedData.last_review = review;
+
         Stage stage = (Stage) L_charCounter.getScene().getWindow();
         stage.close();
     }
