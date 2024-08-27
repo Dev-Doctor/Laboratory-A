@@ -1,6 +1,8 @@
 package io.github.devdoctor.deltabooks;
 
 
+import io.github.devdoctor.deltabooks.utility.FileUtils;
+
 import java.io.File;
 
 /**
@@ -11,14 +13,14 @@ import java.io.File;
 public class Config {
     // The location of the users dataset
     private String users_dataset_location;
-    // The location of the books dataset
+    // The location of the books_uuids dataset
     private String books_dataset_location;
     // Debug mode
     private Boolean debug_mode;
     /**
      * Instantiates a new Config.
      * This is called only if no config file is found.
-     * @see io.github.devdoctor.deltabooks.FileUtils#createEmptyConfigs(File)
+     * @see FileUtils#createEmptyConfigs(File)
      */
     public Config() {
         this.users_dataset_location = "";

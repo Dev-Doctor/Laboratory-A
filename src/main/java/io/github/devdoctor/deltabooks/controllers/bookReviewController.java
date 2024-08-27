@@ -1,6 +1,7 @@
 package io.github.devdoctor.deltabooks.controllers;
 
 import io.github.devdoctor.deltabooks.*;
+import io.github.devdoctor.deltabooks.utility.BookUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -9,8 +10,6 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;

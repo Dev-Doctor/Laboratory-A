@@ -18,7 +18,7 @@ public class Review {
     // the custom note wrote by the user
     private String note;
 
-    // recommended books by the user
+    // recommended books_uuids by the user
     private Collection<Book> recommended_books;
 
     // creator of the review UUID number

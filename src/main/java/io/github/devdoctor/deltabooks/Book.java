@@ -1,6 +1,7 @@
 package io.github.devdoctor.deltabooks;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * The type Book.
@@ -16,7 +17,7 @@ public class Book {
     private float price;
     private String publish_month;
     private String publish_year;
-    private String UUID;
+    private String uuid;
 
     /**
      * Instantiates a new Book.
@@ -39,7 +40,7 @@ public class Book {
         this.price = price;
         this.publish_month = publish_month;
         this.publish_year = publish_year;
-        this.UUID = "";
+        this.uuid = "";
     }
 
     /**
@@ -54,7 +55,7 @@ public class Book {
      * @param publish_month the publish month
      * @param publish_year  the publish year
      */
-    public Book(String title, List<String> authors, String description, List<String> category, String publisher, float price, String publish_month, String publish_year, String UUID) {
+    public Book(String title, List<String> authors, String description, List<String> category, String publisher, float price, String publish_month, String publish_year, String uuid) {
         this.title = title;
         this.authors = authors;
         this.description = description;
@@ -63,7 +64,7 @@ public class Book {
         this.price = price;
         this.publish_month = publish_month;
         this.publish_year = publish_year;
-        this.UUID = UUID;
+        this.uuid = uuid;
     }
 
     public String getTitle() {
@@ -130,12 +131,16 @@ public class Book {
         this.publish_year = publish_year;
     }
 
-    public String getUUID() {
-        return UUID;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setUUID(String UUID) {
-        this.UUID = UUID;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public UUID getRealUUID() {
+        return UUID.fromString(uuid);
     }
 }
 

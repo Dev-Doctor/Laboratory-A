@@ -20,7 +20,7 @@
                         <HBox alignment="CENTER" prefWidth="200.0">
                             <children>
                                 <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="UUID: " wrapText="true" />
-                                <Hyperlink fx:id="HL_uuid" text="?">
+                                <Hyperlink fx:id="HLuuid" onAction="#onUIDDHyperlinkClick" text="?">
                                     <tooltip>
                                         <Tooltip text="Premi per salvare nella clipbord" />
                                     </tooltip>

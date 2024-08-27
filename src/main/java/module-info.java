@@ -12,4 +12,8 @@ module io.github.devdoctor.deltabooks {
     exports io.github.devdoctor.deltabooks;
     exports io.github.devdoctor.deltabooks.controllers;
     opens io.github.devdoctor.deltabooks.controllers to com.google.gson, javafx.fxml;
+    exports io.github.devdoctor.deltabooks.utility;
+    opens io.github.devdoctor.deltabooks.utility to com.google.gson, javafx.fxml;
+    exports io.github.devdoctor.deltabooks.events;
+    opens io.github.devdoctor.deltabooks.events to com.google.gson, javafx.fxml;
 }

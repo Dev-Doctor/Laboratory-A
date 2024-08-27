@@ -1,6 +1,11 @@
 package io.github.devdoctor.deltabooks.controllers;
 
 import io.github.devdoctor.deltabooks.*;
+import io.github.devdoctor.deltabooks.events.LoginEventListener;
+import io.github.devdoctor.deltabooks.utility.BookUtils;
+import io.github.devdoctor.deltabooks.utility.FileUtils;
+import io.github.devdoctor.deltabooks.utility.UserUtils;
+import io.github.devdoctor.deltabooks.utility.WindowsUtils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -14,7 +19,7 @@ import javafx.scene.input.ClipboardContent;
 import java.net.URL;
 import java.util.*;
 
-public class bookpageController implements Initializable, LoginListener {
+public class bookpageController implements Initializable, LoginEventListener {
 
     @FXML
     protected Button B_writeReview;
@@ -32,7 +37,7 @@ public class bookpageController implements Initializable, LoginListener {
     @FXML
     protected Label L_title;
     @FXML
-    protected Hyperlink HL_uuid;
+    protected Hyperlink HLuuid;
 
     @FXML
     private TableColumn<Review, String> TCuser;
@@ -53,7 +58,7 @@ public class bookpageController implements Initializable, LoginListener {
         L_publisher.setText(current_book.getPublisher());
         L_title.setText(current_book.getTitle());
         L_price.setText(String.valueOf(current_book.getPrice()) + "€");
-        HL_uuid.setText(current_book.getUUID());
+        HLuuid.setText(current_book.getUuid());
 
         LoadedData.loginEvent.addListener(this);
 
@@ -75,7 +80,7 @@ public class bookpageController implements Initializable, LoginListener {
         reloadReviews();
 
         if(!LoadedData.config.isDebugOn()) {
-            HL_uuid.setVisible(false);
+            HLuuid.setVisible(false);
         }
 
         if(LoadedData.logged_user != null && !BookUtils.doesReviewExist(current_book, UUID.fromString(LoadedData.logged_user.getUUID()))) {
@@ -106,7 +111,7 @@ public class bookpageController implements Initializable, LoginListener {
 
     public void onUIDDHyperlinkClick() {
         ClipboardContent content = new ClipboardContent();
-        content.putString(HL_uuid.getText());
+        content.putString(HLuuid.getText());
         Clipboard.getSystemClipboard().setContent(content);
     }
 

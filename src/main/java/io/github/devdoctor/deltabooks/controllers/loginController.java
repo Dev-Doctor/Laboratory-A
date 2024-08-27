@@ -1,6 +1,8 @@
 package io.github.devdoctor.deltabooks.controllers;
 
 import io.github.devdoctor.deltabooks.*;
+import io.github.devdoctor.deltabooks.utility.UserUtils;
+import io.github.devdoctor.deltabooks.utility.WindowsUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -25,8 +27,9 @@ public class loginController {
         if(result.getKey()) {
             u = result.getValue();
             if(UserUtils.checkPassword(password, u.getPassword())) {
-                LoadedData.logged_user = u;
-                LoadedData.loginEvent.onLogin();
+                // run the login event
+                LoadedData.loginEvent.onLogin(u);
+                // close window
                 Stage stage = (Stage) TF_email.getScene().getWindow();
                 stage.close();
             } else {
@@ -34,13 +37,11 @@ public class loginController {
             }
         } else {
             System.err.println("Email sbagliata!");
-            // PRINT ERROR MESSAGE TO USER
         }
     }
 
     @FXML
     protected void onRegisterButtonClick(ActionEvent event) {
-//        System.out.println("... this doesn't do anything ...");
         WindowsUtils.changeCurrentWindow(event, Windows.REGISTER);
     }
 }

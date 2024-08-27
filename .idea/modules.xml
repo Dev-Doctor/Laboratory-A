@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/DeltaBooks.iml" filepath="$PROJECT_DIR$/DeltaBooks.iml" />
       <module fileurl="file://$PROJECT_DIR$/Laboratory A.iml" filepath="$PROJECT_DIR$/Laboratory A.iml" />
     </modules>
   </component>

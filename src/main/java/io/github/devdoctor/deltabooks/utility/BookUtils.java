@@ -1,0 +1,181 @@
+package io.github.devdoctor.deltabooks.utility;
+
+import io.github.devdoctor.deltabooks.Book;
+import io.github.devdoctor.deltabooks.LoadedData;
+import io.github.devdoctor.deltabooks.Review;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * This class contains Utility code for Book stuff.
+ *
+ * @author Davide Restelli
+ */
+public class BookUtils {
+
+
+    public static Collection<Book> searchBook(String title, String author, String year) {
+        Collection<Book> result = searchBookByTitle(title);
+        System.out.println(result);
+        result = searchBookByAuthor(result, author);
+        System.out.println(result);
+        result = searchBookByYear(result, year);
+        System.out.println(result);
+
+        return result;
+    }
+
+    /**
+     * Search book by title book. Returns the {@code Book} if found,
+     * otherwise it returns {@code Null}
+     *
+     * @param title the title
+     * @return the book if found or {@code Null}
+     * @see Book
+     */
+    public static Collection<Book> searchBookByTitle(String title) {
+        Collection<Book> result = new ArrayList<Book>();
+        for (Book book : LoadedData.books) {
+            if (book.getTitle().toLowerCase().contains(title.toLowerCase())) {
+                result.add(book);
+            }
+        }
+        return result;
+    }
+
+    public static Collection<Book> searchBookByTitle(Collection<Book> books, String title) {
+        if(books.isEmpty() || title.isEmpty()) {
+            return books;
+        }
+
+        Collection<Book> result = new ArrayList<Book>();
+        for (Book book : books) {
+            if (book.getTitle().toLowerCase().contains(title.toLowerCase())) {
+                result.add(book);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Search book collection by the author name. Returns a list of {@code Books} that match,
+     * otherwise it returns an empty {@code Collection}
+     *
+     * @param author the author
+     * @return the found books as a collection or an empty one
+     * @see Book
+     */
+    public static Collection<Book> searchBookByAuthor(String author) {
+        return searchBookByAuthor(LoadedData.books, author);
+    }
+
+    /**
+     * Search book collection by the author name. Returns a list of {@code Books} that match,
+     * otherwise it returns an empty {@code Collection}
+     *
+     * @param author the author
+     * @param books the collection to search in
+     * @return the found books as a collection or an empty one
+     * @see Book
+     */
+    public static Collection<Book> searchBookByAuthor(Collection<Book> books, String author){
+        if(books.isEmpty() || author.isEmpty()) {
+            return books;
+        }
+
+        Collection<Book> result = new ArrayList<Book>();
+        for (Book book : books) {
+            List<String> mapped = book.getAuthors().stream().map(String::toLowerCase).toList();
+            for (String current : mapped) {
+                if(current.contains(author.toLowerCase())) {
+                    result.add(book);
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Search the book collection by the year. Returns a list of {@code Books} that match,
+     * otherwise it returns an empty {@code Collection}
+     *
+     * @param year   the year
+     * @return the found books as a collection or an empty one
+     * @see Book
+     */
+    public static Collection<Book> searchBookByYear(String year) {
+        return searchBookByAuthor(LoadedData.books, year);
+    }
+
+    /**
+     * Search the book collection by the year. Returns a list of {@code Books} that match,
+     * otherwise it returns an empty {@code Collection}
+     *
+     * @param year   the year
+     * @param books the collection to search in
+     * @return the found books as a collection or an empty one
+     * @see Book
+     */
+    public static Collection<Book> searchBookByYear(Collection<Book> books, String year) {
+        if(books.isEmpty() || year.isEmpty()) {
+            return books;
+        }
+
+        Collection<Book> result = new ArrayList<Book>();
+        for (Book book : LoadedData.books) {
+            if(book.getPublish_year().equals(year)) {
+                result.add(book);
+            }
+        }
+        return result;
+    }
+
+    private static Collection<Review> loadReview(Book book) {
+        return FileUtils.loadReviewsForBook(book);
+    }
+
+    public static Boolean addReview(Book book, Review candidate) {
+        Collection<Review> reviews = loadReview(book);
+        if(!doesReviewExist(book, UUID.fromString(candidate.getCreator_uuid()))) {
+            reviews.add(candidate);
+            return FileUtils.writeBookReviewsToFile(reviews, book);
+        }
+        return false;
+    }
+
+    public static Boolean doesReviewExist(Book book, UUID creator) {
+        Collection<Review> reviews = loadReview(book);
+        for(Review current : reviews) {
+            if(current.getCreator_uuid().equals(creator.toString())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static Integer[] calculateAverageReviewVotes(Collection<Review> reviews) {
+        int style = 0;
+        int content = 0;
+        int niceness = 0;
+        int originality = 0;
+        int edition = 0;
+        
+        for(Review r : reviews) {
+            style += r.getStyle();
+            content += r.getContent();
+            niceness += r.getNiceness();
+            originality += r.getOriginality();
+            edition += r.getEdition();
+        }
+        style /= reviews.size();
+        content /= reviews.size();
+        niceness /= reviews.size();
+        originality /= reviews.size();
+        edition /= reviews.size();
+
+        return new Integer[]{style, content, niceness, originality, edition};
+    }
+}

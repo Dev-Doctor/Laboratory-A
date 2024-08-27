@@ -12,12 +12,13 @@ public enum Windows {
     HOME(DeltaBooks.PROGRAM_NAME + " - Home", "master", 1000, 1000),
     BOOK_OVERVIEW(DeltaBooks.PROGRAM_NAME, "bookpage", 750, 750),
     BOOK_REVIEW(DeltaBooks.PROGRAM_NAME + " - Write Review", "bookReview", 500, 750),
+    LIBRARY_MODAL(DeltaBooks.PROGRAM_NAME + " - Scegli una libreria", "library", 600, 200),
     DEBUG("test", "debug", 500, 1000);
 
-    final String title;
-    final String resource;
-    final Integer height;
-    final Integer width;
+    final public String title;
+    final public String resource;
+    final public Integer height;
+    final public Integer width;
 
     Windows(String title, String resource, Integer height, Integer width) {
         this.title = title;

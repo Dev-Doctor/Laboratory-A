@@ -1,5 +1,8 @@
 package io.github.devdoctor.deltabooks;
 
+import io.github.devdoctor.deltabooks.events.LoginEvent;
+import io.github.devdoctor.deltabooks.events.UpdateUserEvent;
+import io.github.devdoctor.deltabooks.utility.FileUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -32,6 +35,7 @@ public class DeltaBooks extends Application {
 
     private static void inizialization() {
         LoadedData.loginEvent = new LoginEvent();
+        LoadedData.userEvent = new UpdateUserEvent();
         FileUtils.loadConfig();
         FileUtils.loadUsers();
         FileUtils.loadBooks();

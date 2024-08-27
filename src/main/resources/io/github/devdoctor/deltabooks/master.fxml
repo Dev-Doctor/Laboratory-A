@@ -39,6 +39,7 @@
                     <items>
                       <Button fx:id="B_register" mnemonicParsing="false" onAction="#onRegisterButtonClick" text="REGISTER" />
                         <Button fx:id="B_login" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#onLoginButtonClick" text="LOGIN" />
+                        <Button mnemonicParsing="false" onAction="#onTestButtonClick" text="TEST" />
                     </items>
                   </ToolBar>
                </children>
@@ -101,6 +102,18 @@
                                           <Insets top="5.0" />
                                        </padding>
                                     </HBox>
+                                    <HBox alignment="CENTER" layoutX="10.0" layoutY="100.0">
+                                       <children>
+                                          <Button fx:id="BaddToLibrary" disable="true" mnemonicParsing="false" onAction="#onAddToLibraryButtonClick" text="Aggiungi A Libreria">
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                       <padding>
+                                          <Insets top="5.0" />
+                                       </padding>
+                                    </HBox>
                                  </children>
                               </VBox>
                           </items>
@@ -110,7 +123,7 @@
                         <ToolBar prefHeight="10.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
                      </top>
                      <center>
-                        <TableView fx:id="TW_books" maxHeight="1.7976931348623157E308" minHeight="10.0" minWidth="10.0" onMouseClicked="#clickItem" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+                        <TableView fx:id="TWbooks" maxHeight="1.7976931348623157E308" minHeight="10.0" minWidth="10.0" onMouseClicked="#clickItem" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
                           <columns>
                             <TableColumn fx:id="TC_title" editable="false" prefWidth="158.0" text="Titolo" />
                             <TableColumn fx:id="TC_author" editable="false" prefWidth="68.0" text="Autore" />
@@ -129,12 +142,26 @@
                      <top>
                         <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                           <items>
-                            <Button mnemonicParsing="false" text="Crea Librearia" />
+                            <Button fx:id="BaddLibrary" disable="true" mnemonicParsing="false" onAction="#onCreateLibraryButtonClick" text="Crea Librearia" />
                               <Separator prefWidth="10.0" />
-                              <Button mnemonicParsing="false" text="Cancella Libreria/e" />
+                              <Button fx:id="BdeleteLibrary" disable="true" mnemonicParsing="false" onAction="#onDeleteLibraryButtonClick" text="Cancella Libreria" />
                           </items>
                         </ToolBar>
                      </top>
+                     <center>
+                        <TableView fx:id="TWlibraries" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+                          <columns>
+                            <TableColumn fx:id="TClibraryNames" editable="false" prefWidth="75.0" text="Nome Libreria" />
+                            <TableColumn fx:id="TCnumberOfBooks" editable="false" prefWidth="75.0" text="Numero di libri" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                           <BorderPane.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" />
+                           </BorderPane.margin>
+                        </TableView>
+                     </center>
                   </BorderPane>
                </content>
             </Tab>

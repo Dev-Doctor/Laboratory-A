@@ -1,13 +1,14 @@
 package io.github.devdoctor.deltabooks.controllers;
 
-import io.github.devdoctor.deltabooks.LoadedData;
-import io.github.devdoctor.deltabooks.UserUtils;
-import io.github.devdoctor.deltabooks.Windows;
-import io.github.devdoctor.deltabooks.WindowsUtils;
+import io.github.devdoctor.deltabooks.*;
+import io.github.devdoctor.deltabooks.utility.UserUtils;
+import io.github.devdoctor.deltabooks.utility.WindowsUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import java.util.Objects;
 
@@ -69,11 +70,15 @@ public class registerController {
             return;
         }
 
-        if(!UserUtils.createUser(name, lastname, fiscalcode, email, password)) {
+        Pair<Boolean, User> wasRegistered = UserUtils.createUser(name, lastname, fiscalcode, email, password);
+
+        if(!wasRegistered.getKey()) {
             // error message to the user
             System.err.println("La Mail e' gia' in uso!");
+        } else {
+            LoadedData.loginEvent.onLogin(wasRegistered.getValue());
+            Stage stage = (Stage) TF_email.getScene().getWindow();
+            stage.close();
         }
-
-        // SHOULD LOG IN HERE
     }
 }
