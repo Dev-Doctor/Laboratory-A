@@ -8,4 +8,12 @@ public class Utils {
         }
         return Character.toUpperCase(str.charAt(0)) + str.substring(1);
     }
+
+    public static Float calculateAverage(int[] i) {
+        float result = 0f;
+        for (int j : i) {
+            result += j;
+        }
+        return result / i.length;
+    }
 }

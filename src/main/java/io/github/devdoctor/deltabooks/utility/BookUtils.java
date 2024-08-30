@@ -19,11 +19,8 @@ public class BookUtils {
 
     public static Collection<Book> searchBook(String title, String author, String year) {
         Collection<Book> result = searchBookByTitle(title);
-        System.out.println(result);
         result = searchBookByAuthor(result, author);
-        System.out.println(result);
         result = searchBookByYear(result, year);
-        System.out.println(result);
 
         return result;
     }
@@ -92,6 +89,7 @@ public class BookUtils {
             for (String current : mapped) {
                 if(current.contains(author.toLowerCase())) {
                     result.add(book);
+                    break;
                 }
             }
         }
@@ -156,26 +154,29 @@ public class BookUtils {
         return false;
     }
 
-    public static Integer[] calculateAverageReviewVotes(Collection<Review> reviews) {
-        int style = 0;
-        int content = 0;
-        int niceness = 0;
-        int originality = 0;
-        int edition = 0;
-        
-        for(Review r : reviews) {
-            style += r.getStyle();
-            content += r.getContent();
-            niceness += r.getNiceness();
-            originality += r.getOriginality();
-            edition += r.getEdition();
-        }
-        style /= reviews.size();
-        content /= reviews.size();
-        niceness /= reviews.size();
-        originality /= reviews.size();
-        edition /= reviews.size();
+    public static Float[] calculateAverageReviewVotes(Collection<Review> reviews) {
+        float style = 0f;
+        float content = 0f;
+        float niceness = 0f;
+        float originality = 0f;
+        float edition = 0f;
 
-        return new Integer[]{style, content, niceness, originality, edition};
+        for(Review r : reviews) {
+            style += r.getStyle().getValue();
+            content += r.getContent().getValue();
+            niceness += r.getNiceness().getValue();
+            originality += r.getOriginality().getValue();
+            edition += r.getEdition().getValue();
+        }
+
+        if(!reviews.isEmpty()) {
+            style /= reviews.size();
+            content /= reviews.size();
+            niceness /= reviews.size();
+            originality /= reviews.size();
+            edition /= reviews.size();
+        }
+
+        return new Float[]{style, content, niceness, originality, edition};
     }
 }

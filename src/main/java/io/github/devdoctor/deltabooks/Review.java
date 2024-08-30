@@ -1,5 +1,7 @@
 package io.github.devdoctor.deltabooks;
 
+import javafx.util.Pair;
+
 import java.util.Collection;
 
 public class Review {
@@ -9,14 +11,11 @@ public class Review {
     public static final int MAX_BOOKS_RECOM = 3;
 
     // the review score (not the cleanest, should rework)
-    private int style;
-    private int content;
-    private int niceness;
-    private int originality;
-    private int edition;
-
-    // the custom note wrote by the user
-    private String note;
+    private ReviewType style;
+    private ReviewType content;
+    private ReviewType niceness;
+    private ReviewType originality;
+    private ReviewType edition;
 
     // recommended books_uuids by the user
     private Collection<Book> recommended_books;
@@ -28,76 +27,66 @@ public class Review {
         this.creator_uuid = UUID;
     }
 
-    public Review(int style, int content, int niceness, int originality, int edition, String note, Collection<Book> books, String creator_uuid) {
+    public Review(ReviewType style, ReviewType content, ReviewType niceness, ReviewType originality, ReviewType edition, Collection<Book> books, String creator_uuid) {
         this.style = style;
         this.content = content;
         this.niceness = niceness;
         this.originality = originality;
         this.edition = edition;
-        this.note = note;
         this.creator_uuid = creator_uuid;
         this.recommended_books = books;
     }
 
-    public int getFinalVote() {
-        return Math.floorDiv((style + content + niceness + originality + edition), 5);
+    public float getFinalVote() {
+        return ((float) (style.getValue() + content.getValue() + niceness.getValue() + originality.getValue() + edition.getValue()) / 5);
     }
 
-    public int getStyle() {
+    public ReviewType getStyle() {
         return style;
     }
 
-    public void setStyle(int style) {
+    public void setStyle(ReviewType style) {
         this.style = style;
     }
 
-    public int getContent() {
+    public ReviewType getContent() {
         return content;
     }
 
-    public void setContent(int content) {
+    public void setContent(ReviewType content) {
         this.content = content;
     }
 
-    public int getNiceness() {
+    public ReviewType getNiceness() {
         return niceness;
     }
 
-    public void setNiceness(int niceness) {
+    public void setNiceness(ReviewType niceness) {
         this.niceness = niceness;
     }
 
-    public int getOriginality() {
+    public ReviewType getOriginality() {
         return originality;
     }
 
-    public void setOriginality(int originality) {
+    public void setOriginality(ReviewType originality) {
         this.originality = originality;
     }
 
-    public int getEdition() {
+    public ReviewType getEdition() {
         return edition;
     }
 
-    public void setEdition(int edition) {
+    public void setEdition(ReviewType edition) {
         this.edition = edition;
     }
 
-    public String getNote() {
-        return note;
+    public Collection<Book> getRecommended_books() {
+        return recommended_books;
     }
 
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    /**
-     * Converts the note {@code char} array to {@code String}.
-     *
-     * @return the note converted to {@code String}
-     */
-    public String getNoteToString() {
-        return new String(note);
+    public void setRecommended_books(Collection<Book> recommended_books) {
+        this.recommended_books = recommended_books;
     }
 
     public String getCreator_uuid() {

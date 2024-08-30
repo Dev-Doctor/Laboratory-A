@@ -2,19 +2,23 @@ package io.github.devdoctor.deltabooks.controllers;
 
 import io.github.devdoctor.deltabooks.*;
 import io.github.devdoctor.deltabooks.events.LoginEventListener;
-import io.github.devdoctor.deltabooks.utility.BookUtils;
-import io.github.devdoctor.deltabooks.utility.FileUtils;
-import io.github.devdoctor.deltabooks.utility.UserUtils;
-import io.github.devdoctor.deltabooks.utility.WindowsUtils;
+import io.github.devdoctor.deltabooks.utility.*;
+import javafx.beans.property.Property;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
 import java.net.URL;
 import java.util.*;
@@ -25,57 +29,66 @@ public class bookpageController implements Initializable, LoginEventListener {
     protected Button B_writeReview;
 
     @FXML
-    protected Label L_authors;
+    protected Label Lauthors;
     @FXML
-    protected Label L_categories;
+    protected Label Lcategories;
     @FXML
-    protected Label L_description;
+    protected Label Ldescription;
     @FXML
-    protected Label L_price;
+    protected Label Lprice;
     @FXML
-    protected Label L_publisher;
+    protected Label Lpublisher;
     @FXML
-    protected Label L_title;
+    protected Label Ltitle;
+
     @FXML
     protected Hyperlink HLuuid;
 
     @FXML
+    protected HBox HBstyleStars, HBcontentStars, HBnicenessStars, HBoriginalityStars, HBeditionStars;
+
+    @FXML
     private TableColumn<Review, String> TCuser;
     @FXML
-    private TableColumn<Review, String> TCvote;
+    private TableColumn<Review, String> TCfinalVote;
+    @FXML
+    private TableColumn<Review, String> TCstyleVote;
+    @FXML
+    private TableColumn<Review, String> TCcontentVote;
+    @FXML
+    private TableColumn<Review, String> TCnicenessVote;
+    @FXML
+    private TableColumn<Review, String> TCoriginalityVote;
+    @FXML
+    private TableColumn<Review, String> TCeditionVote;
 
     @FXML
     protected TableView<Review> TVreviews;
 
     private ArrayList<Review> reviews;
 
+    Book current_book;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Book current_book = LoadedData.current_looked_book;
-        L_authors.setText(current_book.getAuthors().toString());
-        L_categories.setText(current_book.getCategory().toString());
-        L_description.setText(current_book.getDescription());
-        L_publisher.setText(current_book.getPublisher());
-        L_title.setText(current_book.getTitle());
-        L_price.setText(String.valueOf(current_book.getPrice()) + "€");
+        current_book = LoadedData.current_looked_book;
+        Lauthors.setText(current_book.getAuthors().toString());
+        Lcategories.setText(current_book.getCategory().toString());
+        Ldescription.setText(current_book.getDescription());
+        Lpublisher.setText(current_book.getPublisher());
+        Ltitle.setText(current_book.getTitle());
+        Lprice.setText(String.valueOf(current_book.getPrice()) + "€");
         HLuuid.setText(current_book.getUuid());
-
-        LoadedData.loginEvent.addListener(this);
 
         // is casted to arraylist to use addfirst later
         reviews = new ArrayList<Review>(FileUtils.loadReviewsForBook(current_book));
 
-        TCuser.setCellValueFactory(cellData -> {
-            User creator = UserUtils.getUserFromUUID(UUID.fromString(cellData.getValue().getCreator_uuid()));
-            if(creator == null) {
-                return new SimpleStringProperty("Utente Rimosso");
-            }
-            return new SimpleStringProperty(creator.getFullName());
-        });
-        TCvote.setCellValueFactory(cellData -> {
-            String stars = calculateStars(cellData.getValue());
-            return new SimpleStringProperty(stars);
-        });
+        reloadAverageVotes();
+
+        LoadedData.loginEvent.addListener(this);
+
+        // set the data in the columbs
+        initializeColumbsData();
 
         reloadReviews();
 
@@ -83,14 +96,65 @@ public class bookpageController implements Initializable, LoginEventListener {
             HLuuid.setVisible(false);
         }
 
-        if(LoadedData.logged_user != null && !BookUtils.doesReviewExist(current_book, UUID.fromString(LoadedData.logged_user.getUUID()))) {
+        if(LoadedData.logged_user != null && !BookUtils.doesReviewExist(current_book, UUID.fromString(LoadedData.logged_user.getUUID()))
+                && LibraryUtils.isBookInLibraries(current_book.getRealUUID())) {
             B_writeReview.setDisable(false);
         }
     }
 
-    private String calculateStars(Review review) {
-        String result = String.join("", Collections.nCopies(review.getFinalVote(), "★"));
-        result += String.join("", Collections.nCopies(5-review.getFinalVote(), "☆"));
+    private void reloadAverageVotes() {
+        // sets the stars in the boxes
+        Float[] reviewsValues = BookUtils.calculateAverageReviewVotes(reviews);
+        Star.generateStars(HBstyleStars, reviewsValues[0]);
+        Star.generateStars(HBcontentStars, reviewsValues[1]);
+        Star.generateStars(HBnicenessStars, reviewsValues[2]);
+        Star.generateStars(HBoriginalityStars, reviewsValues[3]);
+        Star.generateStars(HBeditionStars, reviewsValues[4]);
+    }
+
+    private void initializeColumbsData() {
+        TCuser.setCellValueFactory(cellData -> {
+            User creator = UserUtils.getUserFromUUID(UUID.fromString(cellData.getValue().getCreator_uuid()));
+            if(creator == null) {
+                return new SimpleStringProperty("Utente Rimosso");
+            }
+            return new SimpleStringProperty(creator.getFullName());
+        });
+        TCfinalVote.setCellValueFactory(cellData -> {
+            return new SimpleStringProperty(
+                    calculateStars((int)cellData.getValue().getFinalVote())
+            );
+        });
+        TCstyleVote.setCellValueFactory(cellData -> {
+            return new SimpleStringProperty(
+                    calculateStars(cellData.getValue().getStyle().getValue())
+            );
+        });
+        TCcontentVote.setCellValueFactory(cellData -> {
+            return new SimpleStringProperty(
+                    calculateStars(cellData.getValue().getContent().getValue())
+            );
+        });
+        TCnicenessVote.setCellValueFactory(cellData -> {
+            return new SimpleStringProperty(
+                    calculateStars(cellData.getValue().getNiceness().getValue())
+            );
+        });
+        TCoriginalityVote.setCellValueFactory(cellData -> {
+            return new SimpleStringProperty(
+                    calculateStars(cellData.getValue().getOriginality().getValue())
+            );
+        });
+        TCeditionVote.setCellValueFactory(cellData -> {
+            return new SimpleStringProperty(
+                    calculateStars(cellData.getValue().getEdition().getValue())
+            );
+        });
+    }
+
+    private String calculateStars(Integer review) {
+        String result = String.join("", Collections.nCopies(review, "★"));
+        result += String.join("", Collections.nCopies(5-review, "☆"));
         return result;
     }
 
@@ -105,7 +169,7 @@ public class bookpageController implements Initializable, LoginEventListener {
     }
 
     private void reloadReviews() {
-        TVreviews.getItems().clear();
+        TVreviews.setItems(FXCollections.observableList(new ArrayList<>()));
         TVreviews.setItems(FXCollections.observableArrayList(reviews));
     }
 

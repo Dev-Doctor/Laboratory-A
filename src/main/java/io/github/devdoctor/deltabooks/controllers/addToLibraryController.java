@@ -23,11 +23,14 @@ import java.util.ResourceBundle;
 public class addToLibraryController implements Initializable {
     /**
      * Library name column of the libraries table
+     *
      * @see #TWlibraries
      */
     @FXML
     private TableColumn<Library, String> TClibraryNames;
-    /** Table of the libraries list */
+    /**
+     * Table of the libraries list
+     */
     @FXML
     private TableView<Library> TWlibraries;
 
@@ -42,7 +45,7 @@ public class addToLibraryController implements Initializable {
         List<Library> edited_libraries = new ArrayList<Library>();
 
         LoadedData.logged_user_libraries.forEach(library -> {
-            if(!library.doesContainBook(bookToAdd.getUuid())) {
+            if (!library.doesContainBook(bookToAdd.getUuid())) {
                 edited_libraries.add(library);
             }
         });
@@ -52,28 +55,37 @@ public class addToLibraryController implements Initializable {
 
 
     /**
-     * This method is called when a row of the table of {@code Books} is clicked.
-     * It checks for double click, if found opens a new book tab in its {@code TabPane}.
+     * This method is called when a row of the table of {@code Libraries} is clicked.
+     * It checks which row is clicked and gets the library, then it tries to add the book to the library.
+     * if it is successful close the window, and show a message to the user.
      *
      * @param event The mouse event
-     * @see #TWbooks
      * @see MouseEvent
      */
     @FXML
     protected void clickItem(MouseEvent event) {
-        //Checking double click
-        if (event.getClickCount() == 1) {
-            Library candidate = TWlibraries.getSelectionModel().getSelectedItem();
-            Boolean wasSuccessful = candidate.addBook(bookToAdd.getUuid());
-            if(wasSuccessful) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Il libro e' stato aggiunto con successo!", ButtonType.OK);
-                LibraryUtils.updateLibrary(candidate);
-                LibraryUtils.saveLibraries();
-                LoadedData.userEvent.fire();
-                alert.show();
-                Stage stage = (Stage) TWlibraries.getScene().getWindow();
-                stage.close();
-            }
+        // create a popup telling the user that the action was not successful
+        Alert alert = new Alert(Alert.AlertType.ERROR, "C'e' stato un problema sconosciuto.", ButtonType.OK);
+        // gets the candidate library
+        Library candidate = TWlibraries.getSelectionModel().getSelectedItem();
+        // checks if the book is not already added
+        Boolean wasSuccessful = candidate.addBook(bookToAdd.getUuid());
+        if (wasSuccessful) {
+            // udate the popup message to tell the user that was successfully executed
+            alert.setContentText("Il libro e' stato aggiunto con successo!");
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+            // update the library
+            LibraryUtils.updateLibrary(candidate);
+            // save to file the library
+            LibraryUtils.saveLibraries();
+            // call the update libraries event
+            LoadedData.userEvent.fire();
         }
+        // preparation for closing the window
+        Stage stage = (Stage) TWlibraries.getScene().getWindow();
+        // close the window
+        stage.close();
+        // show the popup message
+        alert.show();
     }
 }

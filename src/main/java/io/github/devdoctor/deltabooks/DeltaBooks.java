@@ -1,11 +1,12 @@
 package io.github.devdoctor.deltabooks;
-
 import io.github.devdoctor.deltabooks.events.LoginEvent;
 import io.github.devdoctor.deltabooks.events.UpdateUserEvent;
 import io.github.devdoctor.deltabooks.utility.FileUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;

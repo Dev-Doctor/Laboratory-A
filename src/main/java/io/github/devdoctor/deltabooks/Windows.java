@@ -13,6 +13,7 @@ public enum Windows {
     BOOK_OVERVIEW(DeltaBooks.PROGRAM_NAME, "bookpage", 750, 750),
     BOOK_REVIEW(DeltaBooks.PROGRAM_NAME + " - Write Review", "bookReview", 500, 750),
     LIBRARY_MODAL(DeltaBooks.PROGRAM_NAME + " - Scegli una libreria", "library", 600, 200),
+    ADD_LIBRARY(DeltaBooks.PROGRAM_NAME + " Aggiungi Libreria", "addLibrary", 150, 250),
     DEBUG("test", "debug", 500, 1000);
 
     final public String title;

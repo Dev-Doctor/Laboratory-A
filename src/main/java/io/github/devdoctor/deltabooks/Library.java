@@ -1,10 +1,16 @@
 package io.github.devdoctor.deltabooks;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Library {
     String name;
     List<String> books_uuids;
+
+    public Library(String name) {
+        this.name = name;
+        this.books_uuids = new ArrayList<String>();
+    }
 
     public Library(String name, List<String> books_uuids) {
         this.name = name;

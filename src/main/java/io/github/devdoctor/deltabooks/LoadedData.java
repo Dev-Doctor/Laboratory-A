@@ -3,7 +3,9 @@ package io.github.devdoctor.deltabooks;
 import io.github.devdoctor.deltabooks.events.LoginEvent;
 import io.github.devdoctor.deltabooks.events.UpdateUserEvent;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -22,6 +24,7 @@ public class LoadedData {
     // Books Variables
     public static Book current_looked_book = null;
     public static Review last_review = null;
+    public static List<String> loaded_book_tabs = new ArrayList<String>();
 
     // Events Variables
     public static LoginEvent loginEvent;

@@ -4,9 +4,8 @@ import io.github.devdoctor.deltabooks.Library;
 import io.github.devdoctor.deltabooks.LoadedData;
 import io.github.devdoctor.deltabooks.User;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 public class LibraryUtils {
 
@@ -58,6 +57,23 @@ public class LibraryUtils {
             LoadedData.logged_user_libraries.remove(current);
         }
         FileUtils.writeLibraryToFile(LoadedData.logged_user_libraries, LoadedData.logged_user);
+    }
+
+    public static Boolean isBookInLibrary(Library lib, UUID uuid) {
+        return lib.getBooks_uuids().contains(uuid.toString());
+    }
+
+    public static Boolean isBookInLibraries(UUID uuid) {
+        return isBookInLibraries(LoadedData.logged_user_libraries, uuid);
+    }
+
+    public static Boolean isBookInLibraries(List<Library> libs, UUID uuid) {
+        for (Library lib : libs) {
+            if (isBookInLibrary(lib, uuid)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void saveLibraries() {

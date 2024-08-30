@@ -10,6 +10,8 @@ import io.github.devdoctor.deltabooks.utility.WindowsUtils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -25,7 +27,6 @@ import java.net.URL;
 import java.util.*;
 
 public class masterController implements Initializable, LoginEventListener, UpdateUserEventListener {
-
     @FXML
     private BorderPane BP_firstTabPane;
     @FXML
@@ -33,6 +34,8 @@ public class masterController implements Initializable, LoginEventListener, Upda
 
     @FXML
     private Button BaddToLibrary;
+    @FXML
+    private Button BaddLibrary;
     @FXML
     private Button BdeleteLibrary;
     @FXML
@@ -43,35 +46,48 @@ public class masterController implements Initializable, LoginEventListener, Upda
     @FXML
     private Label L_pageTitle;
 
+    @FXML
+    protected Tab TsearchBook;
+    @FXML
+    protected Tab TopenedBooks;
+
     /**
      * Author column of the book table
+     *
      * @see #TWbooks
      */
     @FXML
     private TableColumn<Book, String> TC_author;
     /**
      * Title column of the book table
+     *
      * @see #TWbooks
      */
     @FXML
     private TableColumn<Book, String> TC_title;
     /**
      * Number of books column of the libraries table
+     *
      * @see #TWlibraries
      */
     @FXML
     private TableColumn<Library, String> TCnumberOfBooks;
     /**
      * Library name column of the libraries table
+     *
      * @see #TWlibraries
      */
     @FXML
     private TableColumn<Library, String> TClibraryNames;
 
-    /** Table of the books collection */
+    /**
+     * Table of the books collection
+     */
     @FXML
     private TableView<Book> TWbooks;
-    /** Table of the libraries list */
+    /**
+     * Table of the libraries list
+     */
     @FXML
     private TableView<Library> TWlibraries;
 
@@ -126,37 +142,41 @@ public class masterController implements Initializable, LoginEventListener, Upda
     protected void clickItem(MouseEvent event) {
         //Checking double click
         if (event.getClickCount() == 2) {
-            LoadedData.current_looked_book = TWbooks.getSelectionModel().getSelectedItem();
-            addNewTab();
-            TPmaster.getSelectionModel().select(0);
-//            WindowsUtils.openDialogWindow(event, Windows.BOOK_OVERVIEW);
-//            LoadedData.current_looked_book = null;
+            Book this_book = TWbooks.getSelectionModel().getSelectedItem();
+            LoadedData.current_looked_book = this_book;
+            if (!LoadedData.loaded_book_tabs.contains(this_book.getUuid())) {
+                LoadedData.loaded_book_tabs.add(this_book.getUuid());
+                addNewTab(this_book);
+                TPmaster.getSelectionModel().select(0);
+            }
         }
     }
+
     @FXML
-    protected void onCreateLibraryButtonClick() {
-        Book selected = TWbooks.getSelectionModel().getSelectedItem();
+    protected void onCreateLibraryButtonClick(ActionEvent event) {
+        WindowsUtils.openDialogWindow(event, Windows.ADD_LIBRARY, false);
     }
 
     @FXML
     protected void onDeleteLibraryButtonClick() {
         List<Library> selected_items = TWlibraries.getSelectionModel().getSelectedItems();
 
-        if(selected_items == null) {
+        if (selected_items == null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Seleziona una o piu' librerie per cancellarla/e.", ButtonType.OK);
             alert.showAndWait();
             return;
         }
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);;
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
+        ;
 
-        if(selected_items.size() > 1) {
+        if (selected_items.size() > 1) {
             alert.setContentText("Sei sicuro di voler cancellare: " + selected_items.size() + " librerie?");
         } else {
             alert.setContentText("Sei sicuro di voler cancellare la libreria: \'" + selected_items.get(0).getName() + "\'?");
         }
         alert.showAndWait();
 
-        if(alert.getResult() == ButtonType.YES) {
+        if (alert.getResult() == ButtonType.YES) {
             LibraryUtils.deleteLibraries(selected_items);
             TWlibraries.setItems(FXCollections.observableArrayList(LoadedData.logged_user_libraries));
         }
@@ -166,7 +186,7 @@ public class masterController implements Initializable, LoginEventListener, Upda
     protected void onAddToLibraryButtonClick(ActionEvent event) {
         Book candidate = TWbooks.getSelectionModel().getSelectedItem();
         System.out.println(candidate);
-        if(candidate == null) {
+        if (candidate == null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Scegli un libro da aggiungere.", ButtonType.OK);
             alert.showAndWait();
             return;
@@ -215,6 +235,7 @@ public class masterController implements Initializable, LoginEventListener, Upda
         String year = TF_year.getText();
 
         TWbooks.setItems(FXCollections.observableArrayList(BookUtils.searchBook(title, author, year)));
+        TWbooks.refresh();
     }
 
 
@@ -238,7 +259,7 @@ public class masterController implements Initializable, LoginEventListener, Upda
      */
     @FXML
     protected void onRegisterButtonClick(ActionEvent event) {
-        if(LoadedData.logged_user == null) {
+        if (LoadedData.logged_user == null) {
             WindowsUtils.openDialogWindow(event, Windows.REGISTER);
             return;
         }
@@ -246,9 +267,8 @@ public class masterController implements Initializable, LoginEventListener, Upda
 
     /**
      * It adds a new tab to the Book {@code TabPane} with the current selected book.
-     *
      */
-    private void addNewTab() {
+    private void addNewTab(Book book) {
         // initializes the resource
         FXMLLoader loader = new FXMLLoader(DeltaBooks.class.getResource("bookTab.fxml"));
         Parent tabContent = null;
@@ -264,7 +284,8 @@ public class masterController implements Initializable, LoginEventListener, Upda
         try {
             new_title = new_title.substring(0, 10);
             new_title += "..";
-        } catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
         // creates a new empty tab with the cut book title
         Tab tab = new Tab(new_title);
         // sets the method when the tab is closed
@@ -274,10 +295,18 @@ public class masterController implements Initializable, LoginEventListener, Upda
         // sets the empty tab content to the loaded one
         tab.setContent(tabContent);
 
+        tab.setOnClosed(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                LoadedData.loaded_book_tabs.remove(book.getUuid());
+            }
+        });
+
         // adds the tab to the Books TabPane
         TP_books.getTabs().add(tab);
         // selects it has the current viewed tab
         TP_books.getSelectionModel().select(tab);
+        TPmaster.getSelectionModel().select(TopenedBooks);
     }
 
     /**
@@ -296,6 +325,7 @@ public class masterController implements Initializable, LoginEventListener, Upda
         // enable library commands
         BaddToLibrary.setDisable(false);
         BdeleteLibrary.setDisable(false);
+        BaddLibrary.setDisable(false);
 
         // change the register button
         B_register.setText("User Profile");
@@ -315,7 +345,7 @@ public class masterController implements Initializable, LoginEventListener, Upda
     @Deprecated(since = "0.5", forRemoval = true)
     private void setUUIDs() {
         Collection<Book> update = new ArrayList<Book>();
-        for(Book book : LoadedData.books) {
+        for (Book book : LoadedData.books) {
             UUID uuid = UUID.randomUUID();
             book.setUuid(uuid.toString());
             update.add(book);
@@ -324,7 +354,7 @@ public class masterController implements Initializable, LoginEventListener, Upda
         String path = LoadedData.config.getBooks_dataset_location() + "/book-catalog.json";
         File f = new File(path);
 
-        if(f.exists()) {
+        if (f.exists()) {
 //            String json = new Gson().toJson(update, FileUtils.BOOK_COLLECTION_TYPE.getType());
 //            try {
 //                FileUtils.createFileWithData(json, path);
@@ -336,8 +366,8 @@ public class masterController implements Initializable, LoginEventListener, Upda
 
     @Override
     public void onUpdate() {
-        TWlibraries.getItems().clear();
-        System.out.println(LoadedData.logged_user_libraries);
+        TWlibraries.refresh();
+        TWlibraries.setItems(FXCollections.observableList(new ArrayList<>()));
         TWlibraries.setItems(FXCollections.observableList(LoadedData.logged_user_libraries));
     }
 }

@@ -25,5 +25,8 @@ replay_pid*
 
 target/*
 # ignore the giant book catalog file
+
+.idea/*
+
 .config/*
 .config/book-catalog.json

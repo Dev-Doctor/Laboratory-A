@@ -50,7 +50,7 @@
    <center>
       <TabPane fx:id="TPmaster" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
-            <Tab text="Cerca Libro">
+            <Tab fx:id="TsearchBook" text="Cerca Libro">
               <content>
                   <BorderPane fx:id="BP_firstTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                      <left>
@@ -144,7 +144,7 @@
                           <items>
                             <Button fx:id="BaddLibrary" disable="true" mnemonicParsing="false" onAction="#onCreateLibraryButtonClick" text="Crea Librearia" />
                               <Separator prefWidth="10.0" />
-                              <Button fx:id="BdeleteLibrary" disable="true" mnemonicParsing="false" onAction="#onDeleteLibraryButtonClick" text="Cancella Libreria" />
+                              <Button fx:id="BdeleteLibrary" disable="true" mnemonicParsing="false" onAction="#onDeleteLibraryButtonClick" text="Cancella Libreria/e" />
                           </items>
                         </ToolBar>
                      </top>
@@ -165,11 +165,11 @@
                   </BorderPane>
                </content>
             </Tab>
-            <Tab text="Libro">
+            <Tab fx:id="TopenedBooks" text="Libro">
                 <content>
                   <BorderPane>
                      <center>
-                        <TabPane fx:id="TP_books" side="BOTTOM">
+                        <TabPane fx:id="TP_books" side="LEFT">
                            <tabs>
                               <Tab closable="false" text="AIUTO">
                                  <content>
