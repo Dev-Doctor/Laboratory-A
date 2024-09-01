@@ -6,6 +6,7 @@ import io.github.devdoctor.deltabooks.events.LoginEventListener;
 import io.github.devdoctor.deltabooks.events.UpdateUserEventListener;
 import io.github.devdoctor.deltabooks.utility.BookUtils;
 import io.github.devdoctor.deltabooks.utility.LibraryUtils;
+import io.github.devdoctor.deltabooks.utility.Utils;
 import io.github.devdoctor.deltabooks.utility.WindowsUtils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -278,14 +279,8 @@ public class masterController implements Initializable, LoginEventListener, Upda
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        // gets the book title
-        String new_title = LoadedData.current_looked_book.getTitle();
         // tries to cut the lenght of the title to 10 and adds ".." at the end of it.
-        try {
-            new_title = new_title.substring(0, 10);
-            new_title += "..";
-        } catch (Exception ignored) {
-        }
+        String new_title = Utils.cutStringSize(LoadedData.current_looked_book.getTitle());
         // creates a new empty tab with the cut book title
         Tab tab = new Tab(new_title);
         // sets the method when the tab is closed

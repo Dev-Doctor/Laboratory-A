@@ -15,6 +15,8 @@ import java.util.List;
  * @author Davide Restelli
  */
 public class LoadedData {
+    public static final int MAX_BOOK_RECOMMENDATIONS = 3;
+
     // Initialization Variables
     public static Collection<User> users;
     public static Collection<Book> books;
@@ -32,4 +34,5 @@ public class LoadedData {
     // Logged Variables
     public static List<Library> logged_user_libraries = null;
     public static User logged_user = null;
+
 }

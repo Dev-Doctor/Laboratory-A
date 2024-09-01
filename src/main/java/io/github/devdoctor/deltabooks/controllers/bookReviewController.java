@@ -2,22 +2,25 @@ package io.github.devdoctor.deltabooks.controllers;
 
 import io.github.devdoctor.deltabooks.*;
 import io.github.devdoctor.deltabooks.utility.BookUtils;
+import io.github.devdoctor.deltabooks.utility.Utils;
+import io.github.devdoctor.deltabooks.utility.WindowsUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 
-import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
 public class bookReviewController implements Initializable {
-
+    static ArrayList<Book> recommendedBooks;
     @FXML
     protected Label LstyleCharCounter, LcontentCharCounter, LnicenessCharCounter, LoriginalityCharCounter, LeditionCharCounter;
 
@@ -33,6 +36,9 @@ public class bookReviewController implements Initializable {
     protected RadioButton RBEdition1, RBEdition2, RBEdition3, RBEdition4, RBEdition5;
 
     @FXML
+    protected HBox HBbookRecomParent;
+
+    @FXML
     protected TextArea TAstyleNote, TAcontentNote, TAnicenessNote, TAoriginalityNote, TAeditionNote;
 
     ToggleGroup styleToggleGroup;
@@ -41,8 +47,14 @@ public class bookReviewController implements Initializable {
     ToggleGroup originalityToggleGroup;
     ToggleGroup editionToggleGroup;
 
+    protected Book REVIEW_BOOK;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        recommendedBooks = new ArrayList<Book>();
+        REVIEW_BOOK = LoadedData.current_looked_book;
+        recommendedBooks.add(REVIEW_BOOK);
+
         // prepare different array with same vote type radio buttons
         RadioButton[] styleButtons = new RadioButton[]{RBStyle1, RBStyle2, RBStyle3, RBStyle4, RBStyle5};
         RadioButton[] contentButtons = new RadioButton[]{RBContent1, RBContent2, RBContent3, RBContent4, RBContent5};
@@ -67,6 +79,11 @@ public class bookReviewController implements Initializable {
         setToggleGroup(originalityButtons, originalityToggleGroup);
         setToggleGroup(editionButtons, editionToggleGroup);
 
+        ArrayList<Button> recommendationButtons = getButtons();
+
+        HBbookRecomParent.setSpacing(5);
+        HBbookRecomParent.getChildren().addAll(recommendationButtons);
+
         // create the pattern to limit the note size
         Pattern pattern = Pattern.compile(".{0," + Review.MAX_NOTE_SIZE + "}");
 
@@ -79,6 +96,28 @@ public class bookReviewController implements Initializable {
 
         // set the default max size
         LstyleCharCounter.setText(String.valueOf(Review.MAX_NOTE_SIZE));
+    }
+
+    private static ArrayList<Button> getButtons() {
+        ArrayList<Button> recommendationButtons = new ArrayList<Button>();
+        for (int i = 0; i < LoadedData.MAX_BOOK_RECOMMENDATIONS; i++) {
+            Button new_btn = new Button("Scegli un libro");
+            new_btn.setOnAction(event -> {
+                Button this_btn = (Button) event.getSource();
+                int nBooks = bookReviewController.recommendedBooks.size();
+                WindowsUtils.openDialogWindow(event, Windows.BOOK_DIALOG, false);
+                if(nBooks != bookReviewController.recommendedBooks.size()) {
+                    Book book = bookReviewController.recommendedBooks.get(
+                            bookReviewController.recommendedBooks.size() - 1
+                    );
+                    this_btn.setText(Utils.cutStringSize(book.getTitle()));
+                    this_btn.setDisable(true);
+                    this_btn.setTooltip(new Tooltip(book.getTitle()));
+                }
+            });
+            recommendationButtons.add(new_btn);
+        }
+        return recommendationButtons;
     }
 
     @FXML
@@ -118,11 +157,15 @@ public class bookReviewController implements Initializable {
         ReviewType originality = new ReviewType(originalityValue, TAoriginalityNote.getText());
         ReviewType edition = new ReviewType(editionValue, TAeditionNote.getText());
 
-        Review review = new Review(style, content, niceness, originality, edition, new ArrayList<Book>(), LoadedData.logged_user.getUUID());
+        recommendedBooks.remove(REVIEW_BOOK);
+        Collection<String> books_uuids = new ArrayList<String>();
+        recommendedBooks.forEach(book -> books_uuids.add(book.getUuid()));
+
+        Review review = new Review(style, content, niceness, originality, edition, books_uuids, LoadedData.logged_user.getUUID());
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "", ButtonType.OK);
 
-        if(BookUtils.addReview(LoadedData.current_looked_book, review)) {
+        if(BookUtils.addReview(REVIEW_BOOK, review)) {
             alert.setContentText("Recensione aggiunta con successo!");
             System.out.println("Recensione aggiunta con successo!");
         } else {

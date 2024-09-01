@@ -16,4 +16,13 @@ public class Utils {
         }
         return result / i.length;
     }
+
+    public static String cutStringSize(String str) {
+        try {
+            str = str.substring(0, 10);
+            str += "..";
+        } catch (Exception ignored) {
+        }
+        return str;
+    }
 }

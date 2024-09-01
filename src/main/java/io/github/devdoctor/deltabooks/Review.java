@@ -1,7 +1,5 @@
 package io.github.devdoctor.deltabooks;
 
-import javafx.util.Pair;
-
 import java.util.Collection;
 import java.util.UUID;
 
@@ -19,7 +17,7 @@ public class Review {
     private ReviewType edition;
 
     // recommended books_uuids by the user
-    private Collection<Book> recommended_books;
+    private Collection<String> recommended_books_uuids;
 
     // creator of the review UUID number
     private String creator_uuid;
@@ -28,14 +26,14 @@ public class Review {
         this.creator_uuid = UUID;
     }
 
-    public Review(ReviewType style, ReviewType content, ReviewType niceness, ReviewType originality, ReviewType edition, Collection<Book> books, String creator_uuid) {
+    public Review(ReviewType style, ReviewType content, ReviewType niceness, ReviewType originality, ReviewType edition, Collection<String> books, String creator_uuid) {
         this.style = style;
         this.content = content;
         this.niceness = niceness;
         this.originality = originality;
         this.edition = edition;
         this.creator_uuid = creator_uuid;
-        this.recommended_books = books;
+        this.recommended_books_uuids = books;
     }
 
     public float getFinalVote() {
@@ -82,12 +80,12 @@ public class Review {
         this.edition = edition;
     }
 
-    public Collection<Book> getRecommended_books() {
-        return recommended_books;
+    public Collection<String> getRecommended_books_uuids() {
+        return recommended_books_uuids;
     }
 
-    public void setRecommended_books(Collection<Book> recommended_books) {
-        this.recommended_books = recommended_books;
+    public void setRecommended_books_uuids(Collection<String> books_uuids) {
+        this.recommended_books_uuids = books_uuids;
     }
 
     public String getCreator_uuid() {
