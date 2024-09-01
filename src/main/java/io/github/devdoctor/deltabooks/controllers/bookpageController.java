@@ -3,23 +3,19 @@ package io.github.devdoctor.deltabooks.controllers;
 import io.github.devdoctor.deltabooks.*;
 import io.github.devdoctor.deltabooks.events.LoginEventListener;
 import io.github.devdoctor.deltabooks.utility.*;
-import javafx.beans.property.Property;
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.*;
@@ -27,7 +23,13 @@ import java.util.*;
 public class bookpageController implements Initializable, LoginEventListener {
 
     @FXML
+    protected Accordion ACreviewsTable;
+
+    @FXML
     protected Button B_writeReview;
+
+    @FXML
+    protected GridPane GPaverageReviews;
 
     @FXML
     protected Label Lauthors;
@@ -66,6 +68,9 @@ public class bookpageController implements Initializable, LoginEventListener {
     @FXML
     protected TableView<Review> TVreviews;
 
+    @FXML
+    protected VBox VBaverageVotesCotnainer;
+
     private ArrayList<Review> reviews;
 
     Book current_book;
@@ -75,7 +80,9 @@ public class bookpageController implements Initializable, LoginEventListener {
         current_book = LoadedData.current_looked_book;
         Lauthors.setText(current_book.getAuthors().toString());
         Lcategories.setText(current_book.getCategory().toString());
-        Ldescription.setText(current_book.getDescription());
+        Ldescription.setText((
+                current_book.getDescription().isEmpty()) ? "Non c'è una descrizione per questo libro." : current_book.getDescription()
+        );
         Lpublisher.setText(current_book.getPublisher());
         Ltitle.setText(current_book.getTitle());
         Lprice.setText(String.valueOf(current_book.getPrice()) + "€");
@@ -91,13 +98,20 @@ public class bookpageController implements Initializable, LoginEventListener {
         // set the data in the columbs
         initializeColumbsData();
 
-        reloadReviews();
+        if (!reviews.isEmpty()) {
+            reloadReviews();
+        } else {
+            VBaverageVotesCotnainer.getChildren().clear();
+            VBaverageVotesCotnainer.getChildren().add(new Label("Non ci sono ancora recensioni per questo libro."));
+            ACreviewsTable.setVisible(false);
+            ACreviewsTable.setDisable(true);
+        }
 
-        if(!LoadedData.config.isDebugOn()) {
+        if (!LoadedData.config.isDebugOn()) {
             HLuuid.setVisible(false);
         }
 
-        if(LoadedData.logged_user != null && !BookUtils.doesReviewExist(current_book, UUID.fromString(LoadedData.logged_user.getUUID()))
+        if (LoadedData.logged_user != null && !BookUtils.doesReviewExist(current_book, UUID.fromString(LoadedData.logged_user.getUUID()))
                 && LibraryUtils.isBookInLibraries(current_book.getRealUUID())) {
             B_writeReview.setDisable(false);
         }
@@ -116,14 +130,14 @@ public class bookpageController implements Initializable, LoginEventListener {
     private void initializeColumbsData() {
         TCuser.setCellValueFactory(cellData -> {
             User creator = UserUtils.getUserFromUUID(UUID.fromString(cellData.getValue().getCreator_uuid()));
-            if(creator == null) {
+            if (creator == null) {
                 return new SimpleStringProperty("Utente Rimosso");
             }
             return new SimpleStringProperty(creator.getFullName());
         });
         TCfinalVote.setCellValueFactory(cellData -> {
             return new SimpleStringProperty(
-                    calculateStars((int)cellData.getValue().getFinalVote())
+                    calculateStars((int) cellData.getValue().getFinalVote())
             );
         });
         TCstyleVote.setCellValueFactory(cellData -> {
@@ -155,22 +169,25 @@ public class bookpageController implements Initializable, LoginEventListener {
 
     private String calculateStars(Integer review) {
         String result = String.join("", Collections.nCopies(review, "★"));
-        result += String.join("", Collections.nCopies(5-review, "☆"));
+        result += String.join("", Collections.nCopies(5 - review, "☆"));
         return result;
     }
 
     public void onWriteReviewButtonClick(ActionEvent event) {
         WindowsUtils.openDialogWindow(event, Windows.BOOK_REVIEW);
-        if(LoadedData.last_review != null) {
+        if (LoadedData.last_review != null) {
             reviews.add(0, LoadedData.last_review);
             LoadedData.last_review = null;
             reloadReviews();
             B_writeReview.setDisable(true);
+            VBaverageVotesCotnainer.getChildren().clear();
+            VBaverageVotesCotnainer.getChildren().add(GPaverageReviews);
+            reloadAverageVotes();
         }
     }
 
     public void onReviewTableMouseClick(MouseEvent mouseEvent) {
-        if(mouseEvent.getClickCount() == 2) {
+        if (mouseEvent.getClickCount() == 2) {
             Review review = TVreviews.getSelectionModel().getSelectedItem();
             Review old_review = LoadedData.last_review;
 
@@ -183,6 +200,8 @@ public class bookpageController implements Initializable, LoginEventListener {
     private void reloadReviews() {
         TVreviews.setItems(FXCollections.observableList(new ArrayList<>()));
         TVreviews.setItems(FXCollections.observableArrayList(reviews));
+        ACreviewsTable.setVisible(true);
+        ACreviewsTable.setDisable(false);
     }
 
     public void onUIDDHyperlinkClick() {
