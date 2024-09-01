@@ -1,24 +1,27 @@
 package io.github.devdoctor.deltabooks.controllers;
 
-import io.github.devdoctor.deltabooks.LoadedData;
-import io.github.devdoctor.deltabooks.Review;
-import io.github.devdoctor.deltabooks.Star;
-import io.github.devdoctor.deltabooks.User;
+import io.github.devdoctor.deltabooks.*;
+import io.github.devdoctor.deltabooks.utility.BookUtils;
 import io.github.devdoctor.deltabooks.utility.UserUtils;
 import io.github.devdoctor.deltabooks.utility.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 public class inspectReviewController implements Initializable {
 
     @FXML
     protected Label Ltitle;
+
+    @FXML
+    protected ListView<String> LVreaderAdvices;
 
     @FXML
     protected TextArea TAstyleNote, TAcontentNote, TAnicenessNote, TAoriginalityNote, TAeditionNote;
@@ -35,7 +38,16 @@ public class inspectReviewController implements Initializable {
         User user = UserUtils.getUserFromUUID(review.getCreatorUuidAsObj());
 
         if(user != null) {
-            Ltitle.setText("Recensione di " + Utils.capitalize(user.getName()) + Utils.capitalize(user.getLastname()));
+            Ltitle.setText("Recensione di " + Utils.capitalize(user.getName()) + " " + Utils.capitalize(user.getLastname()));
+        }
+
+        if(!review.getBooks_uuid().isEmpty()) {
+            review.getBooks_uuid().forEach(s -> {
+                Book book = BookUtils.searchBookByUUID(UUID.fromString(s));
+                LVreaderAdvices.getItems().add(book.getTitle());
+            });
+        } else {
+            LVreaderAdvices.getItems().add(Utils.capitalize(user.getName()) + " non ha consigliato libri.");
         }
 
         TAstyleNote.setText(review.getStyle().getNote());

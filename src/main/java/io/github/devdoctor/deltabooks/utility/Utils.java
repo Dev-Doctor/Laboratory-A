@@ -1,5 +1,9 @@
 package io.github.devdoctor.deltabooks.utility;
 
+import io.github.devdoctor.deltabooks.Book;
+
+import java.util.*;
+
 public class Utils {
 
     public static String capitalize(String str) {

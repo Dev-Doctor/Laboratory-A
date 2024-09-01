@@ -5,11 +5,11 @@ import io.github.devdoctor.deltabooks.utility.FileUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * The main class of the program. It starts the {@code GUI}
@@ -23,6 +23,7 @@ public class DeltaBooks extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(DeltaBooks.class.getResource(START_WINDOW.resource + ".fxml"));
+        stage.getIcons().add(new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("images/icon.png"))));
         Scene scene = new Scene(fxmlLoader.load(), START_WINDOW.width, START_WINDOW.height);
         stage.setTitle(START_WINDOW.title);
         stage.setScene(scene);

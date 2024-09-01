@@ -4,10 +4,7 @@ import io.github.devdoctor.deltabooks.Book;
 import io.github.devdoctor.deltabooks.LoadedData;
 import io.github.devdoctor.deltabooks.Review;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * This class contains Utility code for Book stuff.
@@ -131,6 +128,15 @@ public class BookUtils {
         return result;
     }
 
+    public static Book searchBookByUUID(UUID uuid) {
+        for (Book book : LoadedData.books) {
+            if(book.getRealUUID().equals(uuid)) {
+                return book;
+            }
+        }
+        return null;
+    }
+
     private static Collection<Review> loadReview(Book book) {
         return FileUtils.loadReviewsForBook(book);
     }
@@ -178,5 +184,25 @@ public class BookUtils {
         }
 
         return new Float[]{style, content, niceness, originality, edition};
+    }
+
+    public static HashMap<Book, Integer> getAverageRecommmendedBooks(ArrayList<Review> reviews) {
+        HashMap<Book, Integer> result = new HashMap<>();
+        for (Review review : reviews) {
+            if(review.getBooks_uuid() == null) {
+                continue;
+            }
+            for (String uuid : review.getBooks_uuid()) {
+                Book book = searchBookByUUID(UUID.fromString(uuid));
+                if(book != null) {
+                    if(!result.containsKey(book)) {
+                        result.put(book, 1);
+                    } else {
+                        result.put(book, result.get(book) + 1);
+                    }
+                }
+            }
+        }
+        return result;
     }
 }

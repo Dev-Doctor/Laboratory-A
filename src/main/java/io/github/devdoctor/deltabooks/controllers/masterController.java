@@ -148,7 +148,7 @@ public class masterController implements Initializable, LoginEventListener, Upda
             if (!LoadedData.loaded_book_tabs.contains(this_book.getUuid())) {
                 LoadedData.loaded_book_tabs.add(this_book.getUuid());
                 addNewTab(this_book);
-                TPmaster.getSelectionModel().select(0);
+                TPmaster.getSelectionModel().select(TopenedBooks);
             }
         }
     }
@@ -248,7 +248,7 @@ public class masterController implements Initializable, LoginEventListener, Upda
      */
     @FXML
     protected void onLoginButtonClick(ActionEvent event) {
-        WindowsUtils.openDialogWindow(event, Windows.LOGIN);
+        WindowsUtils.openDialogWindow(event, Windows.LOGIN, false);
     }
 
     /**
@@ -261,7 +261,7 @@ public class masterController implements Initializable, LoginEventListener, Upda
     @FXML
     protected void onRegisterButtonClick(ActionEvent event) {
         if (LoadedData.logged_user == null) {
-            WindowsUtils.openDialogWindow(event, Windows.REGISTER);
+            WindowsUtils.openDialogWindow(event, Windows.REGISTER, false);
             return;
         }
     }
@@ -301,7 +301,6 @@ public class masterController implements Initializable, LoginEventListener, Upda
         TP_books.getTabs().add(tab);
         // selects it has the current viewed tab
         TP_books.getSelectionModel().select(tab);
-        TPmaster.getSelectionModel().select(TopenedBooks);
     }
 
     /**

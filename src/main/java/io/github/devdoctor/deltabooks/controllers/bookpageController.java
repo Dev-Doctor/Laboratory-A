@@ -16,9 +16,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Pair;
 
 import java.net.URL;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class bookpageController implements Initializable, LoginEventListener {
 
@@ -43,6 +46,9 @@ public class bookpageController implements Initializable, LoginEventListener {
     protected Label Lpublisher;
     @FXML
     protected Label Ltitle;
+
+    @FXML
+    protected ListView<String> LVreaderAdvices;
 
     @FXML
     protected Hyperlink HLuuid;
@@ -90,6 +96,17 @@ public class bookpageController implements Initializable, LoginEventListener {
 
         // is casted to arraylist to use addfirst later
         reviews = new ArrayList<Review>(FileUtils.loadReviewsForBook(current_book));
+
+        HashMap<Book, Integer> votes = BookUtils.getAverageRecommmendedBooks(reviews);
+
+        Map<Book, Integer> topTen = votes.entrySet().stream()
+                        .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                        .limit(10)
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+
+        topTen.forEach((book, quantity) -> {
+            LVreaderAdvices.getItems().add(book.getTitle() + " - (" + quantity + " raccomandazioni)");
+        });
 
         reloadAverageVotes();
 

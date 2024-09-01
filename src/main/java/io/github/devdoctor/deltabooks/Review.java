@@ -17,7 +17,7 @@ public class Review {
     private ReviewType edition;
 
     // recommended books_uuids by the user
-    private Collection<String> recommended_books_uuids;
+    private Collection<String> books_uuid;
 
     // creator of the review UUID number
     private String creator_uuid;
@@ -33,7 +33,7 @@ public class Review {
         this.originality = originality;
         this.edition = edition;
         this.creator_uuid = creator_uuid;
-        this.recommended_books_uuids = books;
+        this.books_uuid = books;
     }
 
     public float getFinalVote() {
@@ -80,12 +80,12 @@ public class Review {
         this.edition = edition;
     }
 
-    public Collection<String> getRecommended_books_uuids() {
-        return recommended_books_uuids;
+    public Collection<String> getBooks_uuid() {
+        return books_uuid;
     }
 
-    public void setRecommended_books_uuids(Collection<String> books_uuids) {
-        this.recommended_books_uuids = books_uuids;
+    public void setBooks_uuid(Collection<String> books_uuids) {
+        this.books_uuid = books_uuids;
     }
 
     public String getCreator_uuid() {
