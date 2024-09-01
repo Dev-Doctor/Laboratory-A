@@ -1,0 +1,138 @@
+.root{
+    -fx-primary-color: #171a21;
+    -fx-secondary-color:  #1b2838;
+    -fx-accent-light-color: #a12896;
+    -fx-accent-dark-color: #290628;
+    /*-fx-accent-color: #66c0f4;*/
+    -fx-background-color: -fx-primary-color;
+}
+
+* {
+    /*-fx-background-color: -fx-primary-color;*/
+    -fx-text-fill: #fff;
+}
+
+#TBsearchMenu, #TBsearchDiv {
+    -fx-background-color: -fx-secondary-color;
+}
+
+.tool-bar {
+    -fx-background-color: -fx-primary-color;
+}
+
+#TP_books .tab-header-area .tab-header-background {
+    -fx-background-color: -fx-secondary-color;
+}
+
+#TPmaster .tab-header-area .tab-header-background {
+    -fx-background-color: -fx-primary-color;
+}
+
+.tab-pane .tab {
+    -fx-background-color: -fx-accent-dark-color;
+    -fx-border-color: -fx-accent-light-color;
+    -fx-text-fill: white; /* White text color for selected tab */
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: -fx-accent-dark-color;
+    -fx-border-color: #fff;
+    -fx-font-weight: bold;
+    -fx-text-fill: white; /* White text color for selected tab */
+}
+
+.button {
+    -fx-background-color: -fx-accent-dark-color;
+    -fx-text-fill: #fff;
+    -fx-font-family: sans-serif;
+    -fx-font-size: 14px;
+    -fx-border-color: -fx-accent-light-color;
+    -fx-border-width: 2px;
+    -fx-background-radius: 0px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 8, 0.5, 0, 2);
+    -fx-cursor: hand;
+}
+
+.text-field {
+    -fx-background-color: -fx-accent-dark-color;
+    -fx-control-inner-background: -fx-accent-dark-color;
+    -fx-text-fill: #fff;
+    -fx-font-family: sans-serif;
+    -fx-font-size: 14px;
+    -fx-border-color: -fx-accent-light-color;
+    -fx-border-width: 2px;
+}
+
+/* Button hover effect */
+.button:hover {
+    -fx-font-weight: bold;
+    -fx-border-color: #fff;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 10, 0.5, 0, 3); /* Slightly stronger shadow effect on hover */
+}
+
+.table-view {
+    -fx-border-width: 0px;
+    -fx-border-color: transparent;
+}
+
+.table-view:row-selection:unconstrained-resize {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: -fx-accent-dark-color;
+    -fx-background-insets: 0 11px 0 0;
+    -fx-padding: 0 0 5px 0;
+}
+
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-row-cell {
+    -fx-border-width: 1px;
+    -fx-border-color: transparent;
+}
+
+/* Define the background color for every odd row */
+.table-row-cell:odd {
+    -fx-background-color: -fx-primary-color;
+}
+
+/* Define the background color for every even row */
+.table-row-cell:even {
+    -fx-background-color: -fx-secondary-color;
+}
+
+.table-row-cell:hover {
+    -fx-border-color: -fx-accent-light-color;
+    -fx-background-color: -fx-accent-dark-color;
+}
+
+.table-row-cell:selected {
+    -fx-font-weight: bold;
+}
+
+.list-view:odd {
+    -fx-background-color: -fx-primary-color;
+}
+
+.list-view:even {
+    -fx-background-color: -fx-secondary-color;
+}
+
+#TBsearchMenu {
+    /*-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #FF0000, #00FF00);*/
+    /*-fx-border-width: 0px 5px 0px 0px;*/
+    /*-fx-border-color: #171a21;*/
+    /*-fx-border-style: solid;*/
+    /*-fx-border-insets: 5px;*/
+}

@@ -5,6 +5,8 @@ import io.github.devdoctor.deltabooks.utility.UserUtils;
 import io.github.devdoctor.deltabooks.utility.WindowsUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -21,6 +23,7 @@ public class loginController {
     protected void onLoginButtonClick(ActionEvent event) {
         String email = TF_email.getText();
         String password = PF_password.getText();
+        Alert alert = new Alert(Alert.AlertType.WARNING, "Password e/o Email sbagliati.", ButtonType.OK);
 
         User u = new User(email);
         Pair<Boolean, User> result = UserUtils.doesUserExist(u);

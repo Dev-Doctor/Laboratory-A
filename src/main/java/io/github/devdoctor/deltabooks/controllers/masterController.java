@@ -162,13 +162,13 @@ public class masterController implements Initializable, LoginEventListener, Upda
     protected void onDeleteLibraryButtonClick() {
         List<Library> selected_items = TWlibraries.getSelectionModel().getSelectedItems();
 
-        if (selected_items == null) {
+        if (selected_items.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Seleziona una o piu' librerie per cancellarla/e.", ButtonType.OK);
             alert.showAndWait();
             return;
         }
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
-        ;
 
         if (selected_items.size() > 1) {
             alert.setContentText("Sei sicuro di voler cancellare: " + selected_items.size() + " librerie?");

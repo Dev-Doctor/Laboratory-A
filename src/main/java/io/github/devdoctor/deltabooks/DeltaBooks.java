@@ -18,13 +18,17 @@ import java.util.Objects;
  */
 public class DeltaBooks extends Application {
     public static final String PROGRAM_NAME = "Book Recommender";
+    public static final String ICON = "images/icon.png";
+    public static final String DEFAULT_CSS = "style/master.css";
     private static final Windows START_WINDOW = Windows.HOME;
 
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(DeltaBooks.class.getResource(START_WINDOW.resource + ".fxml"));
-        stage.getIcons().add(new Image(Objects.requireNonNull(this.getClass().getResourceAsStream("images/icon.png"))));
+        String css = this.getClass().getResource(DEFAULT_CSS).toExternalForm();
+        stage.getIcons().add(new Image(Objects.requireNonNull(this.getClass().getResourceAsStream(ICON))));
         Scene scene = new Scene(fxmlLoader.load(), START_WINDOW.width, START_WINDOW.height);
+        scene.getStylesheets().add(css);
         stage.setTitle(START_WINDOW.title);
         stage.setScene(scene);
         stage.show();

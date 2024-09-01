@@ -7,11 +7,13 @@ import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * A set of tools to manage windows more easily.
@@ -34,8 +36,10 @@ public class WindowsUtils {
     public static void changeCurrentWindow(ActionEvent event, Windows window) {
         Scene new_scene;
         try {
+            String css = DeltaBooks.class.getResource(DeltaBooks.DEFAULT_CSS).toExternalForm();
             // loads the new data and create the new scene
             new_scene = new Scene(new FXMLLoader(DeltaBooks.class.getResource(window.resource + ".fxml")).load(), window.width, window.height);
+            new_scene.getStylesheets().add(css);
             // gets the window stage from the event
             Stage stage = (Stage) ((Node)(event.getSource())).getScene().getWindow();
             // sets the title
@@ -93,10 +97,14 @@ public class WindowsUtils {
         Stage dialog = new Stage();
         // sets if the dialog is resizable
         dialog.setResizable(isResizable);
+        // set the window icon
+        dialog.getIcons().add(new Image(Objects.requireNonNull(DeltaBooks.class.getResourceAsStream(DeltaBooks.ICON))));
         // tries to create the new scene else throws a new RuntimeException
         Scene scene = null;
         try {
             scene = new Scene(fxmlLoader.load(), window.width, window.height);
+            String css = DeltaBooks.class.getResource(DeltaBooks.DEFAULT_CSS).toExternalForm();
+            scene.getStylesheets().add(css);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
