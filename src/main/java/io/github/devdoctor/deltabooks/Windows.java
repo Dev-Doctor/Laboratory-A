@@ -14,7 +14,8 @@ public enum Windows {
     BOOK_REVIEW(DeltaBooks.PROGRAM_NAME + " - Write Review", "bookReview", 500, 750),
     LIBRARY_MODAL(DeltaBooks.PROGRAM_NAME + " - Scegli una libreria", "library", 600, 200),
     ADD_LIBRARY(DeltaBooks.PROGRAM_NAME + " Aggiungi Libreria", "addLibrary", 150, 250),
-    DEBUG("test", "debug", 500, 1000);
+    DEBUG("test", "debug", 500, 1000),
+    INSPECT_REVIEW(DeltaBooks.PROGRAM_NAME + " - Inspect Review", "inspectReview", 600, 550);
 
     final public String title;
     final public String resource;

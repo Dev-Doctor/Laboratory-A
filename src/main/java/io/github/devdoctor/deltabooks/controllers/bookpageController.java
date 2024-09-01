@@ -17,6 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
@@ -165,6 +166,17 @@ public class bookpageController implements Initializable, LoginEventListener {
             LoadedData.last_review = null;
             reloadReviews();
             B_writeReview.setDisable(true);
+        }
+    }
+
+    public void onReviewTableMouseClick(MouseEvent mouseEvent) {
+        if(mouseEvent.getClickCount() == 2) {
+            Review review = TVreviews.getSelectionModel().getSelectedItem();
+            Review old_review = LoadedData.last_review;
+
+            LoadedData.last_review = review;
+            WindowsUtils.openDialogWindow(mouseEvent, Windows.INSPECT_REVIEW);
+            LoadedData.last_review = old_review;
         }
     }
 

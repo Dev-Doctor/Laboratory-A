@@ -203,7 +203,7 @@
               <panes>
                 <TitledPane animated="false" text="Recensioni">
                      <content>
-                        <TableView fx:id="TVreviews" prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true">
+                        <TableView fx:id="TVreviews" onMouseClicked="#onReviewTableMouseClick" prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true">
                           <columns>
                             <TableColumn fx:id="TCfinalVote" editable="false" prefWidth="75.0" text="Voto Finale" />
                               <TableColumn fx:id="TCstyleVote" editable="false" prefWidth="75.0" text="Stile" />

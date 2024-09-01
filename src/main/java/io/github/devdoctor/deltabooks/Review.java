@@ -3,6 +3,7 @@ package io.github.devdoctor.deltabooks;
 import javafx.util.Pair;
 
 import java.util.Collection;
+import java.util.UUID;
 
 public class Review {
     // The max size a note can be
@@ -91,6 +92,10 @@ public class Review {
 
     public String getCreator_uuid() {
         return creator_uuid;
+    }
+
+    public UUID getCreatorUuidAsObj() {
+        return UUID.fromString(creator_uuid);
     }
 
     public void setCreator_uuid(String creator_uuid) {
