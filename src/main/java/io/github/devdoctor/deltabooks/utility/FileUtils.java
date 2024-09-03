@@ -1,3 +1,8 @@
+/**
+ * Nome: Davide Restelli
+ * Matricola: 757198
+ * Sede: Como
+ */
 package io.github.devdoctor.deltabooks.utility;
 
 import com.google.gson.Gson;
@@ -10,12 +15,31 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+/**
+ * Utility class providing various file operations such as loading and saving
+ * books, users, libraries, and reviews to and from JSON files. This class is
+ * designed to handle file operations related to the application's data storage.
+ * <p>
+ * This class cannot be instantiated and is intended to be used in a static context.
+ * </p>
+ *
+ * <p><b>Important:</b> The constructor is private to prevent instantiation.</p>
+ *
+ * @author DevDoctor
+ * @since 1.0
+ */
 public class FileUtils {
-    final static TypeToken<Collection<Book>> BOOK_COLLECTION_TYPE = new TypeToken<Collection<Book>>(){};
-    final static TypeToken<Collection<User>> USER_COLLECTION_TYPE = new TypeToken<Collection<User>>(){};
-    final static TypeToken<Collection<Review>> REVIEW_COLLECTION_TYPE = new TypeToken<Collection<Review>>(){};
-    final static TypeToken<List<Library>> LIBRARY_COLLECTION_TYPE = new TypeToken<List<Library>>(){};
+    // Type tokens for deserializing collections from JSON
+    final static TypeToken<Collection<Book>> BOOK_COLLECTION_TYPE = new TypeToken<Collection<Book>>() {
+    };
+    final static TypeToken<Collection<User>> USER_COLLECTION_TYPE = new TypeToken<Collection<User>>() {
+    };
+    final static TypeToken<Collection<Review>> REVIEW_COLLECTION_TYPE = new TypeToken<Collection<Review>>() {
+    };
+    final static TypeToken<List<Library>> LIBRARY_COLLECTION_TYPE = new TypeToken<List<Library>>() {
+    };
 
+    // Directory and file paths
     final static String CURRENT_DIR = System.getProperty("user.dir");
     final static String CONF_FOLDER = CURRENT_DIR + "/.config";
     final static String DATA_FOLDER = CURRENT_DIR + "/data";
@@ -26,15 +50,16 @@ public class FileUtils {
     final static String CATALOG_FILE = "book-catalog";
     final static String USER_FILE = "registered-users";
 
-    // need to move to its utility file
-    public static void loadBooks() {
-        LoadedData.books = loadBooksFromFile();
+    // Private constructor to prevent instantiation
+    private FileUtils() {
+        throw new UnsupportedOperationException("FileUtils cannot be instantiated");
     }
 
     /**
-     * Loads the {@code Users} dataset from the location saved in {@link Config#users_dataset_location}
-     * @return The {@code Collection} of the Users.
-     * @see Book
+     * Loads the {@code User} collection from the file specified in the application's configuration.
+     *
+     * @return the collection of users loaded from the file, or an empty collection if no users are found.
+     * @see User
      * @see Config
      */
     public static Collection<Book> loadBooksFromFile() {
@@ -45,25 +70,21 @@ public class FileUtils {
     }
 
     /**
-     * Need moving to its own Utility File
-     */
-    public static void loadUsers() {
-        LoadedData.users = loadUsersFromFile();
-    }
-
-    /**
-     * Loads the {@code Libraries} dataset of the logged user
-     * @return The {@code Collection} of the Libraries or an empty collection.
+     * Loads the {@code Library} collection for the currently logged-in user from the file system.
+     *
+     * @return the collection of libraries, or an empty list if no libraries are found.
      * @see Library
      * @see Config
      */
-    public static List<Library> loadLibrariesFromFile()  {
+    public static List<Library> loadLibrariesFromFile() {
         return loadLibrariesFromFile(LoadedData.logged_user);
     }
 
     /**
-     * Loads the {@code Libraries} of a specified User
-     * @return The {@code Collection} of the Libraries or an empty collection.
+     * Loads the {@code Library} collection for a specified user from the file system.
+     *
+     * @param user the user whose libraries are to be loaded.
+     * @return the collection of libraries, or an empty list if no libraries are found.
      * @see Library
      * @see Config
      */
@@ -74,6 +95,7 @@ public class FileUtils {
 
     /**
      * Loads the {@code Users} dataset from the location saved in {@link Config#users_dataset_location}
+     *
      * @return The {@code Collection} of the Users.
      * @see User
      * @see Config
@@ -86,9 +108,10 @@ public class FileUtils {
     }
 
     /**
-     * Loads the {@code Reviews} dataset from the passed book UIDD.
-     * If the Review file is not yet created, returns an empty collection
-     * @return The {@code Collection} of the Reviews.
+     * Loads the {@code Review} collection for a specific book from the file system.
+     *
+     * @param book the book whose reviews are to be loaded.
+     * @return the collection of reviews, or an empty collection if no reviews are found.
      * @see Review
      */
     public static Collection<Review> loadReviewsForBook(Book book) {
@@ -98,17 +121,15 @@ public class FileUtils {
     }
 
     /**
-     * Tries to load the {@code Config} file.
-     * If the path to the file is not found, it makes it.
-     * If the file is not found, it makes an empty {@code Config} file.
-     * An {@code IOException} is thrown if the file cannot be open/edited.
-     * @see #createEmptyConfigs(File)
+     * Loads the application's configuration from a file. If the file or directory
+     * does not exist, they are created, and a default configuration is saved.
+     *
      * @see Config
      * @see LoadedData
      */
     public static void loadConfig() {
         File f = new File(CONF_FOLDER + "/" + CONF_FILE + ".json");
-        if(!f.exists()) {
+        if (!f.exists()) {
             try {
                 createEmptyConfigs(f);
             } catch (IOException ioe) {
@@ -124,35 +145,34 @@ public class FileUtils {
     }
 
     /**
-     * Generates an empty {@code Config} file and the path to it.
-     * @param f the file location
-     * @throws IOException if the file cannot be open/edited.
+     * Creates an empty configuration file and its directory if they do not exist.
+     *
+     * @param f the file to create.
+     * @throws IOException if the file cannot be created or written to.
      * @see Config
      */
     private static void createEmptyConfigs(File f) throws IOException {
-            Files.createDirectories(Paths.get(CONF_FOLDER));
+        Files.createDirectories(Paths.get(CONF_FOLDER));
 
-            FileWriter fileWriter = new FileWriter(f);
+        FileWriter fileWriter = new FileWriter(f);
 
-            // generate an empty config object
-            Config config = new Config();
+        // generate an empty config object
+        Config config = new Config();
 
-            Gson gson = new GsonBuilder()
-                    .setPrettyPrinting()
-                    .create();
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .create();
 
-            // write it to file as json
-            fileWriter.write(gson.toJson(config));
-            fileWriter.close();
+        // write it to file as json
+        fileWriter.write(gson.toJson(config));
+        fileWriter.close();
     }
 
     /**
-     * Write the {@code User} collection to file.
-     * The chosen path from where to load the file is saved in the {@code config} file
-     * Gives an error message if it is unable to modify the file.
+     * Writes the {@code User} collection to a file. The file location is specified in the application's configuration.
      *
-     * @param users  the users collection
-     * @return a boolean if the task was successfully executed or not
+     * @param users the collection of users to save.
+     * @return {@code true} if the operation was successful, {@code false} otherwise.
      * @see Config
      */
     public static Boolean writeUserListToFile(Collection<User> users) {
@@ -163,27 +183,25 @@ public class FileUtils {
     }
 
     /**
-     * Write the {@code Libraries} collection to a file.
-     * The file name used is the {@code UUID} of the book.
-     * Gives an error message if it is unable to modify the file.
+     * Writes the {@code Library} collection to a file. The file name is the UUID of the user.
      *
-     * @param libraries  the collection holding the reviews
-     * @param user owner of the reviews
+     * @param libraries the collection of libraries to save.
+     * @param user the user who owns the libraries.
+     * @return {@code true} if the operation was successful, {@code false} otherwise.
      * @see Config
      * @see UUID
      */
     public static Boolean writeLibraryToFile(List<Library> libraries, User user) {
-        String json = new Gson().toJson(libraries,  LIBRARY_COLLECTION_TYPE.getType());
+        String json = new Gson().toJson(libraries, LIBRARY_COLLECTION_TYPE.getType());
         return writeJsonFile(LIBRARY_FOLDER, user.getUUID(), json);
     }
 
     /**
-     * Write the {@code Reviews} collection to a file.
-     * The file name used is the {@code UUID} of the book.
-     * Gives an error message if it is unable to modify the file.
+     * Writes the {@code Review} collection to a file. The file name is the UUID of the book.
      *
-     * @param reviews  the collection holding the reviews
-     * @param book owner of the reviews
+     * @param reviews the collection of reviews to save.
+     * @param book the book that owns the reviews.
+     * @return {@code true} if the operation was successful, {@code false} otherwise.
      * @see Config
      * @see UUID
      */
@@ -193,27 +211,34 @@ public class FileUtils {
     }
 
     /**
-     * Writes to fle the passed data. Throws an {@code IOException}
-     * if it is unable to modify or write the file. If {@code data} is {@code null}
-     * create an empty file.
+     * Writes the given data to a specified file. If the file or directory does not exist,
+     * it creates them. If {@code data} is {@code null}, it creates an empty file.
      *
-     * @param data the data to write to the file, if it is {@code null} then create an empty file.
-     * @param path the path where the file is
-     * @throws IOException if file is not editable for missing permissions
+     * @param data the data to write to the file, or {@code null} to create an empty file.
+     * @param path the path of the file to write.
+     * @throws IOException if the file cannot be created or written to.
      */
     private static void createFileWithData(String data, String path) throws IOException {
         Writer fileWriter = new FileWriter(path, false);
-        if(data != null) {
+        if (data != null) {
             fileWriter.write(data);
         }
         fileWriter.close();
     }
 
-    public static boolean writeJsonFile(String PATH, String filename, String data){
+    /**
+     * Writes JSON data to a specified file. If the file or directory does not exist, it creates them.
+     *
+     * @param PATH the directory path where the file will be saved.
+     * @param filename the name of the file (without extension).
+     * @param data the JSON data to write to the file.
+     * @return {@code true} if the operation was successful, {@code false} otherwise.
+     */
+    public static boolean writeJsonFile(String PATH, String filename, String data) {
         String full_path = PATH + "/" + filename + ".json";
         File directory = new File(PATH);
         /// check if directory exist
-        if (! directory.exists()){
+        if (!directory.exists()) {
             // makes the directory and its parents
             directory.mkdirs();
         }
@@ -222,24 +247,32 @@ public class FileUtils {
 
         File file = new File(full_path);
         // tries to write the passed data to file
-        try{
+        try {
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(data);
             bw.close();
             return true;
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             System.err.println("Smoething went wrong wile trying to create the file: " + filename);
         }
         return false;
     }
 
+    /**
+     * Loads a JSON file and deserializes it into a collection of objects of the specified type.
+     *
+     * @param <T>        the type of the collection to return.
+     * @param path       the directory path where the JSON file is located.
+     * @param filename   the name of the JSON file (without extension).
+     * @param data_token a {@code TypeToken} representing the collection type.
+     * @return a collection of objects deserialized from the JSON file, or {@code null} if the file does not exist or cannot be read.
+     */
     public static <T extends Collection> T loadJsonFile(String path, String filename, TypeToken data_token) {
         Gson gson = new Gson();
         File f = new File(path + "/" + filename + ".json");
         T result = null;
-        if(f.exists()) {
+        if (f.exists()) {
             try {
                 result = gson.fromJson(new FileReader(f), data_token.getType());
             } catch (FileNotFoundException e) {
@@ -249,11 +282,22 @@ public class FileUtils {
         return result;
     }
 
+    /**
+     * Safely loads a JSON file and deserializes it into a collection of objects of the specified type.
+     * If the file does not exist, it creates the file with an empty collection, then loads and returns that empty collection.
+     *
+     * @param <T>        the type of the collection to return.
+     * @param path       the directory path where the JSON file is located.
+     * @param filename   the name of the JSON file (without extension).
+     * @param data_token a {@code TypeToken} representing the collection type.
+     * @param empty_data an empty collection to use as the initial content if the file does not exist.
+     * @return a collection of objects deserialized from the JSON file, or the provided empty collection if the file was created.
+     */
     public static <T extends Collection> T safeLoadJsonFile(String path, String filename, TypeToken data_token, T empty_data) {
         String FULL_PATH = path + "/" + filename + ".json";
         File file = new File(FULL_PATH);
         System.out.println("Loading File -> " + FULL_PATH);
-        if(!file.exists()) {
+        if (!file.exists()) {
             System.out.println("file doesn't exist");
             String json = new Gson().toJson(empty_data, data_token.getType());
             writeJsonFile(path, filename, json);

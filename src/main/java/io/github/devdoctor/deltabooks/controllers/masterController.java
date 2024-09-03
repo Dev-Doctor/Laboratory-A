@@ -1,3 +1,8 @@
+/**
+ * Nome: Davide Restelli
+ * Matricola: 757198
+ * Sede: Como
+ */
 package io.github.devdoctor.deltabooks.controllers;
 
 import io.github.devdoctor.deltabooks.*;
@@ -33,6 +38,10 @@ import java.net.URL;
 import java.util.*;
 import java.util.List;
 
+/**
+ * The master window controller.
+ * @author DevDoctor
+ */
 public class masterController implements Initializable, LoginEventListener, UpdateUserEventListener {
     @FXML
     protected BorderPane BP_firstTabPane;
@@ -108,6 +117,11 @@ public class masterController implements Initializable, LoginEventListener, Upda
     protected TableView<Library> TWlibraries;
 
     @FXML
+    protected TabPane TP_books;
+    @FXML
+    protected TabPane TPmaster;
+
+    @FXML
     protected TextField TF_author;
     @FXML
     protected TextField TF_title;
@@ -117,11 +131,14 @@ public class masterController implements Initializable, LoginEventListener, Upda
     @FXML
     protected ToolBar TB_userSide;
 
-    @FXML
-    protected TabPane TP_books;
-    @FXML
-    protected TabPane TPmaster;
 
+    /**
+     * When the window is created, sets the window title, initializes the table columns,
+     * add this class as a listener of the {@code loginEvent} and the {@code userEvent}.
+     * Sets the Table data and selection mode and initializes the about tab.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // sets the name of the program
@@ -135,6 +152,7 @@ public class masterController implements Initializable, LoginEventListener, Upda
             return new SimpleStringProperty(String.valueOf(cellData.getValue().getBooks_uuids().size()));
         });
 
+        // change the selection mode for the table from single to multiple
         TWlibraries.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         // adds this Object as a listener of the login event
@@ -143,39 +161,32 @@ public class masterController implements Initializable, LoginEventListener, Upda
 
         // loads the data to the Books Table
         TWbooks.setItems(FXCollections.observableArrayList(LoadedData.books));
+
         initializeAbout();
     }
 
+    /**
+     * Initializes the about tab with data
+     * @see Utils#openWebsite(String)
+     */
     private void initializeAbout() {
+        // sets the website for the creator
         HLmyWebsite.setOnAction(actionEvent -> {
-            try {
-                // Open the website in the default browser
-                Desktop.getDesktop().browse(new URI("https://dev-doctor.github.io/"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            Utils.openWebsite("https://dev-doctor.github.io/");
         });
+        // sets the license website
         HLlicense.setOnAction(actionEvent -> {
-            try {
-                // Open the website in the default browser
-                Desktop.getDesktop().browse(new URI("https://github.com/Dev-Doctor/Laboratory-A/blob/main/LICENSE"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            Utils.openWebsite("https://github.com/Dev-Doctor/Laboratory-A/blob/main/LICENSE");
         });
+        // sets the bug report website
         HLissue.setOnAction(actionEvent -> {
-            try {
-                // Open the website in the default browser
-                Desktop.getDesktop().browse(new URI("https://github.com/Dev-Doctor/Laboratory-A/issues"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            Utils.openWebsite("https://github.com/Dev-Doctor/Laboratory-A/issues");
         });
+        // sets some interesting data about the program
         LaboutData.setText("Numero di libri: " + LoadedData.books.size()
                 + "\nUtenti registrati: " + LoadedData.users.size()
                 + "\nVersion: " + DeltaBooks.PROGRAM_VERSION
         );
-
     }
 
 
@@ -191,33 +202,58 @@ public class masterController implements Initializable, LoginEventListener, Upda
     protected void clickItem(MouseEvent event) {
         //Checking double click
         if (event.getClickCount() == 2) {
+            // get the row book
             Book this_book = TWbooks.getSelectionModel().getSelectedItem();
+            // sets it as the current looked book
             LoadedData.current_looked_book = this_book;
+            // if the tab is not already open
             if (!LoadedData.loaded_book_tabs.contains(this_book.getUuid())) {
+                // add the book to the list of looked books
                 LoadedData.loaded_book_tabs.add(this_book.getUuid());
+                // add a new tab with the current book
                 addNewTab(this_book);
+                // select the books tab
                 TPmaster.getSelectionModel().select(TopenedBooks);
             }
         }
     }
 
+    /**
+     * This method is called when the create library button is clicked.
+     * It opens a modal window, not resizable, that will add a new library.
+     *
+     * @param event The action event
+     * @see addLibraryController
+     * @see ActionEvent
+     */
     @FXML
     protected void onCreateLibraryButtonClick(ActionEvent event) {
         WindowsUtils.openDialogWindow(event, Windows.ADD_LIBRARY, false);
     }
 
+    /**
+     * This method is called when the delete library/ies button is clicked.
+     * It gets the selected libraries, ask the user for confirmation and then deletes the libraries.
+     *
+     * @see ActionEvent
+     */
     @FXML
     protected void onDeleteLibraryButtonClick() {
+        // create a list with the selected libraries
         List<Library> selected_items = TWlibraries.getSelectionModel().getSelectedItems();
 
+        // if the list is empty tell the user to select more libraries
         if (selected_items.isEmpty()) {
+            // prepare and show message to user
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Seleziona una o piu' librerie per cancellarla/e.", ButtonType.OK);
             alert.showAndWait();
             return;
         }
 
+        // prepare confirmation alert
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.YES, ButtonType.CANCEL);
 
+        // if the selected library is only more than one, display message for more than one else for only one
         if (selected_items.size() > 1) {
             alert.setContentText("Sei sicuro di voler cancellare: " + selected_items.size() + " librerie?");
         } else {
@@ -231,10 +267,20 @@ public class masterController implements Initializable, LoginEventListener, Upda
         }
     }
 
+    /**
+     * This method is called when the add book to library button is clicked.
+     * It gets the selected book, if its null asks the user to select a book.
+     * Otherwise, opens a window for the user to choose a library.
+     *
+     * @see ActionEvent
+     * @see addToLibraryController
+     */
     @FXML
     protected void onAddToLibraryButtonClick(ActionEvent event) {
+        // get the selected book
         Book candidate = TWbooks.getSelectionModel().getSelectedItem();
-        System.out.println(candidate);
+
+        // if its null ask the user to choose a book
         if (candidate == null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Scegli un libro da aggiungere.", ButtonType.OK);
             alert.showAndWait();
@@ -242,19 +288,19 @@ public class masterController implements Initializable, LoginEventListener, Upda
         }
 
         LoadedData.current_looked_book = candidate;
+        // open the window as a modal
         WindowsUtils.openDialogWindow(event, Windows.LIBRARY_MODAL);
     }
 
+    /**
+     * ONLY FOR TEST PURPOSES, NOTHING TO SEE HERE
+     */
     @FXML
-    protected void onTestButtonClick() {
-        for (User c : LoadedData.users) {
-            System.out.println(c.print());
-        }
-    }
+    protected void onTestButtonClick() {}
 
     /**
-     * On the reset search button click it empties the search fields,
-     * clears the Book collection and reloads the loaded Book collection.
+     * This method is called when the reset search button is clicked.
+     * it empties the search fields, clears the Book collection and reloads the loaded Book collection.
      *
      * @see LoadedData#books
      */
@@ -272,8 +318,8 @@ public class masterController implements Initializable, LoginEventListener, Upda
 
 
     /**
-     * On the search button click gets the search data,
-     * it passes it to the search function and sets it as the table data.
+     * This method is called when the search button is clicked.
+     * gets the search data, it passes it to the search function and sets it as the table data.
      *
      * @see BookUtils#searchBook(String, String, String)
      */
@@ -289,9 +335,11 @@ public class masterController implements Initializable, LoginEventListener, Upda
 
 
     /**
-     * On the login button click opens a new login page as a {@code Modal}.
+     * This method is called when the login button is clicked.
+     * It opens a new login page as a {@code Modal}.
      *
      * @param event the action event
+     * @see loginController
      * @see ActionEvent
      */
     @FXML
@@ -300,8 +348,8 @@ public class masterController implements Initializable, LoginEventListener, Upda
     }
 
     /**
-     * On the register button click, if the user is not logged in,
-     * opens a new register page as a {@code Modal} else opens the User Profile
+     * This method is called when the register button is clicked.
+     * if the user is not logged in, opens a new register page as a {@code Modal} else opens the User Profile
      *
      * @param event the action event
      * @see ActionEvent
@@ -406,6 +454,10 @@ public class masterController implements Initializable, LoginEventListener, Upda
         }
     }
 
+    /**
+     * The implementation of the UpdateUserEvent.
+     * Refreshes the library table.
+     */
     @Override
     public void onUpdate() {
         TWlibraries.refresh();

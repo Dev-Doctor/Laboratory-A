@@ -1,10 +1,32 @@
+/**
+ * Nome: Davide Restelli
+ * Matricola: 757198
+ * Sede: Como
+ */
 package io.github.devdoctor.deltabooks;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 
+/**
+ * Represents a star shape that can be used to display ratings or other visual elements.
+ * <p>
+ * This class extends {@link SVGPath} to create a star shape using SVG path data. It includes methods
+ * to set ratings, resize stars, and generate a series of stars on a given {@link Pane}.
+ * </p>
+ * @author DevDoctor
+ * @since 1.0
+ * @see SVGPath
+ */
 public class Star extends SVGPath {
+    /**
+     * Creates a new {@code Star} instance with the default star SVG path content.
+     * <p>
+     * The star shape is defined by the SVG path data set in this constructor. The star is initially
+     * set with a transparent fill and a black stroke.
+     * </p>
+     */
     public Star() {
         /*this.setContent("M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,"
                 + "1.412l12.091,1.757  c2.118,0.308,2.963,2.91,1.431,4.403l-8.749,8.528c"
@@ -34,11 +56,28 @@ public class Star extends SVGPath {
 //        setScaleY(2);
     }
 
+    /**
+     * Clears the fill color and style class of the star, making it transparent.
+     * <p>
+     * This method is used to reset the appearance of the star, typically before applying a new rating.
+     * </p>
+     */
     public void clearStar() {
         setFill(Color.TRANSPARENT);
         getStyleClass().clear();
     }
 
+    /**
+     * Sets the rating for an array of {@code Star} objects.
+     * <p>
+     * The rating is a floating-point value where the integer part represents fully filled stars,
+     * and the fractional part represents a partially filled star. The star color is set based on
+     * the rating value.
+     * </p>
+     *
+     * @param value the rating value (between 0 and 5)
+     * @param stars an array of {@code Star} objects to set the rating for
+     */
     public static void setRating(Float value, Star[] stars) {
         for (Star star : stars)
             star.clearStar();
@@ -60,6 +99,17 @@ public class Star extends SVGPath {
         }
     }
 
+    /**
+     * Resizes the {@code Star} to fit the specified width and height.
+     * <p>
+     * This method calculates the scaling factors based on the desired dimensions and applies them
+     * to the star's scale properties.
+     * </p>
+     *
+     * @param star   the {@code Star} object to resize
+     * @param width  the desired width
+     * @param height the desired height
+     */
     public static void resize(Star star, int width, int height) {
         double originalWidth = star.prefWidth(-1);
         double originalHeight = star.prefHeight(originalWidth);
@@ -71,12 +121,23 @@ public class Star extends SVGPath {
         star.setScaleY(scaleY);
     }
 
-    public static void generateStars(Pane n, Float f) {
+
+    /**
+     * Generates a set of stars based on the given rating and adds them to a {@link Pane}.
+     * <p>
+     * This method creates an array of stars, sets their rating, and then adds them to the provided
+     * {@code Pane}. The maximum rating value is capped at 4.9.
+     * </p>
+     *
+     * @param pane the {@code Pane} to add the stars to
+     * @param rating the rating value (between 0 and 5)
+     */
+    public static void generateStars(Pane pane, Float rating) {
         Star[] stars = new Star[]{new Star(),new Star(),new Star(),new Star(),new Star()};
-        if(f > 4) {
-            f = 4.9f;
+        if(rating > 4) {
+            rating = 4.9f;
         }
-        Star.setRating(f, stars);
-        n.getChildren().setAll(stars);
+        Star.setRating(rating, stars);
+        pane.getChildren().setAll(stars);
     }
 }

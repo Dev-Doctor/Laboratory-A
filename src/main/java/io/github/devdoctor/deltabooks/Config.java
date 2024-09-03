@@ -1,3 +1,8 @@
+/**
+ * Nome: Davide Restelli
+ * Matricola: 757198
+ * Sede: Como
+ */
 package io.github.devdoctor.deltabooks;
 
 
@@ -8,7 +13,9 @@ import java.io.File;
 /**
  * The type Config.
  * The application settings.
- * @author Davide Restelli
+ *
+ * @author DevDoctor
+ * @since 1.0
  */
 public class Config {
     // The location of the users dataset

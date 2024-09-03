@@ -1,5 +1,17 @@
+/**
+ * Nome: Davide Restelli
+ * Matricola: 757198
+ * Sede: Como
+ */
 package io.github.devdoctor.deltabooks;
 
+
+/**
+ * The type Review type.
+ *
+ * @author DevDoctor
+ * @since 1.0
+ */
 public class ReviewType {
     private Integer value;
     private String note;

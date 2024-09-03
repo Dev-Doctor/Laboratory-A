@@ -1,3 +1,8 @@
+/**
+ * Nome: Davide Restelli
+ * Matricola: 757198
+ * Sede: Como
+ */
 package io.github.devdoctor.deltabooks;
 
 import java.util.List;
@@ -6,7 +11,8 @@ import java.util.UUID;
 /**
  * The type Book.
  *
- * @author Davide Restelli
+ * @author DevDoctor
+ * @since 1.0
  */
 public class Book {
     private String title;

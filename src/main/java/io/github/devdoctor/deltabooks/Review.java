@@ -1,8 +1,20 @@
+/**
+ * Nome: Davide Restelli
+ * Matricola: 757198
+ * Sede: Como
+ */
 package io.github.devdoctor.deltabooks;
 
 import java.util.Collection;
 import java.util.UUID;
 
+
+/**
+ * The type Review.
+ *
+ * @author DevDoctor
+ * @since 1.0
+ */
 public class Review {
     // The max size a note can be
     public static final int MAX_NOTE_SIZE = 255;

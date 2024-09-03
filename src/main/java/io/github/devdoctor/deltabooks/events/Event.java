@@ -1,16 +1,25 @@
+/**
+ * Nome: Davide Restelli
+ * Matricola: 757198
+ * Sede: Como
+ */
 package io.github.devdoctor.deltabooks.events;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class handles event
+ * @param <T> the listener implementation
+ */
 public abstract class Event<T> {
+    // the class that extends the listener implementation
     final Class<T> typeParameterClass;
 
     /** List of the listeners of the {@code Event} */
     protected List<T> listeners = new ArrayList<T>();
 
-    @SuppressWarnings("unchecked")
     public Event(Class<T> typeParameterClass) {
         this.typeParameterClass = typeParameterClass;
     }

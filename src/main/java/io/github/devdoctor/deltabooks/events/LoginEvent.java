@@ -1,3 +1,8 @@
+/**
+ * Nome: Davide Restelli
+ * Matricola: 757198
+ * Sede: Como
+ */
 package io.github.devdoctor.deltabooks.events;
 
 import io.github.devdoctor.deltabooks.LoadedData;
@@ -10,7 +15,7 @@ import java.util.List;
 /**
  * The {@code Event} that handles login in the program.
  *
- * @author Davide Restelli
+ * @author DevDoctor
  */
 public class LoginEvent {
     /** List of the listeners of the {@code Event} */
