@@ -18,34 +18,49 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.util.*;
+import java.util.List;
 
 public class masterController implements Initializable, LoginEventListener, UpdateUserEventListener {
     @FXML
-    private BorderPane BP_firstTabPane;
+    protected BorderPane BP_firstTabPane;
     @FXML
-    private BorderPane BP_master;
+    protected BorderPane BP_master;
 
     @FXML
-    private Button BaddToLibrary;
+    protected Button BaddToLibrary;
     @FXML
-    private Button BaddLibrary;
+    protected Button BaddLibrary;
     @FXML
-    private Button BdeleteLibrary;
+    protected Button BdeleteLibrary;
     @FXML
-    private Button B_login;
+    protected Button B_login;
     @FXML
-    private Button B_register;
+    protected Button B_register;
 
     @FXML
-    private Label L_pageTitle;
+    protected Hyperlink HLlicense;
+    @FXML
+    protected Hyperlink HLmyWebsite;
+    @FXML
+    protected Hyperlink HLissue;
+
+    @FXML
+    protected Label L_pageTitle;
+    @FXML
+    protected Label LaboutData;
 
     @FXML
     protected Tab TsearchBook;
@@ -58,54 +73,54 @@ public class masterController implements Initializable, LoginEventListener, Upda
      * @see #TWbooks
      */
     @FXML
-    private TableColumn<Book, String> TC_author;
+    protected TableColumn<Book, String> TC_author;
     /**
      * Title column of the book table
      *
      * @see #TWbooks
      */
     @FXML
-    private TableColumn<Book, String> TC_title;
+    protected TableColumn<Book, String> TC_title;
     /**
      * Number of books column of the libraries table
      *
      * @see #TWlibraries
      */
     @FXML
-    private TableColumn<Library, String> TCnumberOfBooks;
+    protected TableColumn<Library, String> TCnumberOfBooks;
     /**
      * Library name column of the libraries table
      *
      * @see #TWlibraries
      */
     @FXML
-    private TableColumn<Library, String> TClibraryNames;
+    protected TableColumn<Library, String> TClibraryNames;
 
     /**
      * Table of the books collection
      */
     @FXML
-    private TableView<Book> TWbooks;
+    protected TableView<Book> TWbooks;
     /**
      * Table of the libraries list
      */
     @FXML
-    private TableView<Library> TWlibraries;
+    protected TableView<Library> TWlibraries;
 
     @FXML
-    private TextField TF_author;
+    protected TextField TF_author;
     @FXML
-    private TextField TF_title;
+    protected TextField TF_title;
     @FXML
-    private TextField TF_year;
+    protected TextField TF_year;
 
     @FXML
-    private ToolBar TB_userSide;
+    protected ToolBar TB_userSide;
 
     @FXML
-    private TabPane TP_books;
+    protected TabPane TP_books;
     @FXML
-    private TabPane TPmaster;
+    protected TabPane TPmaster;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -128,6 +143,39 @@ public class masterController implements Initializable, LoginEventListener, Upda
 
         // loads the data to the Books Table
         TWbooks.setItems(FXCollections.observableArrayList(LoadedData.books));
+        initializeAbout();
+    }
+
+    private void initializeAbout() {
+        HLmyWebsite.setOnAction(actionEvent -> {
+            try {
+                // Open the website in the default browser
+                Desktop.getDesktop().browse(new URI("https://dev-doctor.github.io/"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        HLlicense.setOnAction(actionEvent -> {
+            try {
+                // Open the website in the default browser
+                Desktop.getDesktop().browse(new URI("https://github.com/Dev-Doctor/Laboratory-A/blob/main/LICENSE"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        HLissue.setOnAction(actionEvent -> {
+            try {
+                // Open the website in the default browser
+                Desktop.getDesktop().browse(new URI("https://github.com/Dev-Doctor/Laboratory-A/issues"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        LaboutData.setText("Numero di libri: " + LoadedData.books.size()
+                + "\nUtenti registrati: " + LoadedData.users.size()
+                + "\nVersion: " + DeltaBooks.PROGRAM_VERSION
+        );
+
     }
 
 

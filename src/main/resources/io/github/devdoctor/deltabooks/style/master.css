@@ -28,6 +28,10 @@
     -fx-background-color: -fx-primary-color;
 }
 
+.hyperlink {
+    -fx-text-fill: -fx-accent-light-color;
+}
+
 .tab-pane .tab {
     -fx-background-color: -fx-accent-dark-color;
     -fx-border-color: -fx-accent-light-color;

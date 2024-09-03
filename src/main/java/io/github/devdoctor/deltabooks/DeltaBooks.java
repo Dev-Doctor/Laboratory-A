@@ -17,6 +17,7 @@ import java.util.Objects;
  * @author Davide Restelli
  */
 public class DeltaBooks extends Application {
+    public static final String PROGRAM_VERSION = "1.0.0";
     public static final String PROGRAM_NAME = "Book Recommender";
     public static final String ICON = "images/icon.png";
     public static final String DEFAULT_CSS = "style/master.css";
