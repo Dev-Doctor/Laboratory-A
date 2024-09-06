@@ -40,6 +40,7 @@ import java.util.List;
 
 /**
  * The master window controller.
+ *
  * @author DevDoctor
  */
 public class masterController implements Initializable, LoginEventListener, UpdateUserEventListener {
@@ -136,6 +137,7 @@ public class masterController implements Initializable, LoginEventListener, Upda
      * When the window is created, sets the window title, initializes the table columns,
      * add this class as a listener of the {@code loginEvent} and the {@code userEvent}.
      * Sets the Table data and selection mode and initializes the about tab.
+     *
      * @param url
      * @param resourceBundle
      */
@@ -167,6 +169,7 @@ public class masterController implements Initializable, LoginEventListener, Upda
 
     /**
      * Initializes the about tab with data
+     *
      * @see Utils#openWebsite(String)
      */
     private void initializeAbout() {
@@ -296,7 +299,8 @@ public class masterController implements Initializable, LoginEventListener, Upda
      * ONLY FOR TEST PURPOSES, NOTHING TO SEE HERE
      */
     @FXML
-    protected void onTestButtonClick() {}
+    protected void onTestButtonClick() {
+    }
 
     /**
      * This method is called when the reset search button is clicked.
@@ -412,6 +416,10 @@ public class masterController implements Initializable, LoginEventListener, Upda
         B_login.setVisible(false);
         B_login.setDisable(true);
 
+        // disable the register button
+        B_register.setVisible(false);
+        B_register.setDisable(true);
+
         // enable library commands
         BaddToLibrary.setDisable(false);
         BdeleteLibrary.setDisable(false);
@@ -431,29 +439,7 @@ public class masterController implements Initializable, LoginEventListener, Upda
         List<Library> libraries = LoadedData.logged_user_libraries;
         TWlibraries.setItems(FXCollections.observableList(libraries));
     }
-
-    @Deprecated(since = "0.5", forRemoval = true)
-    private void setUUIDs() {
-        Collection<Book> update = new ArrayList<Book>();
-        for (Book book : LoadedData.books) {
-            UUID uuid = UUID.randomUUID();
-            book.setUuid(uuid.toString());
-            update.add(book);
-        }
-
-        String path = LoadedData.config.getBooks_dataset_location() + "/book-catalog.json";
-        File f = new File(path);
-
-        if (f.exists()) {
-//            String json = new Gson().toJson(update, FileUtils.BOOK_COLLECTION_TYPE.getType());
-//            try {
-//                FileUtils.createFileWithData(json, path);
-//            } catch (IOException e) {
-//                System.err.print("Unable to write/edit the file. Check permissions!");
-//            }
-        }
-    }
-
+    
     /**
      * The implementation of the UpdateUserEvent.
      * Refreshes the library table.

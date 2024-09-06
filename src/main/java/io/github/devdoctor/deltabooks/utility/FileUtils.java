@@ -43,8 +43,8 @@ public class FileUtils {
     final static String CURRENT_DIR = System.getProperty("user.dir");
     final static String CONF_FOLDER = CURRENT_DIR + "/.config";
     final static String DATA_FOLDER = CURRENT_DIR + "/data";
-    final static String BOOK_REVIEW_FOLDER = CONF_FOLDER + "/book_reviews";
-    final static String LIBRARY_FOLDER = CONF_FOLDER + "/user_libraries";
+    final static String BOOK_REVIEW_FOLDER = DATA_FOLDER + "/book_reviews";
+    final static String LIBRARY_FOLDER = DATA_FOLDER + "/user_libraries";
 
     final static String CONF_FILE = "app-configs";
     final static String CATALOG_FILE = "book-catalog";
@@ -63,10 +63,10 @@ public class FileUtils {
      * @see Config
      */
     public static Collection<Book> loadBooksFromFile() {
-        String PATH = LoadedData.config.getBooks_dataset_location();
+//        String PATH = LoadedData.config.getBooks_dataset_location();
         Collection<Book> empty_coll = new ArrayList<Book>();
 
-        return safeLoadJsonFile(PATH, CATALOG_FILE, BOOK_COLLECTION_TYPE, empty_coll);
+        return safeLoadJsonFile(DATA_FOLDER, CATALOG_FILE, BOOK_COLLECTION_TYPE, empty_coll);
     }
 
     /**
@@ -94,17 +94,17 @@ public class FileUtils {
     }
 
     /**
-     * Loads the {@code Users} dataset from the location saved in {@link Config#users_dataset_location}
+     * Loads the {@code Users} dataset
      *
      * @return The {@code Collection} of the Users.
      * @see User
      * @see Config
      */
     public static Collection<User> loadUsersFromFile() {
-        String path = LoadedData.config.getUsers_dataset_location();
+//        String path = LoadedData.config.getUsers_dataset_location();
         Collection<User> empty_coll = new ArrayList<User>();
 
-        return safeLoadJsonFile(path, USER_FILE, USER_COLLECTION_TYPE, empty_coll);
+        return safeLoadJsonFile(DATA_FOLDER, USER_FILE, USER_COLLECTION_TYPE, empty_coll);
     }
 
     /**
@@ -128,7 +128,7 @@ public class FileUtils {
      * @see LoadedData
      */
     public static void loadConfig() {
-        File f = new File(CONF_FOLDER + "/" + CONF_FILE + ".json");
+        File f = new File(DATA_FOLDER + "/" + CONF_FILE + ".json");
         if (!f.exists()) {
             try {
                 createEmptyConfigs(f);
@@ -152,7 +152,7 @@ public class FileUtils {
      * @see Config
      */
     private static void createEmptyConfigs(File f) throws IOException {
-        Files.createDirectories(Paths.get(CONF_FOLDER));
+        Files.createDirectories(Paths.get(DATA_FOLDER));
 
         FileWriter fileWriter = new FileWriter(f);
 
@@ -176,10 +176,10 @@ public class FileUtils {
      * @see Config
      */
     public static Boolean writeUserListToFile(Collection<User> users) {
-        String path = LoadedData.config.getUsers_dataset_location();
+//        String path = LoadedData.config.getUsers_dataset_location();
 
         String json = new Gson().toJson(users, USER_COLLECTION_TYPE.getType());
-        return writeJsonFile(path, USER_FILE, json);
+        return writeJsonFile(DATA_FOLDER, USER_FILE, json);
     }
 
     /**

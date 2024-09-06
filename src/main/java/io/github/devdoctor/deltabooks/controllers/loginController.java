@@ -65,9 +65,11 @@ public class loginController {
                 stage.close();
             } else {
                 System.err.println("Password sbagliata!");
+                alert.showAndWait();
             }
         } else {
             System.err.println("Email sbagliata!");
+            alert.showAndWait();
         }
     }
 

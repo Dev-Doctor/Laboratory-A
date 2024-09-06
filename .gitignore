@@ -29,4 +29,5 @@ target/*
 .idea/*
 
 .config/*
-.config/book-catalog.json
+data/*
+data/book-catalog.json

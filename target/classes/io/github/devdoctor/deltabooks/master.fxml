@@ -44,7 +44,6 @@
                     <items>
                       <Button fx:id="B_register" mnemonicParsing="false" onAction="#onRegisterButtonClick" text="REGISTER" />
                         <Button fx:id="B_login" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#onLoginButtonClick" text="LOGIN" />
-                        <Button mnemonicParsing="false" onAction="#onTestButtonClick" text="TEST" />
                     </items>
                   </ToolBar>
                </children>

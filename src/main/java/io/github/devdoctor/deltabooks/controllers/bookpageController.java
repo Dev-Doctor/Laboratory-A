@@ -169,7 +169,7 @@ public class bookpageController implements Initializable, LoginEventListener {
         Lauthors.setText(current_book.getAuthors().toString());
         Lcategories.setText(current_book.getCategory().toString());
         Ldescription.setText((
-                current_book.getDescription().isEmpty()) ? "Non c'è una descrizione per questo libro." : current_book.getDescription()
+                current_book.getDescription().isEmpty()) ? "\nNon c'è una descrizione per questo libro.\n\n" : current_book.getDescription()
         );
         Lpublisher.setText(current_book.getPublisher());
         Ltitle.setText(current_book.getTitle());

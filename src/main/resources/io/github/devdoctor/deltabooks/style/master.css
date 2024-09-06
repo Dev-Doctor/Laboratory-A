@@ -1,6 +1,6 @@
-.root{
+.root {
     -fx-primary-color: #171a21;
-    -fx-secondary-color:  #1b2838;
+    -fx-secondary-color: #1b2838;
     -fx-accent-light-color: #a12896;
     -fx-accent-dark-color: #290628;
     /*-fx-accent-color: #66c0f4;*/
@@ -83,7 +83,7 @@
     -fx-background-color: transparent;
 }
 
-.table-view .column-header-background{
+.table-view .column-header-background {
     -fx-background-color: -fx-accent-dark-color;
     -fx-background-insets: 0 11px 0 0;
     -fx-padding: 0 0 5px 0;
@@ -125,11 +125,52 @@
     -fx-font-weight: bold;
 }
 
-.list-view:odd {
+.titled-pane:collapsed .title {
+    -fx-background-color: -fx-accent-dark-color;
+    -fx-border-color: -fx-accent-light-color;
+}
+
+.titled-pane:expanded .title {
+    -fx-background-color: -fx-accent-dark-color;
+    -fx-border-color: -fx-accent-light-color;
+}
+
+.list-cell:odd {
     -fx-background-color: -fx-primary-color;
 }
 
-.list-view:even {
+.list-cell:even {
+    -fx-background-color: -fx-secondary-color;
+}
+
+.list-view:vertical {
+    -fx-background-color: -fx-secondary-color;
+}
+
+.text-area .content {
+    -fx-background-color: -fx-primary-color;
+}
+
+.radio-button .radio {
+    -fx-background-color: -fx-accent-dark-color;
+    -fx-border-color: -fx-accent-light-color;
+    -fx-border-radius: 50%;
+}
+
+/*.radio-button .selected .dot {*/
+/*    -fx-background-color: #fff;*/
+/*}*/
+
+.black-vbox {
+    -fx-background-color: -fx-primary-color;
+}
+
+.curved-inv-border {
+    -fx-border-radius: 3px;
+    -fx-border-color: #fff;
+}
+
+VBox {
     -fx-background-color: -fx-secondary-color;
 }
 
