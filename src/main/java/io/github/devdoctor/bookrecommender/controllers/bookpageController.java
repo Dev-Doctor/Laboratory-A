@@ -37,7 +37,7 @@ public class bookpageController implements Initializable, LoginEventListener {
     protected Accordion ACreviewsTable;
 
     @FXML
-    protected Button B_writeReview;
+    protected Button BwriteReview;
 
     @FXML
     protected GridPane GPaverageReviews;
@@ -158,7 +158,7 @@ public class bookpageController implements Initializable, LoginEventListener {
         if (LoadedData.logged_user != null && !BookUtils.doesReviewExist(current_book, UUID.fromString(LoadedData.logged_user.getUUID()))
                 && LibraryUtils.isBookInLibraries(current_book.getRealUUID())) {
             // enable the write review button
-            B_writeReview.setDisable(false);
+            BwriteReview.setDisable(false);
         }
     }
 
@@ -266,7 +266,7 @@ public class bookpageController implements Initializable, LoginEventListener {
             // reloads the reviews
             reloadReviews();
             // disable the write review button
-            B_writeReview.setDisable(true);
+            BwriteReview.setDisable(true);
             // clears and reloads the average stars
             VBaverageVotesCotnainer.getChildren().clear();
             VBaverageVotesCotnainer.getChildren().add(GPaverageReviews);

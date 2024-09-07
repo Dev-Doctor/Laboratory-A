@@ -20,7 +20,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="TF_email">
+            <TextField fx:id="TFemail">
                <VBox.margin>
                   <Insets left="20.0" right="20.0" />
                </VBox.margin>
@@ -30,7 +30,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Label>
-            <PasswordField fx:id="PF_password">
+            <PasswordField fx:id="PFpassword">
                <VBox.margin>
                   <Insets left="20.0" right="20.0" />
                </VBox.margin>

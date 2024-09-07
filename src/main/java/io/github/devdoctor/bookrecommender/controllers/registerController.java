@@ -29,18 +29,18 @@ import java.util.Objects;
 public class registerController {
 
     @FXML
-    private TextField TF_email;
+    private TextField TFemail;
     @FXML
-    private TextField TF_fiscalcode;
+    private TextField TFfiscalcode;
     @FXML
-    private TextField TF_name;
+    private TextField TFname;
     @FXML
-    private TextField TF_lastname;
+    private TextField TFlastname;
 
     @FXML
-    private PasswordField PF_confirm_pass;
+    private PasswordField PFconfirm_pass;
     @FXML
-    private PasswordField PF_password;
+    private PasswordField PFpassword;
 
     /**
      * This method is called when the login button is clicked.
@@ -63,12 +63,12 @@ public class registerController {
      */
     @FXML
     protected void onRegisterButtonClick() {
-        String email = TF_email.getText();
-        String name = TF_name.getText();
-        String lastname = TF_lastname.getText();
-        String fiscalcode = TF_fiscalcode.getText();
-        String password = PF_password.getText();
-        String confirmPassword = PF_confirm_pass.getText();
+        String email = TFemail.getText();
+        String name = TFname.getText();
+        String lastname = TFlastname.getText();
+        String fiscalcode = TFfiscalcode.getText();
+        String password = PFpassword.getText();
+        String confirmPassword = PFconfirm_pass.getText();
 
         Alert alert = new Alert(Alert.AlertType.WARNING, "", ButtonType.OK);
         String alert_msg = "";
@@ -115,7 +115,7 @@ public class registerController {
             alert.showAndWait();
         } else {
             LoadedData.loginEvent.onLogin(wasRegistered.getValue());
-            Stage stage = (Stage) TF_email.getScene().getWindow();
+            Stage stage = (Stage) TFemail.getScene().getWindow();
             stage.close();
         }
     }

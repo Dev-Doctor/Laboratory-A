@@ -16,19 +16,19 @@
       <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="black-vbox" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="70.0" layoutY="20.0" text="Nome" />
-            <TextField fx:id="TF_name" layoutX="10.0" layoutY="54.0" />
+            <TextField fx:id="TFname" layoutX="10.0" layoutY="54.0" />
             <Label layoutX="70.0" layoutY="62.0" text="Cognome">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="TF_lastname" />
+            <TextField fx:id="TFlastname" />
             <Label text="Email">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="TF_email">
+            <TextField fx:id="TFemail">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -38,13 +38,13 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="TF_fiscalcode" layoutX="10.0" layoutY="27.0" />
+            <TextField fx:id="TFfiscalcode" layoutX="10.0" layoutY="27.0" />
             <Label layoutX="71.0" layoutY="10.0" text="Password">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </Label>
-            <PasswordField fx:id="PF_password">
+            <PasswordField fx:id="PFpassword">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -53,7 +53,7 @@
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin></Label>
-            <PasswordField fx:id="PF_confirm_pass" layoutX="30.0" layoutY="89.0" />
+            <PasswordField fx:id="PFconfirm_pass" layoutX="30.0" layoutY="89.0" />
          </children>
          <BorderPane.margin>
             <Insets left="20.0" right="20.0" top="10.0" />

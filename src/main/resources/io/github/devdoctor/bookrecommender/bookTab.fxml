@@ -151,7 +151,7 @@
                         <Insets top="10.0" />
                     </padding>
                     <children>
-                        <Button fx:id="B_writeReview" disable="true" mnemonicParsing="false" onAction="#onWriteReviewButtonClick" text="Scrivi una recensione" />
+                        <Button fx:id="BwriteReview" disable="true" mnemonicParsing="false" onAction="#onWriteReviewButtonClick" text="Scrivi una recensione" />
                     </children>
                 </HBox>
             <VBox fx:id="VBaverageVotesCotnainer" alignment="TOP_CENTER" styleClass="curved-inv-border">

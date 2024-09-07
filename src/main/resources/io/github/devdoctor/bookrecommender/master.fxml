@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="BP_master" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="519.0" prefWidth="710.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.devdoctor.bookrecommender.controllers.masterController">
+<BorderPane fx:id="BPmaster" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="519.0" prefWidth="710.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.devdoctor.bookrecommender.controllers.masterController">
    <top>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
          <children>
@@ -33,7 +33,7 @@
                            <image>
                               <Image url="@images/icon.png" />
                            </image></ImageView>
-                        <Label fx:id="L_pageTitle">
+                        <Label fx:id="LpageTitle">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -42,8 +42,8 @@
                   </ToolBar>
                   <ToolBar fx:id="TB_userSide" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                     <items>
-                      <Button fx:id="B_register" mnemonicParsing="false" onAction="#onRegisterButtonClick" text="REGISTER" />
-                        <Button fx:id="B_login" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#onLoginButtonClick" text="LOGIN" />
+                      <Button fx:id="Bregister" mnemonicParsing="false" onAction="#onRegisterButtonClick" text="REGISTER" />
+                        <Button fx:id="Blogin" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" onAction="#onLoginButtonClick" text="LOGIN" />
                     </items>
                   </ToolBar>
                </children>
@@ -56,7 +56,7 @@
         <tabs>
             <Tab fx:id="TsearchBook" text="Cerca Libro">
               <content>
-                  <BorderPane fx:id="BP_firstTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                  <BorderPane fx:id="BPfirstTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                      <left>
                         <ToolBar fx:id="TBsearchMenu" orientation="VERTICAL" prefHeight="291.0" prefWidth="137.0" BorderPane.alignment="CENTER">
                           <items>

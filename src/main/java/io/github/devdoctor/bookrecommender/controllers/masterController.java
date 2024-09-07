@@ -42,9 +42,9 @@ import java.util.List;
  */
 public class masterController implements Initializable, LoginEventListener, UpdateUserEventListener {
     @FXML
-    protected BorderPane BP_firstTabPane;
+    protected BorderPane BPfirstTabPane;
     @FXML
-    protected BorderPane BP_master;
+    protected BorderPane BPmaster;
 
     @FXML
     protected Button BaddToLibrary;
@@ -53,9 +53,9 @@ public class masterController implements Initializable, LoginEventListener, Upda
     @FXML
     protected Button BdeleteLibrary;
     @FXML
-    protected Button B_login;
+    protected Button Blogin;
     @FXML
-    protected Button B_register;
+    protected Button Bregister;
 
     @FXML
     protected Hyperlink HLlicense;
@@ -65,7 +65,7 @@ public class masterController implements Initializable, LoginEventListener, Upda
     protected Hyperlink HLissue;
 
     @FXML
-    protected Label L_pageTitle;
+    protected Label LpageTitle;
     @FXML
     protected Label LaboutData;
 
@@ -141,7 +141,7 @@ public class masterController implements Initializable, LoginEventListener, Upda
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // sets the name of the program
-        L_pageTitle.setText(BookRecommender.PROGRAM_NAME);
+        LpageTitle.setText(BookRecommender.PROGRAM_NAME);
         // sets the columbs of the Books Table
         TC_title.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
         TC_author.setCellValueFactory(new PropertyValueFactory<Book, String>("publisher"));
@@ -410,12 +410,12 @@ public class masterController implements Initializable, LoginEventListener, Upda
     @Override
     public void onLogin() {
         // disable the login button
-        B_login.setVisible(false);
-        B_login.setDisable(true);
+        Blogin.setVisible(false);
+        Blogin.setDisable(true);
 
         // disable the register button
-        B_register.setVisible(false);
-        B_register.setDisable(true);
+        Bregister.setVisible(false);
+        Bregister.setDisable(true);
 
         // enable library commands
         BaddToLibrary.setDisable(false);
@@ -423,7 +423,7 @@ public class masterController implements Initializable, LoginEventListener, Upda
         BaddLibrary.setDisable(false);
 
         // change the register button
-        B_register.setText("User Profile");
+        Bregister.setText("User Profile");
 
         // load libraries
         loadLibraries();

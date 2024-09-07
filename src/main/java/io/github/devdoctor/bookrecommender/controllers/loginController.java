@@ -26,10 +26,10 @@ import javafx.util.Pair;
 public class loginController {
 
     @FXML
-    protected PasswordField PF_password;
+    protected PasswordField PFpassword;
 
     @FXML
-    protected TextField TF_email;
+    protected TextField TFemail;
 
 
     /**
@@ -43,9 +43,9 @@ public class loginController {
     @FXML
     protected void onLoginButtonClick(ActionEvent event) {
         // get the user email
-        String email = TF_email.getText();
+        String email = TFemail.getText();
         // get the user password
-        String password = PF_password.getText();
+        String password = PFpassword.getText();
         // prepares the alert message
         Alert alert = new Alert(Alert.AlertType.WARNING, "Password e/o Email sbagliati.", ButtonType.OK);
 
@@ -61,7 +61,7 @@ public class loginController {
                 // run the login event
                 LoadedData.loginEvent.onLogin(u);
                 // close window
-                Stage stage = (Stage) TF_email.getScene().getWindow();
+                Stage stage = (Stage) TFemail.getScene().getWindow();
                 stage.close();
             } else {
                 System.err.println("Password sbagliata!");
