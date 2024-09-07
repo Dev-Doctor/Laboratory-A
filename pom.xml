@@ -76,7 +76,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>io.github.devdoctor.deltabooks/io.github.devdoctor.deltabooks.DeltaBooks
+                            <mainClass>io.github.devdoctor.deltabooks/io.github.devdoctor.bookrecommender.BookRecommender
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
