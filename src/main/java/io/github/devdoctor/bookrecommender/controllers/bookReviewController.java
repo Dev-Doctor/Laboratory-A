@@ -323,7 +323,7 @@ public class bookReviewController implements Initializable {
         int half = Review.MAX_NOTE_SIZE / 2;
         // changes the color of the label depending on the number of characters remaining
         if (value > half + (half / 2)) {
-            label.setTextFill(Color.BLACK);
+            label.setTextFill(Color.WHITE);
         } else if (value > half) {
             label.setTextFill(Color.GREEN);
         } else if (value > half / 2) {
