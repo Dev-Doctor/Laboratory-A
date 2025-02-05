@@ -23,7 +23,7 @@
           <execution>
             <id>default-cli</id>
             <configuration>
-              <mainClass>io.github.devdoctor.bookrecommender/io.github.devdoctor.bookrecommender.Main</mainClass>
+              <mainClass>io.github.devdoctor.bookrecommender/io.github.devdoctor.BookRecommender.Main</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>
@@ -46,7 +46,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>io.github.devdoctor.bookrecommender.Main</mainClass>
+                  <mainClass>io.github.devdoctor.BookRecommender.Main</mainClass>
                 </transformer>
               </transformers>
             </configuration>

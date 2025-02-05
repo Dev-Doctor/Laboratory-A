@@ -7,7 +7,12 @@
     <groupId>io.github.dev-doctor</groupId>
     <artifactId>BookRecommender</artifactId>
     <version>1.0</version>
+    <packaging>pom</packaging>
     <name>Laboratory A</name>
+    <modules>
+        <module>Client</module>
+        <module>Server</module>
+    </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,21 +22,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>${javafx.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-fxml</artifactId>
-            <version>${javafx.version}</version>
-        </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.controlsfx</groupId>-->
-<!--            <artifactId>controlsfx</artifactId>-->
-<!--            <version>11.1.2</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -43,12 +33,6 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.11.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.mindrot/jbcrypt -->
         <dependency>
@@ -78,7 +62,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>io.github.devdoctor.bookrecommender/io.github.devdoctor.bookrecommender.Main
+                            <mainClass>io.github.devdoctor.bookrecommender/io.github.devdoctor.BookRecommender.Main
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
@@ -103,7 +87,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>io.github.devdoctor.bookrecommender.Main</mainClass>
+                                    <mainClass>io.github.devdoctor.BookRecommender.Main</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
