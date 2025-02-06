@@ -1,7 +1,12 @@
-package io.github.devdoctor.BookRecServer.DBCommands;
+/**
+ * Nome: Davide Restelli
+ * Matricola: 757198
+ * Sede: Como
+ */
+package io.github.devdoctor.BookRecServer.Database.DBCommands;
 
 public class RegisterUser implements DbCommand {
-    String query;
+    String query = "INSERT INTO users (UserId, userName, email, passwordHash) VALUES (default, ?, ?, ?)";
 
     /*
     * Check if a user is valid

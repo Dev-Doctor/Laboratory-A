@@ -1,4 +1,4 @@
-package io.github.devdoctor.BookRecServer;
+package Utils;
 
 public class StringUtils {
 

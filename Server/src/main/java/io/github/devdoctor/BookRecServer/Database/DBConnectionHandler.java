@@ -1,22 +1,29 @@
-package io.github.devdoctor.BookRecServer;
+/**
+ * Nome: Davide Restelli
+ * Matricola: 757198
+ * Sede: Como
+ */
+package io.github.devdoctor.BookRecServer.Database;
+
+import io.github.devdoctor.BookRecServer.ServerState;
 
 import java.sql.SQLException;
 
-public class ConnectionHandler {
+public class DBConnectionHandler {
     private static String DEFAULT_PORT = "5432";
     private DatabaseConnectionSingleton dbConnSingleton;
     private ServerState serverState;
 
-    public ConnectionHandler() throws SQLException {
+    public DBConnectionHandler() throws SQLException {
         serverState = ServerState.getDefaultState();
     }
 
-    public ConnectionHandler(String ip, String username, String password, String database) throws SQLException {
+    public DBConnectionHandler(String ip, String username, String password, String database) throws SQLException {
         serverState = ServerState.getDefaultState();
         this.createConnection(ip, database, username, password);
     }
 
-    public void createConnection(String host, String database, String username, String password) throws SQLException {
+    private void createConnection(String host, String database, String username, String password) throws SQLException {
         String port = DEFAULT_PORT;
 
         if (host.contains(":")) {

@@ -1,4 +1,4 @@
-package io.github.devdoctor.BookRecServer;
+package Utils;
 
 import javax.swing.*;
 import java.io.Console;

@@ -1,8 +1,5 @@
-package io.github.devdoctor.BookRecServer;
+package io.github.devdoctor.BookRecServer.Database;
 
-import org.postgresql.util.PSQLException;
-
-import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

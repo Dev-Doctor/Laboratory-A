@@ -1,8 +1,10 @@
 package io.github.devdoctor.BookRecServer;
 
 public enum ServerState {
-    CONNECTED(null),
-    IDLE(ServerState.CONNECTED);
+    STOPPING(getDefaultState()),
+    ACCEPTS_CLIENTS(STOPPING),
+    CONNECTED(ACCEPTS_CLIENTS),
+    IDLE(CONNECTED);
 
     private final ServerState nextServerState;
 

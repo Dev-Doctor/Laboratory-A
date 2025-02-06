@@ -1,4 +1,4 @@
 package io.github.devdoctor.BookRecServer;
 
-public class Server {
+public class Data {
 }
