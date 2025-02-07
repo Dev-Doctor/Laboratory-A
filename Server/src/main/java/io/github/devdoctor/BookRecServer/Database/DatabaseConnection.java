@@ -1,18 +1,23 @@
+/**
+ * Nome: Davide Restelli
+ * Matricola: 757198
+ * Sede: Como
+ */
 package io.github.devdoctor.BookRecServer.Database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabaseConnectionSingleton {
+public class DatabaseConnection {
 
-    private static DatabaseConnectionSingleton instance;
+    private static DatabaseConnection instance;
 
     private final Connection connection;
     private static boolean connected;
 
     // Private constructor to prevent instantiation
-    private DatabaseConnectionSingleton(String url, String user, String password) throws SQLException {
+    private DatabaseConnection(String url, String user, String password) throws SQLException {
         Connection temp;
 //        try {
         temp = DriverManager.getConnection(url, user, password);
@@ -31,9 +36,9 @@ public class DatabaseConnectionSingleton {
     }
 
     // Static method to initialize the singleton with parameters
-    public static synchronized DatabaseConnectionSingleton getInstance(String url, String user, String password) throws SQLException {
+    public static synchronized DatabaseConnection getInstance(String url, String user, String password) throws SQLException {
         if (instance == null) {
-            instance = new DatabaseConnectionSingleton(url, user, password);
+            instance = new DatabaseConnection(url, user, password);
         }
         return instance;
     }

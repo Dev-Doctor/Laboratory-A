@@ -1,4 +1,4 @@
-module io.github.devdoctor.BookRecommender {
+module io.github.devdoctor.client {
     requires javafx.controls;
     requires javafx.fxml;
 
@@ -7,12 +7,14 @@ module io.github.devdoctor.BookRecommender {
     requires jbcrypt;
     requires java.desktop;
 
-    opens io.github.devdoctor.BookRecommender to javafx.fxml, com.google.gson;
     exports io.github.devdoctor.BookRecommender;
     exports io.github.devdoctor.BookRecommender.controllers;
-    opens io.github.devdoctor.BookRecommender.controllers to com.google.gson, javafx.fxml;
-    exports io.github.devdoctor.BookRecommender.utility;
-    opens io.github.devdoctor.BookRecommender.utility to com.google.gson, javafx.fxml;
     exports io.github.devdoctor.BookRecommender.events;
+    exports io.github.devdoctor.BookRecommender.utility;
+
+
+    opens io.github.devdoctor.BookRecommender to javafx.fxml, com.google.gson;
+    opens io.github.devdoctor.BookRecommender.controllers to com.google.gson, javafx.fxml;
+    opens io.github.devdoctor.BookRecommender.utility to com.google.gson, javafx.fxml;
     opens io.github.devdoctor.BookRecommender.events to com.google.gson, javafx.fxml;
 }

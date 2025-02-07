@@ -1,3 +1,8 @@
+/**
+ * Nome: Davide Restelli
+ * Matricola: 757198
+ * Sede: Como
+ */
 package Utils;
 
 public class StringUtils {

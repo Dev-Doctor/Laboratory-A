@@ -1,3 +1,8 @@
+/**
+ * Nome: Davide Restelli
+ * Matricola: 757198
+ * Sede: Como
+ */
 package io.github.devdoctor.BookRecServer;
 
 import java.io.BufferedInputStream;

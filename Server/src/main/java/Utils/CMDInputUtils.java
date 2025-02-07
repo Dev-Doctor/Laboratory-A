@@ -34,6 +34,7 @@ public class CMDInputUtils {
     }
 
     public static boolean mapYesNo(Scanner scanner) {
+        scanner.hasNext();
         boolean result = false, quit = false;
         do {
             char choice = scanner.next().charAt(0);
