@@ -153,28 +153,50 @@ public class bookpageController implements Initializable, LoginEventListener {
      * if the user is not logged in and there is no review from the logged user and the book is in one of the logged user libraries
      * then enables the review button.
      */
+    // ##################### NEEDS FIXING #####################
     private void tryEnablingReviewButton() {
         // if the user is not logged in and there is no review from the logged user and the book is in one of the logged user libraries
-        if (LoadedData.logged_user != null && !BookUtils.doesReviewExist(current_book, UUID.fromString(LoadedData.logged_user.getUUID()))
-                && LibraryUtils.isBookInLibraries(current_book.getRealUUID())) {
-            // enable the write review button
-            BwriteReview.setDisable(false);
-        }
+//        if (LoadedData.logged_user != null && !BookUtils.doesReviewExist(current_book, UUID.fromString(LoadedData.logged_user.getUUID()))
+//                && LibraryUtils.isBookInLibraries(current_book.getRealUUID())) {
+        // enable the write review button
+        BwriteReview.setDisable(false);
+//        }
     }
 
     /**
      * Populates the bookpage with the current book data
      */
     private void setBookData() {
-        Lauthors.setText(current_book.getAuthors().toString());
-        Lcategories.setText(current_book.getCategory().toString());
-        Ldescription.setText((
-                current_book.getDescription().isEmpty()) ? "\nNon c'è una descrizione per questo libro.\n\n" : current_book.getDescription()
+        // set the authors text
+        Lauthors.setText(
+                (current_book.getAuthors()) == null || current_book.getAuthors().isEmpty()
+                        ? "??"
+                        : current_book.getAuthors().stream()
+                        .map(Author::getName)
+                        .collect(Collectors.joining(", "))
         );
-        Lpublisher.setText(current_book.getPublisher());
+        // set the categories text
+        Lcategories.setText(
+                (current_book.getCategories()) == null || current_book.getCategories().isEmpty()
+                        ? "??"
+                        : current_book.getAuthors().stream()
+                        .map((Author::getName))
+                        .collect(Collectors.joining(" - "))
+        );
+        // set the description text
+        Ldescription.setText((
+                current_book.getDescription() == null) ? "\nNon c'è una descrizione per questo libro.\n\n" : current_book.getDescription()
+        );
+        // set the publisher text
+        Lpublisher.setText(
+                (current_book.getPublisher() == null || current_book.getPublisher().isEmpty() ? "??" : current_book.getPublisher())
+        );
+        // set the title text
         Ltitle.setText(current_book.getTitle());
+        // set the price
         Lprice.setText(String.valueOf(current_book.getPrice()) + "€");
-        HLuuid.setText(current_book.getUuid());
+        // set the id
+        HLuuid.setText(String.valueOf(current_book.getId()));
     }
 
     /**
@@ -235,6 +257,7 @@ public class bookpageController implements Initializable, LoginEventListener {
 
     /**
      * Calculate the stars for a review with the passed review as value.
+     *
      * @param review the value of the review
      * @return a string containing review number of filled stars plus {@code 5-review} numbers of empty stars.
      */
@@ -250,6 +273,7 @@ public class bookpageController implements Initializable, LoginEventListener {
      * if the {@code last_review} is set, if it is it adds it to the review, sets back the
      * {@code last_review} to {@code null}, reloads the review, disables the review button,
      * clears the average reviews and reloads them.
+     *
      * @param event the action event
      * @see bookReviewController
      */
@@ -278,6 +302,7 @@ public class bookpageController implements Initializable, LoginEventListener {
      * This method is called when a row of the reviews table is clicked.
      * It checks for double mouse click, gets the current row review, saves the {@code last_review} just in case.
      * Opens a modal to inspect the review and after it sets back the old review as the last one.
+     *
      * @param mouseEvent the mouse event
      * @see inspectReviewController
      * @see MouseEvent

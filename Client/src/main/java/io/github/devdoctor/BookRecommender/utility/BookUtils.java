@@ -33,7 +33,8 @@ public class BookUtils {
      * Loads all books into memory from the file system using the default path.
      */
     public static void loadBooks() {
-        LoadedData.books = FileUtils.loadBooksFromFile();
+//        LoadedData.books = FileUtils.loadBooksFromFile();
+        LoadedData.books = APIUtils.requestBooks(0);
     }
 
     /**
@@ -119,13 +120,14 @@ public class BookUtils {
 
         Collection<Book> result = new ArrayList<Book>();
         for (Book book : books) {
-            List<String> mapped = book.getAuthors().stream().map(String::toLowerCase).toList();
-            for (String current : mapped) {
-                if (current.contains(author.toLowerCase())) {
-                    result.add(book);
-                    break;
-                }
-            }
+            // ##################### NEEDS FIXING #####################
+//            List<String> mapped = book.getAuthors().stream().map(toLowerCase(auth)).toList();
+//            for (String current : mapped) {
+//                if (current.contains(author.toLowerCase())) {
+//                    result.add(book);
+//                    break;
+//                }
+//            }
         }
         return result;
     }
@@ -175,11 +177,13 @@ public class BookUtils {
      * @return the book if found, otherwise {@code null}
      * @see UUID
      */
+
     public static Book searchBookByUUID(UUID uuid) {
         for (Book book : LoadedData.books) {
-            if (book.getRealUUID().equals(uuid)) {
-                return book;
-            }
+            // ##################### NEEDS FIXING #####################
+//            if (book.getRealUUID().equals(uuid)) {
+//                return book;
+//            }
         }
         return null;
     }

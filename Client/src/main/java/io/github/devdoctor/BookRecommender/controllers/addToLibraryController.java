@@ -62,11 +62,12 @@ public class addToLibraryController implements Initializable {
 
         List<Library> edited_libraries = new ArrayList<Library>();
 
+        // ##################### NEEDS FIXING #####################
         // remove the libraries that contain already the book
         LoadedData.logged_user_libraries.forEach(library -> {
-            if (!library.doesContainBook(bookToAdd.getUuid())) {
-                edited_libraries.add(library);
-            }
+//            if (!library.doesContainBook(bookToAdd.getId())) {
+//                edited_libraries.add(library);
+//            }
         });
 
         // set the data in the table
@@ -88,8 +89,11 @@ public class addToLibraryController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.ERROR, "C'e' stato un problema sconosciuto.", ButtonType.OK);
         // gets the candidate library
         Library candidate = TWlibraries.getSelectionModel().getSelectedItem();
+
+        // ##################### NEEDS FIXING #####################
         // checks if the book is not already added
-        Boolean wasSuccessful = candidate.addBook(bookToAdd.getUuid());
+//        Boolean wasSuccessful = candidate.addBook(bookToAdd.getId());
+        Boolean wasSuccessful = false;
         if (wasSuccessful) {
             // udate the popup message to tell the user that was successfully executed
             alert.setContentText("Il libro e' stato aggiunto con successo!");

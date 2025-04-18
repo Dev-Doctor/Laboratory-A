@@ -80,7 +80,7 @@ public class LoadedData {
      * This list keeps track of the book tabs that have been loaded into the application.
      * </p>
      */
-    public static List<String> loaded_book_tabs = new ArrayList<String>();
+    public static ArrayList<Integer> loaded_book_tabs = new ArrayList<Integer>();
 
     // Events Variables
 

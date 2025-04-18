@@ -1,14 +1,11 @@
-package io.github.devdoctor.BookRecServer.Database;
-
-import io.github.devdoctor.BookRecServer.Main;
-import org.apache.commons.cli.Option;
+package io.github.devdoctor.BookRecommender.Database;
 
 public class ConnCredentials {
-    private String ip;
-    private int port;
-    private String username;
-    private String password;
-    private String database;
+    private final String ip;
+    private final int port;
+    private final String username;
+    private final String password;
+    private final String database;
 
     private ConnCredentials(Builder builder) {
         this.ip = builder.ip;

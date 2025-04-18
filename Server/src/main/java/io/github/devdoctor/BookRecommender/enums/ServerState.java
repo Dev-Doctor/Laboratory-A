@@ -3,7 +3,7 @@
  * Matricola: 757198
  * Sede: Como
  */
-package io.github.devdoctor.BookRecServer;
+package io.github.devdoctor.BookRecommender.enums;
 
 public enum ServerState {
     STOPPING(getDefaultState()),

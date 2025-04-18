@@ -3,7 +3,7 @@
  * Matricola: 757198
  * Sede: Como
  */
-package io.github.devdoctor.BookRecServer.Database.DBCommands;
+package io.github.devdoctor.BookRecommender.Database.DBCommands;
 
 public class RegisterUser implements DbCommand {
     String query = "INSERT INTO users (UserId, userName, email, passwordHash) VALUES (default, ?, ?, ?)";

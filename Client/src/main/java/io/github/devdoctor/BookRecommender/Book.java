@@ -5,8 +5,7 @@
  */
 package io.github.devdoctor.BookRecommender;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * The type Book.
@@ -16,14 +15,13 @@ import java.util.UUID;
  */
 public class Book {
     private String title;
-    private List<String> authors;
+    private List<Author> authors;
     private String description;
     private List<String> category;
     private String publisher;
     private float price;
-    private String publish_month;
-    private String publish_year;
-    private String uuid;
+    private Date publish_date;
+    private int id;
 
     /**
      * Instantiates a new Book.
@@ -34,19 +32,17 @@ public class Book {
      * @param category      the category
      * @param publisher     the publisher
      * @param price         the price
-     * @param publish_month the publish month
-     * @param publish_year  the publish year
+     * @param publish_date  the date the book was published (month,year)
      */
-    public Book(String title, List<String> authors, String description, List<String> category, String publisher, float price, String publish_month, String publish_year) {
+    public Book(String title, List<Author> authors, String description, List<String> category, String publisher, float price, Date publish_date) {
         this.title = title;
         this.authors = authors;
         this.description = description;
         this.category = category;
         this.publisher = publisher;
         this.price = price;
-        this.publish_month = publish_month;
-        this.publish_year = publish_year;
-        this.uuid = "";
+        this.publish_date = publish_date;
+        this.id = -1;
     }
 
     /**
@@ -58,19 +54,17 @@ public class Book {
      * @param category      the category
      * @param publisher     the publisher
      * @param price         the price
-     * @param publish_month the publish month
-     * @param publish_year  the publish year
+     * @param publish_date  the date the book was published (month,year)
      */
-    public Book(String title, List<String> authors, String description, List<String> category, String publisher, float price, String publish_month, String publish_year, String uuid) {
+    public Book(String title, List<Author> authors, String description, List<String> category, String publisher, float price, Date publish_date, int id) {
         this.title = title;
         this.authors = authors;
         this.description = description;
         this.category = category;
         this.publisher = publisher;
         this.price = price;
-        this.publish_month = publish_month;
-        this.publish_year = publish_year;
-        this.uuid = uuid;
+        this.publish_date = publish_date;
+        this.id = id;
     }
 
     public String getTitle() {
@@ -81,11 +75,11 @@ public class Book {
         this.title = title;
     }
 
-    public List<String> getAuthors() {
+    public List<Author> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<String> authors) {
+    public void setAuthors(List<Author> authors) {
         this.authors = authors;
     }
 
@@ -97,7 +91,7 @@ public class Book {
         this.description = description;
     }
 
-    public List<String> getCategory() {
+    public List<String> getCategories() {
         return category;
     }
 
@@ -122,31 +116,46 @@ public class Book {
     }
 
     public String getPublish_month() {
-        return publish_month;
-    }
-
-    public void setPublish_month(String publish_month) {
-        this.publish_month = publish_month;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(publish_date);
+        return String.valueOf(cal.get(Calendar.MONTH));
     }
 
     public String getPublish_year() {
-        return publish_year;
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(publish_date);
+        return String.valueOf(cal.get(Calendar.YEAR));
     }
 
-    public void setPublish_year(String publish_year) {
-        this.publish_year = publish_year;
+    public Date getPublish_date() {
+        return publish_date;
     }
 
-    public String getUuid() {
-        return uuid;
+    public void setPublish_date(Date publish_date) {
+        this.publish_date = publish_date;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public int getId() {
+        return id;
     }
 
-    public UUID getRealUUID() {
-        return UUID.fromString(uuid);
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", authors=" + authors +
+                ", description='" + description + '\'' +
+                ", category=" + category +
+                ", publisher='" + publisher + '\'' +
+                ", price=" + price +
+                ", publish_month='" + getPublish_month() + '\'' +
+                ", publish_year='" + getPublish_year() + '\'' +
+                ", id=" + id +
+                '}';
     }
 }
 

@@ -219,12 +219,14 @@ public class bookReviewController implements Initializable {
         recommendedBooks.remove(REVIEW_BOOK);
 
         // create a new book uuid list that will contain each recommended book
-        Collection<String> books_uuids = new ArrayList<String>();
+        Collection<Integer> books_uuids = new ArrayList<Integer>();
         // adds each book uuid to the newly created list
-        recommendedBooks.forEach(book -> books_uuids.add(book.getUuid()));
+        recommendedBooks.forEach(book -> books_uuids.add(book.getId()));
 
         // creates a new review with the provided user data
-        Review review = new Review(style, content, niceness, originality, edition, books_uuids, LoadedData.logged_user.getUUID());
+        // ##################### NEEDS FIXING #####################
+//        Review review = new Review(style, content, niceness, originality, edition, books_uuids, LoadedData.logged_user.getUUID());
+        Review review = null;
 
         if (BookUtils.addReview(REVIEW_BOOK, review)) {
             alert.setAlertType(Alert.AlertType.INFORMATION);

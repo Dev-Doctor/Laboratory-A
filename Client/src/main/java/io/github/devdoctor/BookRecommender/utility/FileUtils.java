@@ -117,7 +117,8 @@ public class FileUtils {
     public static Collection<Review> loadReviewsForBook(Book book) {
         Collection<Review> empty_coll = new ArrayList<Review>();
 
-        return safeLoadJsonFile(BOOK_REVIEW_FOLDER, book.getUuid(), REVIEW_COLLECTION_TYPE, empty_coll);
+        // return safeLoadJsonFile(BOOK_REVIEW_FOLDER, book.getId(), REVIEW_COLLECTION_TYPE, empty_coll);
+        return Collections.emptyList();
     }
 
     /**
@@ -207,7 +208,8 @@ public class FileUtils {
      */
     public static Boolean writeBookReviewsToFile(Collection<Review> reviews, Book book) {
         String json = new Gson().toJson(reviews, REVIEW_COLLECTION_TYPE.getType());
-        return writeJsonFile(BOOK_REVIEW_FOLDER, book.getUuid(), json);
+//        return writeJsonFile(BOOK_REVIEW_FOLDER, book.getId(), json);
+        return null;
     }
 
     /**

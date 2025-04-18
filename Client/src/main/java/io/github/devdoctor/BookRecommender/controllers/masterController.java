@@ -9,10 +9,7 @@ import io.github.devdoctor.BookRecommender.*;
 import io.github.devdoctor.BookRecommender.events.LoginEvent;
 import io.github.devdoctor.BookRecommender.events.LoginEventListener;
 import io.github.devdoctor.BookRecommender.events.UpdateUserEventListener;
-import io.github.devdoctor.BookRecommender.utility.BookUtils;
-import io.github.devdoctor.BookRecommender.utility.LibraryUtils;
-import io.github.devdoctor.BookRecommender.utility.Utils;
-import io.github.devdoctor.BookRecommender.utility.WindowsUtils;
+import io.github.devdoctor.BookRecommender.utility.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -142,9 +139,11 @@ public class masterController implements Initializable, LoginEventListener, Upda
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // sets the name of the program
         LpageTitle.setText(BookRecommender.PROGRAM_NAME);
+
         // sets the columbs of the Books Table
         TC_title.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
         TC_author.setCellValueFactory(new PropertyValueFactory<Book, String>("publisher"));
+
         // sets the columbs of the Libraries Table
         TClibraryNames.setCellValueFactory(new PropertyValueFactory<Library, String>("name"));
         TCnumberOfBooks.setCellValueFactory(cellData -> {
@@ -204,12 +203,16 @@ public class masterController implements Initializable, LoginEventListener, Upda
         if (event.getClickCount() == 2) {
             // get the row book
             Book this_book = TWbooks.getSelectionModel().getSelectedItem();
-            // sets it as the current looked book
-            LoadedData.current_looked_book = this_book;
             // if the tab is not already open
-            if (!LoadedData.loaded_book_tabs.contains(this_book.getUuid())) {
+            if (!LoadedData.loaded_book_tabs.contains(this_book.getId())) {
                 // add the book to the list of looked books
-                LoadedData.loaded_book_tabs.add(this_book.getUuid());
+                LoadedData.loaded_book_tabs.add(this_book.getId());
+
+                this_book = APIUtils.fetchBookData(this_book.getId());
+
+                // sets it as the current looked book
+                LoadedData.current_looked_book = this_book;
+
                 // add a new tab with the current book
                 addNewTab(this_book);
                 // select the books tab
@@ -390,7 +393,7 @@ public class masterController implements Initializable, LoginEventListener, Upda
         tab.setOnClosed(new EventHandler<Event>() {
             @Override
             public void handle(Event event) {
-                LoadedData.loaded_book_tabs.remove(book.getUuid());
+                LoadedData.loaded_book_tabs.remove(Integer.valueOf(book.getId()));
             }
         });
 

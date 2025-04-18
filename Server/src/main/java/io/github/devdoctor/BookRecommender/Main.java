@@ -3,17 +3,14 @@
  * Matricola: 757198
  * Sede: Como
  */
-package io.github.devdoctor.BookRecServer;
+package io.github.devdoctor.BookRecommender;
 
 import Utils.CMDInputUtils;
 import Utils.StringUtils;
-import io.github.devdoctor.BookRecServer.Console.ConsoleThread;
-import io.github.devdoctor.BookRecServer.Database.ConnCredentials;
-import io.github.devdoctor.BookRecServer.Database.DBConnectionHandler;
+import io.github.devdoctor.BookRecommender.Database.ConnCredentials;
+import io.github.devdoctor.BookRecommender.Database.DBConnectionHandler;
 import org.apache.commons.cli.*;
 
-import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,39 +19,24 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
-    public static final int PORT = 8080;
-    private static ServerSocket serverSocket;
-    private static ArrayList<ClientHandler> connectedClients;
+    public static final int API_PORT = 8080;
+    public static DBConnectionHandler dbConnectionHandler;
+
 
     public static void main(String[] args) {
         // initialize scanner
         Scanner scanner = new Scanner(System.in);
         scanner.useDelimiter("\n");
 
-        connectedClients = new ArrayList<ClientHandler>();
-
         // welcome the admin
-        System.out.println("Welcome to BookRec Server!");
+        System.out.println("Welcome to BookRecommender Server!");
 
         // create the connection to the database
-        DBConnectionHandler dbConnectionHandler = InitializeConnection(scanner, args);
+        dbConnectionHandler = InitializeConnection(scanner, args);
+        HttpServerManager httpServerManager = new HttpServerManager();
 
         // prepare the console
-        ConsoleThread consoleThread = new ConsoleThread(scanner);
-
-        // inizialize the server
-        try {
-            // create the server socket
-            serverSocket = new ServerSocket(PORT);
-            // listen to clients connections
-            while (true) {
-                new ClientHandler(serverSocket.accept()).start();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        scanner.close();
+        // ConsoleThread consoleThread = new ConsoleThread(scanner);
     }
 
     /**

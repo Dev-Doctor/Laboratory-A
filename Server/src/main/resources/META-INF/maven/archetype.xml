@@ -1,5 +1,5 @@
 <archetype>
-  <id>Server</id>
+  <id>io.github.devdoctor.BookRecommender.Server</id>
   <sources>
     <source>src/main/java/App.java</source>
   </sources>

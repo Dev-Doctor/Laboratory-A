@@ -6,6 +6,8 @@ module io.github.devdoctor.client {
     requires java.logging;
     requires jbcrypt;
     requires java.desktop;
+    requires jdk.httpserver;
+    requires jdk.jfr;
 
     exports io.github.devdoctor.BookRecommender;
     exports io.github.devdoctor.BookRecommender.controllers;

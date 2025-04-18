@@ -86,8 +86,10 @@ public class LibraryUtils {
         return lib.getBooks_uuids().contains(uuid.toString());
     }
 
-    public static Boolean isBookInLibraries(UUID uuid) {
-        return isBookInLibraries(LoadedData.logged_user_libraries, uuid);
+    public static Boolean isBookInLibraries(int uuid) {
+        // ##################### NEEDS FIXING #####################
+//        return isBookInLibraries(LoadedData.logged_user_libraries, uuid);
+        return false;
     }
 
     public static Boolean isBookInLibraries(List<Library> libs, UUID uuid) {
