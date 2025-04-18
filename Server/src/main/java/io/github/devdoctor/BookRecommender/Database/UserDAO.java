@@ -9,16 +9,15 @@ import Utils.QueriesUtils;
 import Utils.UserUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import io.github.devdoctor.BookRecommender.CommonObjects.Author;
+import io.github.devdoctor.BookRecommender.CommonObjects.Book;
 import io.github.devdoctor.BookRecommender.Main;
-import io.github.devdoctor.BookRecommender.Objets.Author;
-import io.github.devdoctor.BookRecommender.Objets.Book;
 import io.github.devdoctor.BookRecommender.Objets.BookSearchOptions;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -59,6 +58,7 @@ public class UserDAO {
 
     public static Book getBookDetails(int bookId) {
         Book book = new Book();
+
         try (Connection conn = Main.dbConnectionHandler.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(Queries.BOOK_BY_ID);
             stmt.setInt(1, bookId);

@@ -16,6 +16,11 @@
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
         <dependency>
+            <groupId>io.github.devdoctor</groupId>
+            <artifactId>shared</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.7.5</version>

@@ -6,6 +6,8 @@
 package io.github.devdoctor.BookRecommender.controllers;
 
 import io.github.devdoctor.BookRecommender.*;
+import io.github.devdoctor.BookRecommender.CommonObjects.Author;
+import io.github.devdoctor.BookRecommender.CommonObjects.Book;
 import io.github.devdoctor.BookRecommender.events.LoginEventListener;
 import io.github.devdoctor.BookRecommender.utility.*;
 import javafx.beans.property.SimpleStringProperty;

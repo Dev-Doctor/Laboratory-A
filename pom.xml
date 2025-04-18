@@ -14,6 +14,7 @@
     <modules>
         <module>Client</module>
         <module>Server</module>
+        <module>shared</module>
     </modules>
 
     <properties>

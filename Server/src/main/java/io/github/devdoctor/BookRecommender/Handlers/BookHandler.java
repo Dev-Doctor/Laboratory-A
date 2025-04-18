@@ -6,12 +6,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import io.github.devdoctor.BookRecommender.CommonObjects.Book;
 import io.github.devdoctor.BookRecommender.Database.UserDAO;
-import io.github.devdoctor.BookRecommender.Objets.Book;
 import io.github.devdoctor.BookRecommender.Objets.BookSearchOptions;
 import io.github.devdoctor.BookRecommender.enums.RequestMethods;
 import io.github.devdoctor.BookRecommender.enums.Responses;
-import org.apache.catalina.util.ToStringUtil;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -25,9 +24,10 @@ public class BookHandler implements HttpHandler {
             String path = httpExchange.getRequestURI().getPath();
             
             String bookIdstr = path.substring(path.lastIndexOf('/') + 1);
-            
+
+
             if(NumberUtils.isInteger(bookIdstr)) {
-                Book book = UserDAO.getBookDetails(Integer.valueOf(bookIdstr));
+                Book book = UserDAO.getBookDetails(Integer.parseInt(bookIdstr));
                 Gson json = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
                 String response = json.toJson(book);

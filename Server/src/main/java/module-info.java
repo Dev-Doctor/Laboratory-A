@@ -9,6 +9,7 @@ open module io.github.devdoctor.server {
     requires java.desktop;
     requires com.google.gson;
     requires ch.qos.logback.core;
+    requires io.github.devdoctor.shared;
 
     exports io.github.devdoctor.BookRecommender;
     exports io.github.devdoctor.BookRecommender.enums;

@@ -12,6 +12,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Client" />
         <module name="Server" />
+        <module name="shared" />
       </profile>
     </annotationProcessing>
   </component>

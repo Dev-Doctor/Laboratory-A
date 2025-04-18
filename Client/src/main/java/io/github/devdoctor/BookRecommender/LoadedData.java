@@ -5,6 +5,7 @@
  */
 package io.github.devdoctor.BookRecommender;
 
+import io.github.devdoctor.BookRecommender.CommonObjects.Book;
 import io.github.devdoctor.BookRecommender.events.LoginEvent;
 import io.github.devdoctor.BookRecommender.events.UpdateUserEvent;
 

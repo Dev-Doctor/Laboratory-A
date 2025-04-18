@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import io.github.devdoctor.BookRecommender.*;
+import io.github.devdoctor.BookRecommender.CommonObjects.Book;
 
 import java.io.*;
 import java.nio.file.Files;

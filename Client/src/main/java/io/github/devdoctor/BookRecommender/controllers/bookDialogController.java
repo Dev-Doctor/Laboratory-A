@@ -5,7 +5,7 @@
  */
 package io.github.devdoctor.BookRecommender.controllers;
 
-import io.github.devdoctor.BookRecommender.Book;
+import io.github.devdoctor.BookRecommender.CommonObjects.Book;
 import io.github.devdoctor.BookRecommender.LoadedData;
 import io.github.devdoctor.BookRecommender.utility.BookUtils;
 import javafx.collections.FXCollections;

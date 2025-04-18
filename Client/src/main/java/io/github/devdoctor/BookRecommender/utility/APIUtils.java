@@ -1,17 +1,13 @@
 package io.github.devdoctor.BookRecommender.utility;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import io.github.devdoctor.BookRecommender.Book;
+import io.github.devdoctor.BookRecommender.CommonObjects.Book;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**

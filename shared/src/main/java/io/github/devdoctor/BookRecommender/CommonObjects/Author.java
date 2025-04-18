@@ -1,4 +1,4 @@
-package io.github.devdoctor.BookRecommender.Objets;
+package io.github.devdoctor.BookRecommender.CommonObjects;
 
 public class Author {
     private int id;

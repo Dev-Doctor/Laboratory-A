@@ -3,7 +3,7 @@
  * Matricola: 757198
  * Sede: Como
  */
-package io.github.devdoctor.BookRecommender;
+package io.github.devdoctor.BookRecommender.CommonObjects;
 
 import java.util.*;
 
@@ -23,26 +23,17 @@ public class Book {
     private Date publish_date;
     private int id;
 
-    /**
-     * Instantiates a new Book.
-     *
-     * @param title         the title
-     * @param authors       the authors
-     * @param description   the description
-     * @param category      the category
-     * @param publisher     the publisher
-     * @param price         the price
-     * @param publish_date  the date the book was published (month,year)
-     */
-    public Book(String title, List<Author> authors, String description, List<String> category, String publisher, float price, Date publish_date) {
-        this.title = title;
-        this.authors = authors;
-        this.description = description;
-        this.category = category;
-        this.publisher = publisher;
-        this.price = price;
-        this.publish_date = publish_date;
+
+
+    public Book() {
         this.id = -1;
+        this.title = null;
+        this.description = null;
+        this.price = -1;
+        this.publisher = null;
+        this.publish_date = null;
+        this.authors = new ArrayList<>();
+        this.category = new ArrayList<>();
     }
 
     /**
@@ -57,13 +48,34 @@ public class Book {
      * @param publish_date  the date the book was published (month,year)
      */
     public Book(String title, List<Author> authors, String description, List<String> category, String publisher, float price, Date publish_date, int id) {
+        this.id = id;
         this.title = title;
-        this.authors = authors;
         this.description = description;
-        this.category = category;
-        this.publisher = publisher;
         this.price = price;
+        this.publisher = publisher;
         this.publish_date = publish_date;
+        this.authors = authors;
+        this.category = category;
+    }
+
+
+
+    public Book(int bookId, String title, String editorName, float price, Date publishDate) {
+        this.id = bookId;
+        this.title = title;
+        this.description = null;
+        this.price = price;
+        this.publisher = editorName;
+        this.publish_date = publishDate;
+        this.authors = new ArrayList<>();
+        this.category = new ArrayList<>();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -75,28 +87,12 @@ public class Book {
         this.title = title;
     }
 
-    public List<Author> getAuthors() {
-        return authors;
-    }
-
-    public void setAuthors(List<Author> authors) {
-        this.authors = authors;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<String> getCategories() {
-        return category;
-    }
-
-    public void setCategory(List<String> category) {
-        this.category = category;
     }
 
     public String getPublisher() {
@@ -115,6 +111,30 @@ public class Book {
         this.price = price;
     }
 
+    public Date getPublish_date() {
+        return publish_date;
+    }
+
+    public void setPublish_date(Date publish_date) {
+        this.publish_date = publish_date;
+    }
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
+    }
+
+    public List<String> getCategories() {
+        return category;
+    }
+
+    public void setCategories(List<String> category) {
+        this.category = category;
+    }
+
     public String getPublish_month() {
         Calendar cal = Calendar.getInstance();
         cal.setTime(publish_date);
@@ -125,22 +145,6 @@ public class Book {
         Calendar cal = Calendar.getInstance();
         cal.setTime(publish_date);
         return String.valueOf(cal.get(Calendar.YEAR));
-    }
-
-    public Date getPublish_date() {
-        return publish_date;
-    }
-
-    public void setPublish_date(Date publish_date) {
-        this.publish_date = publish_date;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     @Override

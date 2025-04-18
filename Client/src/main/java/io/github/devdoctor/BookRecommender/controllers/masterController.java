@@ -6,6 +6,7 @@
 package io.github.devdoctor.BookRecommender.controllers;
 
 import io.github.devdoctor.BookRecommender.*;
+import io.github.devdoctor.BookRecommender.CommonObjects.Book;
 import io.github.devdoctor.BookRecommender.events.LoginEvent;
 import io.github.devdoctor.BookRecommender.events.LoginEventListener;
 import io.github.devdoctor.BookRecommender.events.UpdateUserEventListener;

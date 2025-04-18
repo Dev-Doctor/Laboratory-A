@@ -8,6 +8,7 @@ module io.github.devdoctor.client {
     requires java.desktop;
     requires jdk.httpserver;
     requires jdk.jfr;
+    requires io.github.devdoctor.shared;
 
     exports io.github.devdoctor.BookRecommender;
     exports io.github.devdoctor.BookRecommender.controllers;
