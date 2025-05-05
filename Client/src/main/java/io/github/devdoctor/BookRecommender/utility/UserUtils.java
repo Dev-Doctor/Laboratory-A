@@ -5,8 +5,8 @@
  */
 package io.github.devdoctor.BookRecommender.utility;
 
+import io.github.devdoctor.BookRecommender.CommonObjects.User;
 import io.github.devdoctor.BookRecommender.LoadedData;
-import io.github.devdoctor.BookRecommender.User;
 import javafx.util.Pair;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -32,14 +32,6 @@ public class UserUtils {
     // Private constructor to prevent instantiation
     private UserUtils() {
         throw new UnsupportedOperationException("UserUtils cannot be instantiated");
-    }
-
-    /**
-     * Loads all users into memory from the file system using the default path.
-     * The loaded users are stored in {@link LoadedData#users}.
-     */
-    public static void loadUsers() {
-        LoadedData.users = FileUtils.loadUsersFromFile();
     }
 
     /**
@@ -128,11 +120,12 @@ public class UserUtils {
      * @return the {@code User} with the specified UUID, or {@code null} if no such user exists
      */
     public static User getUserFromUUID(UUID uuid) {
-        for (User current : LoadedData.users) {
-            if (Objects.equals(current.getUUID(), uuid.toString())) {
-                return current;
-            }
-        }
+// ##################### NEEDS FIXING #####################
+        //        for (User current : LoadedData.users) {
+//            if (Objects.equals(current.getUUID(), uuid.toString())) {
+//                return current;
+//            }
+//        }
         return null;
     }
 
@@ -143,13 +136,14 @@ public class UserUtils {
      * @return a {@link Pair} where the first element is {@code true} if the user exists, {@code false} otherwise,
      * and the second element is the existing user if found, or {@code null} otherwise
      */
-    public static Pair<Boolean, User> doesUserExist(User user) {
-        for (User current : LoadedData.users) {
-            if (user.equals(current)) {
-                return new Pair<Boolean, User>(true, current);
-            }
-        }
-        return new Pair<Boolean, User>(false, null);
+    public static boolean doesUserExist(User user) {
+        return APIUtils.doesUserExist(user);
+    }
+
+    public static boolean registerUser(User user) {
+        boolean succsess = APIUtils.registerUser(user);
+//        #################################################################################### NEED FINISHING #########################################################################################################
+        return false;
     }
 
     /**
@@ -162,21 +156,33 @@ public class UserUtils {
      * @param email       the email address of the new user
      * @param password    the plaintext password for the new user
      * @return a {@link Pair} where the first element is {@code true} if the user was created successfully,
+     * @deprecated since 1.0
      * {@code false} otherwise, and the second element is the created user if successful, or {@code null} otherwise
      */
     public static Pair<Boolean, User> createUser(String name, String lastname, String fiscal_code,
                                                  String email, String password) {
         UUID uuid = UUID.randomUUID();
         User new_user = new User(name, lastname, fiscal_code, email, "", uuid.toString());
-        if (!doesUserExist(new_user).getKey()) {
-            String hashed_password = generatePassword(password);
-            new_user.setPassword(hashed_password);
-            ArrayList<User> users_temp = new ArrayList<>(LoadedData.users);
-            users_temp.add(new_user);
-            LoadedData.users = users_temp;
-            FileUtils.writeUserListToFile(LoadedData.users);
-            return new Pair<Boolean, User>(true, new_user);
+
+        String hashed_password = generatePassword(password);
+        new_user.setPassword(hashed_password);
+        ArrayList<User> users_temp = new ArrayList<>(LoadedData.users);
+        users_temp.add(new_user);
+        LoadedData.users = users_temp;
+        FileUtils.writeUserListToFile(LoadedData.users);
+        return new Pair<Boolean, User>(true, new_user);
+    }
+
+    public static String getUserToken(User u) {
+        if (u == null) {
+            return null;
         }
-        return new Pair<Boolean, User>(false, null);
+
+        String token = FileUtils.getUserTokenFromFile();
+        if (token == null) {
+            token = APIUtils.getUserToken(u.getEmail(), u.getPassword());
+        }
+
+        return token;
     }
 }

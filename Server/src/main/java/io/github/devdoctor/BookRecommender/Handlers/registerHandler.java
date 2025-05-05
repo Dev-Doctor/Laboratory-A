@@ -13,8 +13,8 @@ import com.sun.net.httpserver.HttpHandler;
 import io.github.devdoctor.BookRecommender.Database.Queries;
 import io.github.devdoctor.BookRecommender.Database.UserDAO;
 import io.github.devdoctor.BookRecommender.Main;
-import io.github.devdoctor.BookRecommender.enums.RequestMethods;
-import io.github.devdoctor.BookRecommender.enums.Responses;
+import io.github.devdoctor.BookRecommender.CommonObjects.enums.RequestMethods;
+import io.github.devdoctor.BookRecommender.CommonObjects.enums.Responses;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -31,15 +31,15 @@ public class registerHandler implements HttpHandler {
 
         JsonObject requestBody = UrlUtils.parseJsonBody(httpExchange);
 
-        if(!requestBody.has("name") || !requestBody.has("lastname") || !requestBody.has("password")
-            || !requestBody.has("password") || !requestBody.has("email")) {
+        if(!requestBody.has("first_name") || !requestBody.has("last_name") || !requestBody.has("password")
+            || !requestBody.has("fiscal_code") || !requestBody.has("email")) {
             String response = UrlUtils.generateError("Invalid params", "params", "missing required params");
             UrlUtils.sendResponse(httpExchange, Responses.BAD_REQUEST, response);
             return;
         }
 
-        String name = requestBody.get("name").getAsString();
-        String lastname = requestBody.get("lastname").getAsString();
+        String name = requestBody.get("first_name").getAsString();
+        String lastname = requestBody.get("last_name").getAsString();
         String fiscal_code = requestBody.get("fiscal_code").getAsString();
         String password = requestBody.get("password").getAsString();
         String email = requestBody.get("email").getAsString();

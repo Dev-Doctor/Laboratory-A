@@ -7,7 +7,7 @@ package io.github.devdoctor.BookRecommender.utility;
 
 import io.github.devdoctor.BookRecommender.Library;
 import io.github.devdoctor.BookRecommender.LoadedData;
-import io.github.devdoctor.BookRecommender.User;
+import io.github.devdoctor.BookRecommender.CommonObjects.User;
 
 import java.util.List;
 import java.util.UUID;

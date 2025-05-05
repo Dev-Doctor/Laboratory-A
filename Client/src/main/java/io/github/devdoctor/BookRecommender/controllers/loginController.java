@@ -6,6 +6,8 @@
 package io.github.devdoctor.BookRecommender.controllers;
 
 import io.github.devdoctor.BookRecommender.*;
+import io.github.devdoctor.BookRecommender.CommonObjects.User;
+import io.github.devdoctor.BookRecommender.utility.APIUtils;
 import io.github.devdoctor.BookRecommender.utility.UserUtils;
 import io.github.devdoctor.BookRecommender.utility.WindowsUtils;
 import javafx.event.ActionEvent;
@@ -16,7 +18,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 
 /**
  * The login window controller.
@@ -52,12 +53,13 @@ public class loginController {
         // creates a temp user to check
         User u = new User(email);
         // checks if the user exists
-        Pair<Boolean, User> result = UserUtils.doesUserExist(u);
+
         // if the user exists
-        if (result.getKey()) {
-            u = result.getValue();
-            // check the password if it is correct
-            if (UserUtils.checkPassword(password, u.getPassword())) {
+        if (UserUtils.doesUserExist(u)) {
+            String token = UserUtils.getUserToken(u);
+            u = APIUtils.fetchUserData(token);
+            // check if the request was successful
+            if (u != null) {
                 // run the login event
                 LoadedData.loginEvent.onLogin(u);
                 // close window
@@ -68,7 +70,7 @@ public class loginController {
                 alert.showAndWait();
             }
         } else {
-            System.err.println("Email sbagliata!");
+            System.err.println("Esiste di gia' un account con questa email.");
             alert.showAndWait();
         }
     }

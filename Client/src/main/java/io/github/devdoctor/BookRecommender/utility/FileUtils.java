@@ -5,14 +5,15 @@
  */
 package io.github.devdoctor.BookRecommender.utility;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import io.github.devdoctor.BookRecommender.*;
 import io.github.devdoctor.BookRecommender.CommonObjects.Book;
+import io.github.devdoctor.BookRecommender.CommonObjects.User;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -50,10 +51,32 @@ public class FileUtils {
     final static String CONF_FILE = "app-configs";
     final static String CATALOG_FILE = "book-catalog";
     final static String USER_FILE = "registered-users";
+    final static String USER_TOKEN = "user-token";
 
     // Private constructor to prevent instantiation
     private FileUtils() {
         throw new UnsupportedOperationException("FileUtils cannot be instantiated");
+    }
+
+    public static String getTokenFromFile() {
+        Path path = Paths.get(DATA_FOLDER + "/" + USER_TOKEN);
+
+        try {
+            // If file does not exist, create it and return null
+            if (Files.notExists(path)) {
+                Files.createFile(path);
+                return null;
+            }
+
+            // If file exists, read the first line
+            try (BufferedReader reader = Files.newBufferedReader(path)) {
+                return reader.readLine(); // returns null if file is empty
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null; // Or throw custom exception if preferred
+        }
     }
 
     /**
@@ -68,6 +91,28 @@ public class FileUtils {
         Collection<Book> empty_coll = new ArrayList<Book>();
 
         return safeLoadJsonFile(DATA_FOLDER, CATALOG_FILE, BOOK_COLLECTION_TYPE, empty_coll);
+    }
+
+    public static String getUserTokenFromFile() {
+        try {
+            String FULL_PATH = DATA_FOLDER + File.separator + USER_TOKEN + ".json";
+            File f = new File(FULL_PATH);
+
+
+            System.out.println("Loading File -> " + FULL_PATH);
+            if (!f.exists()) {
+                return null;
+            }
+
+            Gson gson = new Gson();
+            JsonElement jsonElement = JsonParser.parseString(Files.readString(Paths.get(FULL_PATH)));
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
+
+            return jsonObject.get("token").getAsString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -188,7 +233,7 @@ public class FileUtils {
      * Writes the {@code Library} collection to a file. The file name is the UUID of the user.
      *
      * @param libraries the collection of libraries to save.
-     * @param user the user who owns the libraries.
+     * @param user      the user who owns the libraries.
      * @return {@code true} if the operation was successful, {@code false} otherwise.
      * @see Config
      * @see UUID
@@ -202,7 +247,7 @@ public class FileUtils {
      * Writes the {@code Review} collection to a file. The file name is the UUID of the book.
      *
      * @param reviews the collection of reviews to save.
-     * @param book the book that owns the reviews.
+     * @param book    the book that owns the reviews.
      * @return {@code true} if the operation was successful, {@code false} otherwise.
      * @see Config
      * @see UUID
@@ -232,9 +277,9 @@ public class FileUtils {
     /**
      * Writes JSON data to a specified file. If the file or directory does not exist, it creates them.
      *
-     * @param PATH the directory path where the file will be saved.
+     * @param PATH     the directory path where the file will be saved.
      * @param filename the name of the file (without extension).
-     * @param data the JSON data to write to the file.
+     * @param data     the JSON data to write to the file.
      * @return {@code true} if the operation was successful, {@code false} otherwise.
      */
     public static boolean writeJsonFile(String PATH, String filename, String data) {

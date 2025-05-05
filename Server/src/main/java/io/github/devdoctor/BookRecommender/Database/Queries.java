@@ -26,7 +26,7 @@ public class Queries {
     public static final String SEARCH_BOOKS_BY_AUTHOR_SUB = "SELECT * FROM books b JOIN book_authors ba ON b.book_id = ba.book_id WHERE ba.author_id IN (select a.author_id FROM authors a WHERE a.author_name LIKE '%?%')";
     public static final String CREATE_LOGIN_TOKEN = "INSERT INTO user_tokens (token, user_id) VALUES (?, ?)";
 
-    public static final String USER_BY_TOKEN = "SELECT * FROM users WHERE token = ? LIMIT 1";
+    public static final String USER_BY_TOKEN = "SELECT * FROM users u JOIN user_tokens ut ON ut.user_id = u.user_id WHERE ut.\"token\" = ? LIMIT 1";
     public static final String USER_BY_EMAIL = "SELECT * FROM users WHERE email = ? LIMIT 1";
     public static final String ADD_USER = "INSERT INTO users (first_name, last_name, fiscal_code, email, password_hash) VALUES(?, ?, ?, ?, ?) RETURNING user_id";
 

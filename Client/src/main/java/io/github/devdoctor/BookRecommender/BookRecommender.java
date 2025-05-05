@@ -9,7 +9,6 @@ import io.github.devdoctor.BookRecommender.events.LoginEvent;
 import io.github.devdoctor.BookRecommender.events.UpdateUserEvent;
 import io.github.devdoctor.BookRecommender.utility.BookUtils;
 import io.github.devdoctor.BookRecommender.utility.FileUtils;
-import io.github.devdoctor.BookRecommender.utility.UserUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -64,7 +63,7 @@ public class BookRecommender extends Application {
         LoadedData.loginEvent = new LoginEvent();
         LoadedData.userEvent = new UpdateUserEvent();
         FileUtils.loadConfig();
-        UserUtils.loadUsers();
+//        UserUtils.loadUsers();
         BookUtils.loadBooks();
     }
 }

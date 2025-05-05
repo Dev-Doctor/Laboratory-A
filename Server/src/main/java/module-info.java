@@ -10,6 +10,7 @@ open module io.github.devdoctor.server {
     requires com.google.gson;
     requires ch.qos.logback.core;
     requires io.github.devdoctor.shared;
+    requires spring.web;
 
     exports io.github.devdoctor.BookRecommender;
     exports io.github.devdoctor.BookRecommender.enums;

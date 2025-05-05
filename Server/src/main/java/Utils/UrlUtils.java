@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
 import io.github.devdoctor.BookRecommender.Objets.Errors;
-import io.github.devdoctor.BookRecommender.enums.Responses;
+import io.github.devdoctor.BookRecommender.CommonObjects.enums.Responses;
 
 import java.io.BufferedReader;
 import java.io.IOException;

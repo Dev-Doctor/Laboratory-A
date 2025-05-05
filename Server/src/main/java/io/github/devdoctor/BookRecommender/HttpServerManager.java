@@ -46,6 +46,9 @@ public class HttpServerManager {
         // login a user
         httpServer.createContext(API_ROOT_PATH + "/login", new LoginHandler());
 
+        // users endpoint
+        httpServer.createContext(API_ROOT_PATH + "/users", new UsersHandler());
+
         // for authentication
         httpServer.createContext(API_ROOT_PATH + "/register", new registerHandler());
 

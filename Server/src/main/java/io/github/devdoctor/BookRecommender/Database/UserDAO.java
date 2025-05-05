@@ -11,8 +11,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.github.devdoctor.BookRecommender.CommonObjects.Author;
 import io.github.devdoctor.BookRecommender.CommonObjects.Book;
+import io.github.devdoctor.BookRecommender.Data;
 import io.github.devdoctor.BookRecommender.Main;
 import io.github.devdoctor.BookRecommender.Objets.BookSearchOptions;
+import io.github.devdoctor.BookRecommender.Objets.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -238,7 +240,7 @@ public class UserDAO {
     }
 
     //  ####################    INCOMPLETE      ###################
-    public static String loginWithToken(String token) {
+    public static User loginWithToken(String token) {
         try (Connection conn = Main.dbConnectionHandler.getConnection();
              PreparedStatement stmt = conn.prepareStatement(Queries.USER_BY_TOKEN)) {
             stmt.setString(1, token);
@@ -247,7 +249,17 @@ public class UserDAO {
 
             if (rs.next()) {
                 Date date = rs.getDate("expires_at");
-                if (date.before(new Date())) {
+                if (new Date().before(date)) {
+                    return new User(
+                            rs.getString("first_name"),
+                            rs.getString("last_name"),
+                            rs.getString("fiscal_code"),
+                            rs.getString("email"),
+                            null,
+                            null
+                    );
+                } else {
+                    tokenExpired(conn, token);
                     return null;
                 }
             }
@@ -275,6 +287,32 @@ public class UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public static void tokenExpired(Connection conn, String token) {
+        try (PreparedStatement stmt = conn.prepareStatement(Queries.DELETE_TOKEN)) {
+            stmt.setString(1, token);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean checkIfUserExists(String email) {
+        try (Connection conn = Main.dbConnectionHandler.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(Queries.USER_BY_EMAIL)) {
+            stmt.setString(1, email);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

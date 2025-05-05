@@ -6,7 +6,7 @@
 package io.github.devdoctor.BookRecommender.events;
 
 import io.github.devdoctor.BookRecommender.LoadedData;
-import io.github.devdoctor.BookRecommender.User;
+import io.github.devdoctor.BookRecommender.CommonObjects.User;
 import io.github.devdoctor.BookRecommender.utility.LibraryUtils;
 
 import java.util.ArrayList;

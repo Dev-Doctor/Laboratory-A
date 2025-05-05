@@ -9,8 +9,8 @@ import com.sun.net.httpserver.HttpHandler;
 import io.github.devdoctor.BookRecommender.CommonObjects.Book;
 import io.github.devdoctor.BookRecommender.Database.UserDAO;
 import io.github.devdoctor.BookRecommender.Objets.BookSearchOptions;
-import io.github.devdoctor.BookRecommender.enums.RequestMethods;
-import io.github.devdoctor.BookRecommender.enums.Responses;
+import io.github.devdoctor.BookRecommender.CommonObjects.enums.RequestMethods;
+import io.github.devdoctor.BookRecommender.CommonObjects.enums.Responses;
 
 import java.io.IOException;
 import java.io.OutputStream;

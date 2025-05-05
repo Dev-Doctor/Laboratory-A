@@ -184,7 +184,6 @@ public class masterController implements Initializable, LoginEventListener, Upda
         });
         // sets some interesting data about the program
         LaboutData.setText("Numero di libri: " + LoadedData.books.size()
-                + "\nUtenti registrati: " + LoadedData.users.size()
                 + "\nVersion: " + BookRecommender.PROGRAM_VERSION
         );
     }

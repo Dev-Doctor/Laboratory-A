@@ -2,7 +2,7 @@ package io.github.devdoctor.BookRecommender.Handlers;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import io.github.devdoctor.BookRecommender.enums.RequestMethods;
+import io.github.devdoctor.BookRecommender.CommonObjects.enums.RequestMethods;
 
 import java.io.IOException;
 

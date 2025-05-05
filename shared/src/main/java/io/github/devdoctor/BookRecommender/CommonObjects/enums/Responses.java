@@ -1,4 +1,4 @@
-package io.github.devdoctor.BookRecommender.enums;
+package io.github.devdoctor.BookRecommender.CommonObjects.enums;
 
 public enum Responses {
     OK(200),
@@ -20,5 +20,13 @@ public enum Responses {
 
     public int code() {
         return code;
+    }
+
+    public boolean check(int status) {
+        return code == status;
+    }
+
+    public String toFormat() {
+        return String.valueOf(code) + " " + name();
     }
 }

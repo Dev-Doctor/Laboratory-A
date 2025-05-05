@@ -1,4 +1,4 @@
-package io.github.devdoctor.BookRecommender.enums;
+package io.github.devdoctor.BookRecommender.CommonObjects.enums;
 
 public enum RequestMethods {
     POST("POST"),

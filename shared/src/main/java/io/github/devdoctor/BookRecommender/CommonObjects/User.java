@@ -3,9 +3,9 @@
  * Matricola: 757198
  * Sede: Como
  */
-package io.github.devdoctor.BookRecommender;
+package io.github.devdoctor.BookRecommender.CommonObjects;
 
-import io.github.devdoctor.BookRecommender.utility.Utils;
+import io.github.devdoctor.BookRecommender.CommonObjects.utility.Utils;
 
 import java.util.Objects;
 

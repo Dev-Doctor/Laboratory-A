@@ -7,6 +7,7 @@ package io.github.devdoctor.BookRecommender.controllers;
 
 import io.github.devdoctor.BookRecommender.*;
 import io.github.devdoctor.BookRecommender.CommonObjects.Book;
+import io.github.devdoctor.BookRecommender.CommonObjects.User;
 import io.github.devdoctor.BookRecommender.utility.BookUtils;
 import io.github.devdoctor.BookRecommender.utility.UserUtils;
 import io.github.devdoctor.BookRecommender.utility.Utils;

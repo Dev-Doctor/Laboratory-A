@@ -6,6 +6,7 @@
 package io.github.devdoctor.BookRecommender;
 
 import io.github.devdoctor.BookRecommender.CommonObjects.Book;
+import io.github.devdoctor.BookRecommender.CommonObjects.User;
 import io.github.devdoctor.BookRecommender.events.LoginEvent;
 import io.github.devdoctor.BookRecommender.events.UpdateUserEvent;
 
@@ -39,7 +40,7 @@ public class LoadedData {
      * This collection is populated with user data during the application's runtime.
      * </p>
      */
-    public static Collection<User> users;
+//    public static Collection<User> users;
 
     /**
      * Collection of all books in the system.
@@ -111,6 +112,10 @@ public class LoadedData {
      */
     public static List<Library> logged_user_libraries = null;
 
+
+    @Deprecated
+    public static Collection<User> users;
+
     /**
      * The currently logged-in user.
      * <p>
@@ -118,5 +123,5 @@ public class LoadedData {
      * </p>
      */
     public static User logged_user = null;
-
+    public static String user_token = null;
 }
